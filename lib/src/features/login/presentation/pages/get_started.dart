@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/core/constants/texts.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedPage extends StatelessWidget {
@@ -5,13 +7,11 @@ class GetStartedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Text(
-          'Get Started Page',
-          style: TextStyle(
-            fontSize: 24,
-          ),
+          AppTexts.getStartedPage,
+          style: AppTextStyles.headlineLarge,
         ),
       ),
     );
