@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -7,8 +6,12 @@ class AppTheme {
     return ThemeData(
       primaryColor: AppColors.whiteColor,
       scaffoldBackgroundColor: AppColors.backgroundColor,
-      textTheme: TextTheme(
-        headlineLarge: AppTextStyles.headlineLarge,
+      textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+          color: AppColors.whiteColor,
+        ),
       ),
     );
   }

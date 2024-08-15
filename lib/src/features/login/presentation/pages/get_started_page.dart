@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:ecommerce_app/core/widgets/getStartedPage/background.dart';
-import 'package:ecommerce_app/core/widgets/getStartedPage/background_gif.dart';
-import 'package:ecommerce_app/core/widgets/getStartedPage/bottom_window.dart';
-import 'package:ecommerce_app/core/widgets/getStartedPage/yellow_figure.dart';
+import 'package:ecommerce_app/core/widgets/get_started_page/background.dart';
+import 'package:ecommerce_app/core/widgets/get_started_page/background_gif.dart';
+import 'package:ecommerce_app/core/widgets/get_started_page/get_started_window.dart';
+import 'package:ecommerce_app/core/widgets/get_started_page/yellow_figure.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -14,17 +14,27 @@ class GetStartedPage extends StatelessWidget {
     return const Scaffold(
       body: Stack(
         children: [
-          // Gif
+          // Background Gif Image
           GetStartedPageBackgroundGif(),
 
-          // Background
+          // Background Color
           GetStartedPageBackground(),
 
-          // Yellow transparent figure
-          GetStartedPageYellowFigure(),
+          // Yellow Transparent Figure
 
-          // Bottom window
-          GetStartedPageBottomWindow(),
+          Positioned(
+            top: 420,
+            left: 400,
+            child: YellowFigure(),
+          ),
+
+          // Get Started Window
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: GetStartedWindow(),
+          ),
         ],
       ),
     );
