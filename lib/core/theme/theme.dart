@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static ThemeData get themeData {
     return ThemeData(
-      primaryColor: AppColors.primaryColor,
+      primaryColor: AppColors.whiteColor,
       scaffoldBackgroundColor: AppColors.backgroundColor,
       textTheme: TextTheme(
         headlineLarge: AppTextStyles.headlineLarge,

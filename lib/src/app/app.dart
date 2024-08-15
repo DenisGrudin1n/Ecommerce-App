@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/core/localization/localization.dart';
 import 'package:ecommerce_app/core/theme/theme.dart';
-import 'package:ecommerce_app/src/features/login/presentation/pages/get_started.dart';
+import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/src/app/app.dart';
-import 'package:ecommerce_app/src/features/login/presentation/pages/get_started.dart';
+import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

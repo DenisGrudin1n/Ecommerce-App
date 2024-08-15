@@ -8,11 +8,14 @@ environment:
 
 dependencies:
   bloc: ^8.1.4
+  build_runner: ^2.4.12
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_gen_runner: ^5.6.0
   flutter_localizations:
     sdk: flutter
+  google_fonts: ^6.2.1
   intl: ^0.19.0
 
 dev_dependencies:
@@ -25,3 +28,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  fonts:
+    - family: SFProDisplay
+      fonts:
+        - asset: assets/fonts/SFPRODISPLAYBOLD.OTF
+  assets:
+    - assets/images/
+    - assets/gifs/
+
