@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/constants/texts/get_started_page_texts.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedButton extends StatelessWidget {
@@ -8,7 +10,9 @@ class GetStartedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        context.router.push(const EnterPhoneRoute());
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.yellowColor,
         padding: EdgeInsets.symmetric(
