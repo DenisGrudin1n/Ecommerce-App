@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/core/constants/network_images_urls/enter_phone_page_images_urls.dart';
-import 'package:ecommerce_app/core/constants/texts/enter_phone_page_texts.dart';
+import 'package:ecommerce_app/core/localization/localization.dart';
+import 'package:ecommerce_app/core/theme/text_styles/enter_phone_page_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class PhoneInputField extends StatelessWidget {
@@ -7,8 +8,6 @@ class PhoneInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final phoneController = TextEditingController();
-
     return Container(
       height: 65,
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -25,16 +24,18 @@ class PhoneInputField extends StatelessWidget {
           const SizedBox(width: 5),
           const Icon(Icons.keyboard_arrow_down),
           const SizedBox(width: 12),
-          EnterPhonePageTexts.ukrainianIdentifierNums,
+          Text(
+            context.localization.enterPhonePageUkrainianIdentifierNumsText,
+            style: EnterPhonePageTextStyles.ukrainianIdentifierNumsTextStyle,
+          ),
           Expanded(
             child: TextField(
-              controller: phoneController,
               keyboardType: TextInputType.phone,
-              style: EnterPhonePageTexts.enterPhoneNumsTextStyle,
+              style: EnterPhonePageTextStyles.enterPhoneNumsTextStyle,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: EnterPhonePageTexts.hintPhoneNums,
-                hintStyle: EnterPhonePageTexts.hintPhoneNumsTextStyle,
+                hintText: context.localization.enterPhonePageHintPhoneNumsText,
+                hintStyle: EnterPhonePageTextStyles.hintPhoneNumsTextStyle,
               ),
             ),
           ),

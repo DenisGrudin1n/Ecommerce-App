@@ -1,6 +1,7 @@
-import 'package:ecommerce_app/core/constants/texts/get_started_page_texts.dart';
+import 'package:ecommerce_app/core/localization/localization.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
-import 'package:ecommerce_app/core/widgets/get_started_page/get_started_button.dart';
+import 'package:ecommerce_app/core/theme/text_styles/get_started_page_text_styles.dart';
+import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page/widgets/get_started_button.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedWindow extends StatelessWidget {
@@ -25,8 +26,14 @@ class GetStartedWindow extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GetStartedPageTexts.myText,
-              GetStartedPageTexts.shopText,
+              Text(
+                context.localization.getStartedPageMyText,
+                style: GetStartedPageTextStyles.myTextStyle,
+              ),
+              Text(
+                context.localization.getStartedPageShopText,
+                style: GetStartedPageTextStyles.shopTextStyle,
+              ),
             ],
           ),
           const SizedBox(
@@ -36,7 +43,11 @@ class GetStartedWindow extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: 40,
             ),
-            child: GetStartedPageTexts.loremIpsumText,
+            child: Text(
+              context.localization.getStartedPageLoremIpsumText,
+              style: GetStartedPageTextStyles.loremIpsumTextStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
           const SizedBox(
             height: 32,
