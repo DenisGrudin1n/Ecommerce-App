@@ -9,5 +9,6 @@
     "enterPhonePageUkrainianIdentifierNumsText": "+380 ",
     "enterPhonePageHintPhoneNumsText": "(99) 999 99 99",
     "enterPhonePageSendVerificationCodeText": "Send Verification Code",
-    "enterPhonePageSkipText": "Skip"
+    "enterPhonePageSkipText": "Skip",
+    "enterPhonePageSearchCountryText": "Search your country here.."
 }
