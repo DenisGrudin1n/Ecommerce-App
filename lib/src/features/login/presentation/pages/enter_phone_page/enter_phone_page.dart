@@ -13,79 +13,85 @@ class EnterPhonePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.whiteColor,
-      body: Stack(
-        children: [
-          // Purple figure
-          const Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: PurpleFigure(),
-          ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.whiteColor,
+        body: Stack(
+          children: [
+            // Purple figure
+            const Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: PurpleFigure(),
+            ),
 
-          // Main Content
-          ListView(
-            padding: const EdgeInsets.only(top: 100),
-            children: [
-              // Title
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 30,
-                  right: 60,
+            // Main Content
+            ListView(
+              padding: const EdgeInsets.only(top: 100),
+              children: [
+                // Title
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 30,
+                    right: 60,
+                  ),
+                  child: Text(
+                    context
+                        .localization.enterPhonePageWhatIsYourPhoneNumberText,
+                    style:
+                        EnterPhonePageTextStyles.whatIsYourPhoneNumberTextStyle,
+                  ),
                 ),
-                child: Text(
-                  context.localization.enterPhonePageWhatIsYourPhoneNumberText,
-                  style:
-                      EnterPhonePageTextStyles.whatIsYourPhoneNumberTextStyle,
+
+                const SizedBox(height: 70),
+
+                // Instruction
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    context.localization.enterPhonePageEnterPhoneText,
+                    style: EnterPhonePageTextStyles.enterPhoneTextStyle,
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 70),
+                const SizedBox(height: 20),
 
-              // Instruction
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Text(
-                  context.localization.enterPhonePageEnterPhoneText,
-                  style: EnterPhonePageTextStyles.enterPhoneTextStyle,
+                // Phone Number Input Field
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: PhoneInputField(),
                 ),
-              ),
 
-              const SizedBox(height: 20),
+                const SizedBox(height: 25),
 
-              // Phone Number Input Field
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: PhoneInputField(),
-              ),
+                // Send Verification Code Button
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: SendVerificationCodeButton(
+                    onPressed: () {},
+                  ),
+                ),
 
-              const SizedBox(height: 25),
+                const SizedBox(
+                  height: 25,
+                ),
 
-              // Send Verification Code Button
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: SendVerificationCodeButton(
+                // Skip Button
+                TextButton(
                   onPressed: () {},
+                  child: Text(
+                    context.localization.enterPhonePageSkipText,
+                    style: EnterPhonePageTextStyles.skipTextStyle,
+                  ),
                 ),
-              ),
-
-              const SizedBox(
-                height: 25,
-              ),
-
-              // Skip Button
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  context.localization.enterPhonePageSkipText,
-                  style: EnterPhonePageTextStyles.skipTextStyle,
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

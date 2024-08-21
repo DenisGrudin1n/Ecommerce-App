@@ -6,10 +6,24 @@ import 'package:ecommerce_app/core/theme/opacities.dart';
 import 'package:ecommerce_app/gen/assets.gen.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page/widgets/get_started_window.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 @RoutePage()
-class GetStartedPage extends StatelessWidget {
+class GetStartedPage extends StatefulWidget {
   const GetStartedPage({super.key});
+
+  @override
+  State<GetStartedPage> createState() => _GetStartedPageState();
+}
+
+class _GetStartedPageState extends State<GetStartedPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Closing keyboard after hot restart
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +34,7 @@ class GetStartedPage extends StatelessWidget {
           Assets.gifs.getStartedGirl.image(
             fit: BoxFit.cover,
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: MediaQuery.of(context).size.height * 0.75,
           ),
 
           // Background Color
@@ -33,8 +47,8 @@ class GetStartedPage extends StatelessWidget {
 
           // Yellow Transparent Figure
           Positioned(
-            top: 420,
-            left: 400,
+            top: MediaQuery.of(context).size.height * 0.57,
+            left: MediaQuery.of(context).size.width,
             child: Transform(
               transform: Matrix4.rotationY(math.pi),
               child: Container(

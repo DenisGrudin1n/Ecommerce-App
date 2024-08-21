@@ -10,7 +10,7 @@ class GetStartedWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 270,
+      height: MediaQuery.of(context).size.height * 0.35,
       decoration: const BoxDecoration(
         gradient: AppGradients.purpleGradient,
         borderRadius: BorderRadius.only(

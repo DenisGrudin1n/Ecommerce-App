@@ -40,6 +40,6 @@ flutter:
       fonts:
         - asset: assets/fonts/SFProText-Regular.ttf
   assets:
-    - assets/images/
+    - assets/fonts/
     - assets/gifs/
 
