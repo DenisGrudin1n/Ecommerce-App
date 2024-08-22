@@ -63,7 +63,7 @@ class PhoneInputField extends StatelessWidget {
                 child: TextFormField(
                   initialValue: phoneNumber,
                   style: EnterPhonePageTextStyles.enterPhoneNumsTextStyle,
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.transparent,

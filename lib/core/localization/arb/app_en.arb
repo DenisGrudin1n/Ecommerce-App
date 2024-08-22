@@ -10,5 +10,10 @@
     "enterPhonePageHintPhoneNumsText": "(99) 999 99 99",
     "enterPhonePageSendVerificationCodeText": "Send Verification Code",
     "enterPhonePageSkipText": "Skip",
-    "enterPhonePageSearchCountryText": "Search your country here.."
+    "enterPhonePageSearchCountryText": "Search your country here..",
+    "verificationPageVerificationCodeText": "Verification Code",
+    "verificationPagePleaseEnterCodeText": "Please enter Code sent to",
+    "verificationPageChangePhoneNumberText": "Change Phone Number",
+    "verificationPageSendVerificationCodeText": "Send Verification Code",
+    "verificationPageResendCodeText": "Resend Code"
 }

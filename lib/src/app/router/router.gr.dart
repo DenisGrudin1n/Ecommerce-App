@@ -46,3 +46,22 @@ class GetStartedRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [VerificationPage]
+class VerificationRoute extends PageRouteInfo<void> {
+  const VerificationRoute({List<PageRouteInfo>? children})
+      : super(
+          GetStartedRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'VerificationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const VerificationPage();
+    },
+  );
+}

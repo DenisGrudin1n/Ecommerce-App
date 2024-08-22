@@ -9,15 +9,6 @@ class GetStartedPageTextStyles {
     color: AppColors.yellowColor,
   );
 
-  static Text shopText = Text(
-    'Shop',
-    style: GoogleFonts.montserrat(
-      fontSize: 32,
-      fontWeight: FontWeight.bold,
-      color: AppColors.whiteColor,
-    ),
-  );
-
   static TextStyle shopTextStyle = GoogleFonts.montserrat(
     fontSize: 32,
     fontWeight: FontWeight.bold,
@@ -30,7 +21,6 @@ class GetStartedPageTextStyles {
     color: AppColors.whiteColor,
     height: 19 / 14,
     letterSpacing: -0.15,
-    // textAlign: TextAlign.center,
   );
 
   static TextStyle getStartedTextStyle = const TextStyle(

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/enter_phone_page.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page/get_started_page.dart';
+import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/verification_page.dart';
 
 part 'router.gr.dart';
 
@@ -11,11 +12,14 @@ class AppRouter extends RootStackRouter {
         /// routes go here
         AutoRoute(
           page: GetStartedRoute.page,
-          initial: true,
+          //initial: true,
         ),
         AutoRoute(
           page: EnterPhoneRoute.page,
-          maintainState: false,
+        ),
+        AutoRoute(
+          page: VerificationRoute.page,
+          initial: true,
         ),
       ];
 }
