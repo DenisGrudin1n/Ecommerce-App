@@ -1,15 +1,29 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/localization/localization.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles/verification_page_text_styles.dart';
 import 'package:ecommerce_app/core/widgets/purple_figure.dart';
 import 'package:ecommerce_app/core/widgets/send_verification_code_button.dart';
+import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/login/bloc/verification_page/verification_code_input_bloc/verification_code_input_bloc.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/widgets/verification_code_input_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class VerificationPage extends StatelessWidget {
-  const VerificationPage({super.key});
+  const VerificationPage({
+    required this.phoneNumber,
+    required this.phoneCode,
+    required this.verificationId,
+    super.key,
+  });
+  final String phoneNumber;
+  final String phoneCode;
+  final String verificationId;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +83,7 @@ class VerificationPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              '+380991234567',
+                              '+$phoneCode$phoneNumber',
                               style: VerificationPageTextStyles
                                   .phoneNumberTextStyle,
                             ),
@@ -103,7 +117,29 @@ class VerificationPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: SendVerificationCodeButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      try {
+                        final codeState =
+                            BlocProvider.of<VerificationCodeBloc>(context).state
+                                as VerificationCodeUpdated;
+                        final smsCode = codeState.code;
+
+                        final cred = PhoneAuthProvider.credential(
+                          verificationId: verificationId,
+                          smsCode: smsCode,
+                        );
+
+                        await FirebaseAuth.instance.signInWithCredential(cred);
+
+                        if (context.mounted) {
+                          await context.router.push(
+                            const HomeRoute(),
+                          );
+                        }
+                      } catch (e) {
+                        log(e.toString());
+                      }
+                    },
                   ),
                 ),
 

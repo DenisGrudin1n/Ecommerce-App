@@ -1,11 +1,17 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/localization/localization.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles/enter_phone_page_text_styles.dart';
 import 'package:ecommerce_app/core/widgets/purple_figure.dart';
 import 'package:ecommerce_app/core/widgets/send_verification_code_button.dart';
+import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/login/bloc/enter_phone_page/phone_input_bloc/phone_input_bloc.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/widgets/phone_input_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class EnterPhonePage extends StatelessWidget {
@@ -72,7 +78,34 @@ class EnterPhonePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: SendVerificationCodeButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final phoneState =
+                          BlocProvider.of<PhoneInputBloc>(context).state
+                              as PhoneInputUpdated;
+                      final phoneNumber = phoneState.phoneNumber;
+                      final phoneCode = phoneState.country.phoneCode;
+                      final fullPhoneNumber = '+$phoneCode$phoneNumber';
+
+                      FirebaseAuth.instance.verifyPhoneNumber(
+                        phoneNumber: fullPhoneNumber,
+                        verificationCompleted: (phoneAuthCredential) {},
+                        verificationFailed: (error) {
+                          log(error.toString());
+                        },
+                        codeSent: (verificationId, forceResendingToken) {
+                          context.router.push(
+                            VerificationRoute(
+                              phoneNumber: phoneNumber,
+                              phoneCode: phoneCode,
+                              verificationId: verificationId,
+                            ),
+                          );
+                        },
+                        codeAutoRetrievalTimeout: (verificationId) {
+                          log('Auto Retrieval Timeout');
+                        },
+                      );
+                    },
                   ),
                 ),
 
