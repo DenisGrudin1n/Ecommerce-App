@@ -1,0 +1,19 @@
+{
+    "@@locale": "en",
+    "getStartedPageMyText": "My",
+    "getStartedPageShopText": "Shop",
+    "getStartedPageLoremIpsumText": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "getStartedPageGetStartedText": "Get Started",
+    "enterPhonePageWhatIsYourPhoneNumberText": "What Is Your Phone Number?",
+    "enterPhonePageEnterPhoneText": "Please enter your phone number to verify your account",
+    "enterPhonePageUkrainianIdentifierNumsText": "+380 ",
+    "enterPhonePageHintPhoneNumsText": "(99) 999 99 99",
+    "enterPhonePageSendVerificationCodeText": "Send Verification Code",
+    "enterPhonePageSkipText": "Skip",
+    "enterPhonePageSearchCountryText": "Search your country here..",
+    "verificationPageVerificationCodeText": "Verification Code",
+    "verificationPagePleaseEnterCodeText": "Please enter Code sent to",
+    "verificationPageChangePhoneNumberText": "Change Phone Number",
+    "verificationPageSendVerificationCodeText": "Send Verification Code",
+    "verificationPageResendCodeText": "Resend Code"
+}

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "943085493680",
+    "project_id": "ecommerceapp-staging-e75ab",
+    "storage_bucket": "ecommerceapp-staging-e75ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943085493680:android:f9a590503d29067633ca75",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce_app.stg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943085493680-p44ov9jfcnnmkkdep7dili192niebq3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl7gV0P01827PWJOYUP8whNH2IN55-KkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943085493680-p44ov9jfcnnmkkdep7dili192niebq3d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "943085493680-1nd7vgsnm2d179bi3rjtspgqo6l6f6bs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ecommerce-app.stg"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
