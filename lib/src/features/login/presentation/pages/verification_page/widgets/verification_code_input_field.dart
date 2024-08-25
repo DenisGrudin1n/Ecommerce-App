@@ -5,23 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class VerificationCodeInputField extends StatefulWidget {
+class VerificationCodeInputField extends StatelessWidget {
   const VerificationCodeInputField({super.key});
-
-  @override
-  State<VerificationCodeInputField> createState() =>
-      _VerificationCodeInputFieldState();
-}
-
-class _VerificationCodeInputFieldState
-    extends State<VerificationCodeInputField> {
-  final FocusNode focusNode = FocusNode();
-
-  @override
-  void dispose() {
-    focusNode.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +14,6 @@ class _VerificationCodeInputFieldState
       builder: (context, state) {
         return PinCodeTextField(
           appContext: context,
-          focusNode: focusNode,
           keyboardType: TextInputType.number,
           length: 6,
           animationType: AnimationType.fade,

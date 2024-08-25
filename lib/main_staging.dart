@@ -3,10 +3,10 @@ import 'package:ecommerce_app/src/app/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  Firebase.initializeApp();
 
-  await bootstrap(() => const App());
+  bootstrap(() => const App());
 }

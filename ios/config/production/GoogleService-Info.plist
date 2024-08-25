@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>287803924424-g4mb8ueahri4k44c1fpdg0s30gtpq0tl.apps.googleusercontent.com</string>
+	<string>624577807105-5a226b5176uemqk6p7d6cmh5toia02lq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.287803924424-g4mb8ueahri4k44c1fpdg0s30gtpq0tl</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>287803924424-qrvmes50v2rvpv5ot829ldvni1hv3vq0.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.624577807105-5a226b5176uemqk6p7d6cmh5toia02lq</string>
 	<key>API_KEY</key>
-	<string>AIzaSyABkwvng32DpGgfeTm0HAW_jhLSUWWrZlg</string>
+	<string>AIzaSyBFxMXn2weNWqjQJDPJJ2OHaV4VXNlVVQ0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>287803924424</string>
+	<string>624577807105</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.ecommerce-app</string>
 	<key>PROJECT_ID</key>
-	<string>ecommerceapp-cf7df</string>
+	<string>ecommerceapp-4951f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ecommerceapp-cf7df.appspot.com</string>
+	<string>ecommerceapp-4951f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:287803924424:ios:bffc624c6cdfb25129eafd</string>
+	<string>1:624577807105:ios:11bb6a209378393e645100</string>
 </dict>
 </plist>

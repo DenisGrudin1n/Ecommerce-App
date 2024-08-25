@@ -1,5 +1,5 @@
 import 'package:country_picker/country_picker.dart';
-import 'package:ecommerce_app/core/localization/localization.dart';
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles/enter_phone_page_text_styles.dart';
 import 'package:ecommerce_app/src/features/login/bloc/enter_phone_page/phone_input_bloc/phone_input_bloc.dart';

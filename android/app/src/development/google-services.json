@@ -1,45 +1,37 @@
 {
   "project_info": {
-    "project_number": "133445801132",
-    "project_id": "ecommerceapp-development",
-    "storage_bucket": "ecommerceapp-development.appspot.com"
+    "project_number": "316291848833",
+    "project_id": "ecommerceapp-development-8c5da",
+    "storage_bucket": "ecommerceapp-development-8c5da.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:133445801132:android:0fc9bd677b5fd8b1e77b09",
+        "mobilesdk_app_id": "1:316291848833:android:8bb7132df10225864bcb80",
         "android_client_info": {
           "package_name": "com.example.ecommerce_app.dev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "133445801132-thpg8kf18ucn2qr77gkj5sq20gvjo0c3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.ecommerce_app.dev",
-            "certificate_hash": "4652828c33c55301cd0f3fa9ee7f538d4a2eafd1"
-          }
-        },
-        {
-          "client_id": "133445801132-sgnhanfg3o7qjtnbvgn1pbovgfi903ur.apps.googleusercontent.com",
+          "client_id": "316291848833-q7g7nkhlbjt4hb0ef4g2krl3bd8e9b9e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCLjO1dFPwbGdTq64VBGEkDinyi-WPhqJA"
+          "current_key": "AIzaSyBt3c1CflHx1CNZvag-CUSrCeFS4nwvnLM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "133445801132-sgnhanfg3o7qjtnbvgn1pbovgfi903ur.apps.googleusercontent.com",
+              "client_id": "316291848833-iuflafq4ibg92j9l2tcrp0vv5mvtutc7.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "133445801132-8fgifugg15reejuvnfuv8q3la032g4eb.apps.googleusercontent.com",
+              "client_id": "316291848833-j4hjbbsb4gv6g89ak3o57kosr7gphsqc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.ecommerce-app.dev"
