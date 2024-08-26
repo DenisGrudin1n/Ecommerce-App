@@ -7,6 +7,7 @@ import 'package:ecommerce_app/core/theme/text_styles/verification_page_text_styl
 import 'package:ecommerce_app/core/widgets/purple_figure.dart';
 import 'package:ecommerce_app/core/widgets/send_verification_code_button.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/login/bloc/verification_page/resend_code/resend_code_bloc.dart';
 import 'package:ecommerce_app/src/features/login/bloc/verification_page/verification_code_input_bloc/verification_code_input_bloc.dart';
 import 'package:ecommerce_app/src/features/login/data/repositories/auth_repository.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/widgets/verification_code_input_field.dart';
@@ -37,6 +38,9 @@ class _VerificationPageState extends State<VerificationPage> {
   void initState() {
     super.initState();
     authRepository = RepositoryProvider.of<AuthRepository>(context);
+    context
+        .read<ResendCodeBloc>()
+        .add(ResendCodeUpdated(widget.verificationId));
   }
 
   @override
@@ -99,7 +103,9 @@ class _VerificationPageState extends State<VerificationPage> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.router.push(const EnterPhoneRoute());
+                          },
                           child: Text(
                             context.localization
                                 .verificationPageChangePhoneNumberText,
@@ -139,12 +145,17 @@ class _VerificationPageState extends State<VerificationPage> {
                         smsCode: smsCode,
                       );
 
-                      await authRepository.signInWithCredential(cred);
+                      final authResult =
+                          await authRepository.signInWithCredential(cred);
 
-                      if (context.mounted) {
-                        await context.router.push(
-                          const HomeRoute(),
-                        );
+                      if (authResult.user != null) {
+                        if (context.mounted) {
+                          await context.router.push(
+                            const HomeRoute(),
+                          );
+                        }
+                      } else {
+                        log('Authentication failed');
                       }
                     } catch (e) {
                       log(e.toString());
@@ -159,7 +170,19 @@ class _VerificationPageState extends State<VerificationPage> {
 
               // Resend Code Button
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  authRepository.resendCode(
+                    phoneNumber: widget.phoneNumber,
+                    codeSent: (verificationId, forceResendingToken) {
+                      context.read<ResendCodeBloc>().add(
+                            ResendCodeUpdated(verificationId),
+                          );
+                    },
+                    verificationFailed: (error) {
+                      log('Verification failed: ${error.message}');
+                    },
+                  );
+                },
                 child: Text(
                   context.localization.verificationPageResendCodeText,
                   style: VerificationPageTextStyles.resendCodeTextStyle,

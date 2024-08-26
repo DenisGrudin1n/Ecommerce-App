@@ -2,6 +2,7 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/theme.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/login/bloc/enter_phone_page/phone_input_bloc/phone_input_bloc.dart';
+import 'package:ecommerce_app/src/features/login/bloc/verification_page/resend_code/resend_code_bloc.dart';
 import 'package:ecommerce_app/src/features/login/bloc/verification_page/verification_code_input_bloc/verification_code_input_bloc.dart';
 import 'package:ecommerce_app/src/features/login/data/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,9 @@ class App extends StatelessWidget {
           ),
           BlocProvider(
             create: (_) => VerificationCodeBloc(),
+          ),
+          BlocProvider(
+            create: (_) => ResendCodeBloc(),
           ),
         ],
         child: MaterialApp.router(

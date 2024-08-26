@@ -122,7 +122,11 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
 
               // Skip Button
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.router.push(
+                    const HomeRoute(),
+                  );
+                },
                 child: Text(
                   context.localization.enterPhonePageSkipText,
                   style: EnterPhonePageTextStyles.skipTextStyle,
