@@ -15,5 +15,7 @@
     "verificationPagePleaseEnterCodeText": "Please enter Code sent to",
     "verificationPageChangePhoneNumberText": "Change Phone Number",
     "verificationPageSendVerificationCodeText": "Send Verification Code",
-    "verificationPageResendCodeText": "Resend Code"
+    "verificationPageResendCodeText": "Resend Code",
+    "homePageMyText": "My",
+    "homePageShopText": "Shop"
 }

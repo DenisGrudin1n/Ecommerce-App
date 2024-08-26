@@ -60,15 +60,18 @@ class AuthRepository {
       );
     } else {
       log('Verification ID is null, cannot resend code.');
-      verificationFailed(FirebaseAuthException(
-        code: 'verification-id-null',
-        message: 'Verification ID is null',
-      ));
+      verificationFailed(
+        FirebaseAuthException(
+          code: 'verification-id-null',
+          message: 'Verification ID is null',
+        ),
+      );
     }
   }
 
   Future<UserCredential> signInWithCredential(
-      PhoneAuthCredential credential) async {
+    PhoneAuthCredential credential,
+  ) async {
     try {
       final userCredential =
           await _firebaseAuth.signInWithCredential(credential);
