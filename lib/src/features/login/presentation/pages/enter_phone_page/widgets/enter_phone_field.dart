@@ -1,14 +1,14 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/text_styles/enter_phone_page_text_styles.dart';
-import 'package:ecommerce_app/src/features/login/bloc/enter_phone_page/phone_input_bloc/phone_input_bloc.dart';
+import 'package:ecommerce_app/core/theme/text_styles/text_styles.dart';
+import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/bloc/enter_phone_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PhoneInputField extends StatelessWidget {
-  const PhoneInputField({super.key});
+class EnterPhoneField extends StatelessWidget {
+  const EnterPhoneField({super.key});
 
   void showPicker(BuildContext context) {
     showCountryPicker(
@@ -30,19 +30,19 @@ class PhoneInputField extends StatelessWidget {
         ),
       ),
       onSelect: (country) {
-        BlocProvider.of<PhoneInputBloc>(context).add(CountryChanged(country));
+        BlocProvider.of<EnterPhoneBloc>(context).add(CountryChanged(country));
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PhoneInputBloc, PhoneInputState>(
+    return BlocBuilder<EnterPhoneBloc, EnterPhoneState>(
       builder: (context, state) {
-        final country = state is PhoneInputUpdated
+        final country = state is EnterPhoneUpdated
             ? state.country
             : CountryParser.parseCountryCode('UA');
-        final phoneNumber = state is PhoneInputUpdated ? state.phoneNumber : '';
+        final phoneNumber = state is EnterPhoneUpdated ? state.phoneNumber : '';
         final border = OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
@@ -113,7 +113,7 @@ class PhoneInputField extends StatelessWidget {
                     LengthLimitingTextInputFormatter(9),
                   ],
                   onChanged: (value) {
-                    BlocProvider.of<PhoneInputBloc>(context)
+                    BlocProvider.of<EnterPhoneBloc>(context)
                         .add(PhoneNumberChanged(value));
                   },
                 ),

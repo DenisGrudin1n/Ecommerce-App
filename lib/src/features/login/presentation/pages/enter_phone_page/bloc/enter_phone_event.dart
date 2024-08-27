@@ -1,11 +1,11 @@
-part of 'phone_input_bloc.dart';
+part of 'enter_phone_bloc.dart';
 
-abstract class PhoneInputEvent extends Equatable {
+abstract class EnterPhoneEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class PhoneNumberChanged extends PhoneInputEvent {
+class PhoneNumberChanged extends EnterPhoneEvent {
   PhoneNumberChanged(this.phoneNumber);
   final String phoneNumber;
 
@@ -13,7 +13,7 @@ class PhoneNumberChanged extends PhoneInputEvent {
   List<Object> get props => [phoneNumber];
 }
 
-class CountryChanged extends PhoneInputEvent {
+class CountryChanged extends EnterPhoneEvent {
   CountryChanged(this.country);
   final Country country;
 

@@ -1,10 +1,9 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/theme.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/login/bloc/enter_phone_page/phone_input_bloc/phone_input_bloc.dart';
-import 'package:ecommerce_app/src/features/login/bloc/verification_page/resend_code/resend_code_bloc.dart';
-import 'package:ecommerce_app/src/features/login/bloc/verification_page/verification_code_input_bloc/verification_code_input_bloc.dart';
 import 'package:ecommerce_app/src/features/login/data/repositories/auth_repository.dart';
+import 'package:ecommerce_app/src/features/login/data/repositories/firebase_auth_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,29 +17,21 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
-          create: (_) => AuthRepository(),
+          create: (_) => FirebaseAuthRepository(FirebaseAuth.instance),
+        ),
+        RepositoryProvider(
+          create: (context) => AuthRepository(
+            context.read<FirebaseAuthRepository>(),
+          ),
         ),
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) => PhoneInputBloc(),
-          ),
-          BlocProvider(
-            create: (_) => VerificationCodeBloc(),
-          ),
-          BlocProvider(
-            create: (_) => ResendCodeBloc(),
-          ),
-        ],
-        child: MaterialApp.router(
-          title: 'Ecommerce App',
-          theme: AppTheme.themeData,
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          routerConfig: appRouter.config(),
-        ),
+      child: MaterialApp.router(
+        title: 'Ecommerce App',
+        theme: AppTheme.themeData,
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        routerConfig: appRouter.config(),
       ),
     );
   }

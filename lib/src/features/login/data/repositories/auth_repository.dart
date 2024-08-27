@@ -1,84 +1,62 @@
 import 'dart:developer';
+
+import 'package:ecommerce_app/src/features/login/data/repositories/firebase_auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepository {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  String? _verificationId;
+  AuthRepository(this._firebaseAuthRepository);
+  final FirebaseAuthRepository _firebaseAuthRepository;
   int? _forceResendingToken;
 
   Future<void> verifyPhoneNumber({
     required String phoneNumber,
-    required void Function(PhoneAuthCredential) verificationCompleted,
-    required void Function(FirebaseAuthException) verificationFailed,
     required void Function(String verificationId, int? forceResendingToken)
         codeSent,
     required void Function(String verificationId) codeAutoRetrievalTimeout,
-    int? forceResendingToken,
+    required void Function(String message) verificationFailed,
+    required void Function() verificationCompleted,
   }) async {
-    try {
-      await _firebaseAuth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        verificationCompleted: verificationCompleted,
-        verificationFailed: verificationFailed,
-        codeSent: (verificationId, forceResendingToken) {
-          _verificationId = verificationId;
-          _forceResendingToken = forceResendingToken;
-          codeSent(verificationId, forceResendingToken);
-        },
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
-        forceResendingToken: forceResendingToken,
-      );
-    } catch (e) {
-      log(e.toString());
-    }
+    await _firebaseAuthRepository.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      codeSent: (verificationId, forceResendingToken) {
+        _forceResendingToken = forceResendingToken;
+        codeSent(verificationId, forceResendingToken);
+      },
+      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+      verificationFailed: verificationFailed,
+      verificationCompleted: verificationCompleted,
+      forceResendingToken: _forceResendingToken,
+    );
   }
 
   void resendCode({
     required String phoneNumber,
     required void Function(String verificationId, int? forceResendingToken)
         codeSent,
-    required void Function(FirebaseAuthException) verificationFailed,
+    required void Function(String message) verificationFailed,
   }) {
-    if (_verificationId != null) {
+    if (_forceResendingToken != null) {
       log('Resending code to $phoneNumber with forceResendingToken $_forceResendingToken');
       verifyPhoneNumber(
         phoneNumber: phoneNumber,
-        verificationCompleted: (credential) {},
-        verificationFailed: (e) {
-          log('Verification failed during resend: ${e.message}');
-          verificationFailed(e);
-        },
-        codeSent: (verificationId, forceResendingToken) {
-          _verificationId = verificationId;
-          _forceResendingToken = forceResendingToken;
-          log('New verification ID received: $verificationId');
-          codeSent(verificationId, forceResendingToken);
-        },
+        codeSent: codeSent,
         codeAutoRetrievalTimeout: (verificationId) {},
-        forceResendingToken: _forceResendingToken,
+        verificationFailed: verificationFailed,
+        verificationCompleted: () {},
       );
     } else {
-      log('Verification ID is null, cannot resend code.');
-      verificationFailed(
-        FirebaseAuthException(
-          code: 'verification-id-null',
-          message: 'Verification ID is null',
-        ),
-      );
+      log('Force resending token is null, cannot resend code.');
+      verificationFailed('Force resending token is null');
     }
   }
 
-  Future<UserCredential> signInWithCredential(
-    PhoneAuthCredential credential,
+  Future<UserCredential?> signInWithCredential(
+    String verificationId,
+    String smsCode,
   ) async {
-    try {
-      final userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
-      return userCredential;
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
+    return _firebaseAuthRepository.signInWithCredential(
+      verificationId,
+      smsCode,
+    );
   }
 }
