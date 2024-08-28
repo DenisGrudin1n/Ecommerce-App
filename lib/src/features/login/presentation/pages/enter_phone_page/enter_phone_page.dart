@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/text_styles/text_styles.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/core/widgets/purple_figure.dart';
 import 'package:ecommerce_app/core/widgets/send_verification_code_button.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
@@ -95,9 +95,7 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
                           BlocProvider.of<EnterPhoneBloc>(context).add(
                             VerifyPhoneNumber(
                               verificationCompleted: () {},
-                              verificationFailed: (error) {
-                                log(error);
-                              },
+                              verificationFailed: log,
                               codeSent: (verificationId, forceResendingToken) {
                                 final currentState = context
                                     .read<EnterPhoneBloc>()

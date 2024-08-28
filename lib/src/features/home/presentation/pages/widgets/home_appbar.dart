@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
-import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
-import 'package:ecommerce_app/core/theme/text_styles/text_styles.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class HomeAppbar extends StatelessWidget {
@@ -22,10 +22,7 @@ class HomeAppbar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: AppColors.whiteColor,
-              ),
+              icon: AppIcons.openHomeDrawerIcon,
               onPressed: () {},
             ),
             Row(
@@ -42,10 +39,7 @@ class HomeAppbar extends StatelessWidget {
               ],
             ),
             IconButton(
-              icon: const Icon(
-                Icons.notifications_none_outlined,
-                color: AppColors.whiteColor,
-              ),
+              icon: AppIcons.notificationsIcon,
               onPressed: () {},
             ),
           ],

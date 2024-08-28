@@ -48,51 +48,6 @@ class GetStartedRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [VerificationPage]
-class VerificationRoute extends PageRouteInfo<VerificationRouteArgs> {
-  VerificationRoute({
-    required String phoneNumber,
-    required String phoneCode,
-    required String verificationId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          VerificationRoute.name,
-          args: VerificationRouteArgs(
-            phoneNumber: phoneNumber,
-            phoneCode: phoneCode,
-            verificationId: verificationId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'VerificationRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<VerificationRouteArgs>();
-      return VerificationPage(
-        phoneNumber: args.phoneNumber,
-        phoneCode: args.phoneCode,
-        verificationId: args.verificationId,
-      );
-    },
-  );
-}
-
-class VerificationRouteArgs {
-  final String phoneNumber;
-  final String phoneCode;
-  final String verificationId;
-
-  const VerificationRouteArgs({
-    required this.phoneNumber,
-    required this.phoneCode,
-    required this.verificationId,
-  });
-}
-
-/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
@@ -109,4 +64,62 @@ class HomeRoute extends PageRouteInfo<void> {
       return const HomePage();
     },
   );
+}
+
+/// generated route for
+/// [VerificationPage]
+class VerificationRoute extends PageRouteInfo<VerificationRouteArgs> {
+  VerificationRoute({
+    required String phoneNumber,
+    required String phoneCode,
+    required String verificationId,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          VerificationRoute.name,
+          args: VerificationRouteArgs(
+            phoneNumber: phoneNumber,
+            phoneCode: phoneCode,
+            verificationId: verificationId,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'VerificationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<VerificationRouteArgs>();
+      return VerificationPage(
+        phoneNumber: args.phoneNumber,
+        phoneCode: args.phoneCode,
+        verificationId: args.verificationId,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class VerificationRouteArgs {
+  const VerificationRouteArgs({
+    required this.phoneNumber,
+    required this.phoneCode,
+    required this.verificationId,
+    this.key,
+  });
+
+  final String phoneNumber;
+
+  final String phoneCode;
+
+  final String verificationId;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'VerificationRouteArgs{phoneNumber: $phoneNumber, phoneCode: $phoneCode, verificationId: $verificationId, key: $key}';
+  }
 }

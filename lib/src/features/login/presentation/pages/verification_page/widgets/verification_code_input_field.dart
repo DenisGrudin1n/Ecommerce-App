@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/text_styles/text_styles.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/bloc/verification_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

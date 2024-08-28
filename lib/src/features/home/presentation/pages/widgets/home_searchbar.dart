@@ -1,4 +1,7 @@
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class HomeSearchBar extends StatelessWidget {
@@ -25,13 +28,13 @@ class HomeSearchBar extends StatelessWidget {
               color: AppColors.whiteColor,
               borderRadius: BorderRadius.circular(24),
             ),
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.search, color: AppColors.greyColor),
-                SizedBox(width: 10),
+                AppIcons.searchIcon,
+                const SizedBox(width: 10),
                 Text(
-                  'What are you looking for?',
-                  style: TextStyle(color: AppColors.greyColor),
+                  context.localization.homePageWhatAreYouLookingForText,
+                  style: HomePageTextStyles.homeWhatAreYouLookingforTextStyle,
                 ),
               ],
             ),

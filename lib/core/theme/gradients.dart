@@ -9,4 +9,11 @@ class AppGradients {
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
   );
+
+  static LinearGradient fashionSaleSectionGradient = LinearGradient(
+    colors: [
+      const Color(0x0034283e).withOpacity(1),
+      const Color(0x001d2332).withOpacity(0.2),
+    ],
+  );
 }

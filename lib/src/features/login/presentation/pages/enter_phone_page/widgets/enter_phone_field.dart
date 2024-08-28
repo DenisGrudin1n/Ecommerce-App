@@ -1,7 +1,8 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/text_styles/text_styles.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/bloc/enter_phone_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -84,10 +85,7 @@ class EnterPhoneField extends StatelessWidget {
                             const SizedBox(
                               width: 5,
                             ),
-                            const Icon(
-                              Icons.keyboard_arrow_down,
-                              size: 20,
-                            ),
+                            AppIcons.selectCountryIcon,
                             const SizedBox(
                               width: 10,
                             ),

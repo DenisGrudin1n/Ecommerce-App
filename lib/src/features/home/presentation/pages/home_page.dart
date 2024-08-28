@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/widgets/fashion_sale_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/widgets/home_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/widgets/home_searchbar.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            const SizedBox(height: 20),
-            _buildBanner(),
+            const FashionSaleSection(),
             const SizedBox(height: 20),
             _buildCatalogue(),
             const SizedBox(height: 20),
@@ -33,27 +33,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
-    );
-  }
-
-  Widget _buildBanner() {
-    return Container(
-      width: double.infinity,
-      height: 150,
-      decoration: BoxDecoration(
-        color: AppColors.darkGreyColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: const Center(
-        child: Text(
-          'Fashion Sale',
-          style: TextStyle(
-            color: AppColors.whiteColor,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
     );
   }
 

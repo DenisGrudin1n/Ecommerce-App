@@ -17,5 +17,8 @@
     "verificationPageSendVerificationCodeText": "Send Verification Code",
     "verificationPageResendCodeText": "Resend Code",
     "homePageMyText": "My",
-    "homePageShopText": "Shop"
+    "homePageShopText": "Shop",
+    "homePageWhatAreYouLookingForText": "What are you looking for?",
+    "homePageFashionSaleText": "Fashion Sale",
+    "homePageSeeMoreText": "See More"
 }

@@ -9,6 +9,23 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsFontsGen {
+  const $AssetsFontsGen();
+
+  /// File path: assets/fonts/SFPRODISPLAYBOLD.OTF
+  String get sfprodisplaybold => 'assets/fonts/SFPRODISPLAYBOLD.OTF';
+
+  /// File path: assets/fonts/SFProText-Bold.ttf
+  String get sFProTextBold => 'assets/fonts/SFProText-Bold.ttf';
+
+  /// File path: assets/fonts/SFProText-Regular.ttf
+  String get sFProTextRegular => 'assets/fonts/SFProText-Regular.ttf';
+
+  /// List of all assets
+  List<String> get values =>
+      [sfprodisplaybold, sFProTextBold, sFProTextRegular];
+}
+
 class $AssetsGifsGen {
   const $AssetsGifsGen();
 
@@ -20,10 +37,23 @@ class $AssetsGifsGen {
   List<AssetGenImage> get values => [getStartedGirl];
 }
 
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/fashionSectionBg.jpg
+  AssetGenImage get fashionSectionBg =>
+      const AssetGenImage('assets/images/fashionSectionBg.jpg');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [fashionSectionBg];
+}
+
 class Assets {
   Assets._();
 
+  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsGifsGen gifs = $AssetsGifsGen();
+  static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 
 class AssetGenImage {

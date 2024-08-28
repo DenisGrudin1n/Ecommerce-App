@@ -4,14 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class GetStartedPageTextStyles {
   static TextStyle myTextStyle = GoogleFonts.montserrat(
-    fontSize: 32,
+    fontSize: 31,
     fontWeight: FontWeight.w800,
     color: AppColors.yellowColor,
   );
 
   static TextStyle shopTextStyle = GoogleFonts.montserrat(
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
+    fontSize: 31,
+    fontWeight: FontWeight.w800,
     color: AppColors.whiteColor,
   );
 
@@ -36,6 +36,7 @@ class GetStartedPageTextStyles {
 class EnterPhonePageTextStyles {
   static TextStyle whatIsYourPhoneNumberTextStyle = const TextStyle(
     fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
     fontSize: 25,
     color: AppColors.whiteColor,
     height: 31 / 25,
@@ -44,6 +45,7 @@ class EnterPhonePageTextStyles {
 
   static TextStyle enterPhoneTextStyle = const TextStyle(
     fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
     fontSize: 17,
     color: AppColors.darkGreyColor,
     height: 22 / 17,
@@ -60,6 +62,7 @@ class EnterPhonePageTextStyles {
 
   static TextStyle hintPhoneNumsTextStyle = const TextStyle(
     fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
     fontSize: 19,
     color: AppColors.lightGreyColor,
     height: 23 / 19,
@@ -67,6 +70,7 @@ class EnterPhonePageTextStyles {
   );
   static TextStyle enterPhoneNumsTextStyle = const TextStyle(
     fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
     fontSize: 19,
     color: AppColors.darkGreyColor,
     height: 23 / 19,
@@ -75,6 +79,7 @@ class EnterPhonePageTextStyles {
 
   static TextStyle sendVerificationCodeTextStyle = const TextStyle(
     fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
     fontSize: 17,
     color: AppColors.whiteColor,
     height: 22 / 17,
@@ -83,6 +88,7 @@ class EnterPhonePageTextStyles {
 
   static TextStyle skipTextStyle = const TextStyle(
     fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
     fontSize: 17,
     color: AppColors.greyColor,
     height: 22 / 17,
@@ -93,6 +99,7 @@ class EnterPhonePageTextStyles {
 class VerificationPageTextStyles {
   static TextStyle verificationCodeTextStyle = const TextStyle(
     fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
     fontSize: 25,
     color: AppColors.whiteColor,
     height: 31 / 25,
@@ -101,6 +108,7 @@ class VerificationPageTextStyles {
 
   static TextStyle pleaseEnterCodeTextStyle = const TextStyle(
     fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
     fontSize: 17,
     color: AppColors.darkGreyColor,
     height: 22 / 17,
@@ -109,7 +117,7 @@ class VerificationPageTextStyles {
 
   static TextStyle phoneNumberTextStyle = const TextStyle(
     fontFamily: 'SFProText',
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w700,
     fontSize: 17,
     color: AppColors.darkGreyColor,
     height: 22 / 17,
@@ -118,6 +126,7 @@ class VerificationPageTextStyles {
 
   static TextStyle changePhoneNumberTextStyle = const TextStyle(
     fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
     fontSize: 12,
     color: AppColors.darkColor,
     height: 16 / 12,
@@ -127,6 +136,7 @@ class VerificationPageTextStyles {
 
   static TextStyle enterVerificationCodeTextStyle = const TextStyle(
     fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
     fontSize: 25,
     color: AppColors.darkGreyColor,
     height: 31 / 25,
@@ -135,6 +145,7 @@ class VerificationPageTextStyles {
 
   static TextStyle sendVerificationCodeTextStyle = const TextStyle(
     fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
     fontSize: 17,
     color: AppColors.whiteColor,
     height: 22 / 17,
@@ -143,6 +154,7 @@ class VerificationPageTextStyles {
 
   static TextStyle resendCodeTextStyle = const TextStyle(
     fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
     fontSize: 17,
     color: AppColors.greyColor,
     height: 22 / 17,
@@ -155,11 +167,42 @@ class HomePageTextStyles {
     fontSize: 18,
     fontWeight: FontWeight.w800,
     color: AppColors.yellowColor,
+    height: 24 / 18,
+    letterSpacing: 2,
   );
 
   static TextStyle homeShopTextStyle = GoogleFonts.montserrat(
     fontSize: 18,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w700,
     color: AppColors.whiteColor,
+    height: 24 / 18,
+    letterSpacing: 2,
+  );
+
+  static TextStyle homeWhatAreYouLookingforTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+    color: AppColors.greyColor,
+    height: 22 / 14,
+    letterSpacing: 0,
+  );
+
+  static TextStyle homeFashionSaleTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
+    fontSize: 25,
+    color: AppColors.whiteColor,
+    height: 31 / 25,
+    letterSpacing: 0.35,
+  );
+
+  static TextStyle homeSeeMoreTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w700,
+    fontSize: 12,
+    color: AppColors.yellowColor,
+    height: 16 / 12,
+    letterSpacing: 0,
   );
 }
