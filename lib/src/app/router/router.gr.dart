@@ -46,3 +46,67 @@ class GetStartedRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [VerificationPage]
+class VerificationRoute extends PageRouteInfo<VerificationRouteArgs> {
+  VerificationRoute({
+    required String phoneNumber,
+    required String phoneCode,
+    required String verificationId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          VerificationRoute.name,
+          args: VerificationRouteArgs(
+            phoneNumber: phoneNumber,
+            phoneCode: phoneCode,
+            verificationId: verificationId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'VerificationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<VerificationRouteArgs>();
+      return VerificationPage(
+        phoneNumber: args.phoneNumber,
+        phoneCode: args.phoneCode,
+        verificationId: args.verificationId,
+      );
+    },
+  );
+}
+
+class VerificationRouteArgs {
+  final String phoneNumber;
+  final String phoneCode;
+  final String verificationId;
+
+  const VerificationRouteArgs({
+    required this.phoneNumber,
+    required this.phoneCode,
+    required this.verificationId,
+  });
+}
+
+/// generated route for
+/// [HomePage]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+      : super(
+          HomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const HomePage();
+    },
+  );
+}

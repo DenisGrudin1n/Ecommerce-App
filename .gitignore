@@ -53,9 +53,6 @@ unlinked_spec.ds
 **/android/app/profile
 **/android/app/release
 *.jks
-**/android/app/src/development/google-services.json
-**/android/app/src/staging/google-services.json
-**/android/app/src/production/google-services.json
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -113,6 +110,3 @@ app.*.map.json
 !.idea/codeStyles/
 !.idea/dictionaries/
 !.idea/runConfigurations/
-
-#lib
-lib/gen/assets.gen.dart

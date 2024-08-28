@@ -44,8 +44,8 @@ android {
     }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/java'
-        main.kotlin.srcDirs += 'src/main/kotlin'
+       main.java.srcDirs += 'src/main/java'
+       main.kotlin.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
@@ -53,7 +53,7 @@ android {
         applicationId "com.example.ecommerce_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -113,7 +113,5 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.10"
-    implementation platform('com.google.firebase:firebase-bom:33.1.2')
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.20"
 }
