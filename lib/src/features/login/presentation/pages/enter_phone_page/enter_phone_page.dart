@@ -33,7 +33,7 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EnterPhoneBloc(),
+      create: (context) => EnterPhoneBloc(authRepository: authRepository),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -92,20 +92,20 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: SendVerificationCodeButton(
                         onPressed: () {
-                          final phoneState =
-                              BlocProvider.of<EnterPhoneBloc>(context).state;
-                          if (phoneState is EnterPhoneUpdated) {
-                            final phoneNumber = phoneState.phoneNumber;
-                            final phoneCode = phoneState.country.phoneCode;
-                            final fullPhoneNumber = '+$phoneCode$phoneNumber';
-                            log(fullPhoneNumber);
-                            log(phoneNumber);
-
-                            authRepository.verifyPhoneNumber(
-                              phoneNumber: fullPhoneNumber,
+                          BlocProvider.of<EnterPhoneBloc>(context).add(
+                            VerifyPhoneNumber(
                               verificationCompleted: () {},
-                              verificationFailed: log,
+                              verificationFailed: (error) {
+                                log(error);
+                              },
                               codeSent: (verificationId, forceResendingToken) {
+                                final currentState = context
+                                    .read<EnterPhoneBloc>()
+                                    .state as EnterPhoneUpdated;
+                                final phoneNumber = currentState.phoneNumber;
+                                final phoneCode =
+                                    currentState.country.phoneCode;
+
                                 context.router.push(
                                   VerificationRoute(
                                     phoneNumber: phoneNumber,
@@ -117,10 +117,8 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
                               codeAutoRetrievalTimeout: (verificationId) {
                                 log('Auto Retrieval Timeout');
                               },
-                            );
-                          } else {
-                            log('PhoneInputBloc state is not PhoneInputUpdated');
-                          }
+                            ),
+                          );
                         },
                       ),
                     ),

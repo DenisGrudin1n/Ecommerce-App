@@ -30,7 +30,7 @@ class EnterPhoneField extends StatelessWidget {
         ),
       ),
       onSelect: (country) {
-        BlocProvider.of<EnterPhoneBloc>(context).add(CountryChanged(country));
+        context.read<EnterPhoneBloc>().add(CountryChanged(country));
       },
     );
   }
@@ -39,10 +39,6 @@ class EnterPhoneField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<EnterPhoneBloc, EnterPhoneState>(
       builder: (context, state) {
-        final country = state is EnterPhoneUpdated
-            ? state.country
-            : CountryParser.parseCountryCode('UA');
-        final phoneNumber = state is EnterPhoneUpdated ? state.phoneNumber : '';
         final border = OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
@@ -61,7 +57,7 @@ class EnterPhoneField extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
-                  initialValue: phoneNumber,
+                  initialValue: state.phoneNumber,
                   style: EnterPhonePageTextStyles.enterPhoneNumsTextStyle,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -82,7 +78,7 @@ class EnterPhoneField extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              country.flagEmoji,
+                              state.country.flagEmoji,
                               style: const TextStyle(fontSize: 24),
                             ),
                             const SizedBox(
@@ -96,7 +92,7 @@ class EnterPhoneField extends StatelessWidget {
                               width: 10,
                             ),
                             Text(
-                              '+ ${country.phoneCode}',
+                              '+ ${state.country.phoneCode}',
                               style: EnterPhonePageTextStyles
                                   .enterPhoneNumsTextStyle,
                             ),
@@ -113,7 +109,8 @@ class EnterPhoneField extends StatelessWidget {
                     LengthLimitingTextInputFormatter(9),
                   ],
                   onChanged: (value) {
-                    BlocProvider.of<EnterPhoneBloc>(context)
+                    context
+                        .read<EnterPhoneBloc>()
                         .add(PhoneNumberChanged(value));
                   },
                 ),

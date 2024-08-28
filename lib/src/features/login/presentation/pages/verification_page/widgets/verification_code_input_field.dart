@@ -1,12 +1,17 @@
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles/text_styles.dart';
-import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/bloc/verification_code_input_bloc/verification_code_input_bloc.dart';
+import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/bloc/verification_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerificationCodeInputField extends StatelessWidget {
-  const VerificationCodeInputField({super.key});
+  const VerificationCodeInputField({
+    required this.verificationId,
+    super.key,
+  });
+
+  final String verificationId;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +29,13 @@ class VerificationCodeInputField extends StatelessWidget {
       ),
       animationDuration: const Duration(milliseconds: 300),
       backgroundColor: Colors.transparent,
-      onChanged: (value) {
-        BlocProvider.of<VerificationCodeBloc>(context).add(CodeChanged(value));
+      onChanged: (code) {
+        BlocProvider.of<VerificationBloc>(context).add(
+          VerificationCodeChanged(
+            verificationId,
+            code,
+          ),
+        );
       },
       textStyle: VerificationPageTextStyles.enterVerificationCodeTextStyle,
     );

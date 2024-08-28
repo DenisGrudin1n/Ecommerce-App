@@ -20,3 +20,19 @@ class CountryChanged extends EnterPhoneEvent {
   @override
   List<Object> get props => [country];
 }
+
+class VerifyPhoneNumber extends EnterPhoneEvent {
+  VerifyPhoneNumber({
+    required this.verificationCompleted,
+    required this.verificationFailed,
+    required this.codeSent,
+    required this.codeAutoRetrievalTimeout,
+  });
+  final void Function() verificationCompleted;
+  final void Function(String) verificationFailed;
+  final void Function(String, int?) codeSent;
+  final void Function(String) codeAutoRetrievalTimeout;
+
+  @override
+  List<Object> get props => [];
+}

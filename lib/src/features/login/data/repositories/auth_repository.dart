@@ -29,15 +29,15 @@ class AuthRepository {
     );
   }
 
-  void resendCode({
+  Future<void> resendCode({
     required String phoneNumber,
     required void Function(String verificationId, int? forceResendingToken)
         codeSent,
     required void Function(String message) verificationFailed,
-  }) {
+  }) async {
     if (_forceResendingToken != null) {
       log('Resending code to $phoneNumber with forceResendingToken $_forceResendingToken');
-      verifyPhoneNumber(
+      await verifyPhoneNumber(
         phoneNumber: phoneNumber,
         codeSent: codeSent,
         codeAutoRetrievalTimeout: (verificationId) {},
