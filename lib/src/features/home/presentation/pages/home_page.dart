@@ -63,10 +63,7 @@ class HomePage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildCategoryItem(),
-            _buildCategoryItem(),
-            _buildCategoryItem(),
-            _buildCategoryItem(),
+            for (int i = 0; i < 4; i++) _buildCategoryItem(),
           ],
         ),
       ],
@@ -78,7 +75,7 @@ class HomePage extends StatelessWidget {
       width: 70,
       height: 70,
       decoration: BoxDecoration(
-        color: AppColors.lightGreyColor,
+        color: AppColors.greyColor,
         borderRadius: BorderRadius.circular(12),
       ),
     );
