@@ -20,5 +20,11 @@
     "homePageShopText": "Shop",
     "homePageWhatAreYouLookingForText": "What are you looking for?",
     "homePageFashionSaleText": "Fashion Sale",
-    "homePageSeeMoreText": "See More"
+    "homePageSeeMoreText": "See More",
+    "bottomNavBarHomeText": "Home",
+    "bottomNavBarCatalogueText": "Catalogue",
+    "bottomNavBarFavoriteText": "Favorite",
+    "bottomNavBarProfileText": "Profile",
+    "bottomNavBarShoppingCartPriceText": "$239.98",
+    "bottomNavBarShoppingCartItemText": "2 items"
 }

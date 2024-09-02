@@ -1,165 +1,186 @@
+import 'package:ecommerce_app/core/constants/keys.dart';
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class HomeBottomNavigationBar extends StatefulWidget {
   const HomeBottomNavigationBar({super.key});
 
   @override
-  _HomeBottomNavigationBarState createState() =>
+  State<HomeBottomNavigationBar> createState() =>
       _HomeBottomNavigationBarState();
 }
 
 class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
   int _selectedIndex = 0;
-  bool _isCartExpanded = false;
+  bool _isCartClosed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: (index) {
-            setState(() {
-              _selectedIndex = index;
-              _isCartExpanded = false;
-            });
-          },
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.transparent,
-          unselectedItemColor: AppColors.greyColor,
-          items: [
-            BottomNavigationBarItem(
-              icon: buildIcon(Icons.home, 'Home', _selectedIndex == 0),
-              label: '',
+    return Container(
+      height: 105,
+      color: AppColors.transparentColor,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Container(
+            height: 85,
+            color: AppColors.whiteColor,
+            padding: const EdgeInsets.only(bottom: 25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    buildIcon(
+                      BottomNavBarKeys.home,
+                      context.localization.bottomNavBarHomeText,
+                      0,
+                    ),
+                    buildIcon(
+                      BottomNavBarKeys.catalogue,
+                      context.localization.bottomNavBarCatalogueText,
+                      1,
+                    ),
+                    buildIcon(
+                      BottomNavBarKeys.favorite,
+                      context.localization.bottomNavBarFavoriteText,
+                      2,
+                    ),
+                    buildIcon(
+                      BottomNavBarKeys.profile,
+                      context.localization.bottomNavBarProfileText,
+                      3,
+                    ),
+                    SizedBox(width: _isCartClosed ? 50 : 110),
+                  ],
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon:
-                  buildIcon(Icons.grid_view, 'Catalogue', _selectedIndex == 1),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: buildIcon(Icons.favorite, 'Favorite', _selectedIndex == 2),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: buildIcon(Icons.person, 'Profile', _selectedIndex == 3),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: buildIcon(Icons.shopping_cart, 'Cart', _selectedIndex == 4),
-              label: '',
-            ),
-          ],
-        ),
-        if (_isCartExpanded)
+          ),
           Positioned(
             right: 0,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _isCartExpanded = !_isCartExpanded;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: AppGradients.purpleGradient,
-                    borderRadius: BorderRadius.circular(20),
+            bottom: 45,
+            child: buildCartButton(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildIcon(String iconKey, String label, int index) {
+    final isSelected = _selectedIndex == index;
+    final iconWidget = isSelected
+        ? getActiveBottomNavBarIcon(iconKey)
+        : getInactiveBottomNavBarIcon(iconKey);
+
+    final labelWidget = isSelected
+        ? GradientText(
+            text: label,
+            style: HomePageTextStyles.bottomNavBarActiveIconTextTextStyle,
+            gradient: AppGradients.purpleGradient,
+          )
+        : Text(
+            label,
+            style: HomePageTextStyles.bottomNavBarNotActiveIconTextTextStyle,
+          );
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          iconWidget,
+          labelWidget,
+        ],
+      ),
+    );
+  }
+
+  Widget buildCartButton() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _isCartClosed = !_isCartClosed;
+        });
+      },
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          gradient: AppGradients.purpleGradient,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 22,
+          vertical: 10,
+        ),
+        child: _isCartClosed
+            ? AppIcons.shoppingCartIcon
+            : Row(
+                children: [
+                  AppIcons.shoppingCartIcon,
+                  const SizedBox(
+                    width: 4,
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 19,
-                    vertical: 14,
-                  ),
-                  child: const Row(
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.shopping_cart_outlined, color: Colors.white),
-                      SizedBox(width: 4),
                       Text(
-                        '\$239.98\n2 items',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        context.localization.bottomNavBarShoppingCartPriceText,
+                        style: HomePageTextStyles
+                            .bottomNavBarShoppingCartPriceTextStyle,
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        context.localization.bottomNavBarShoppingCartItemText,
+                        style: HomePageTextStyles
+                            .bottomNavBarShoppingCartItemCountTextStyle,
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
-            ),
-          )
-        else
-          Positioned(
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _isCartExpanded = !_isCartExpanded;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: AppGradients.purpleGradient,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 19,
-                    vertical: 14,
-                  ),
-                  child: const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          )
-      ],
+      ),
     );
   }
 
-  Widget buildIcon(IconData icon, String label, bool isSelected) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (isSelected)
-          ShaderMask(
-            shaderCallback: (bounds) {
-              return AppGradients.purpleGradient.createShader(bounds);
-            },
-            child: Icon(icon, color: Colors.white),
-          )
-        else
-          Icon(icon, color: AppColors.greyColor),
-        if (isSelected)
-          ShaderMask(
-            shaderCallback: (bounds) {
-              return AppGradients.purpleGradient.createShader(bounds);
-            },
-            child: Text(
-              label,
-              style: const TextStyle(color: Colors.white),
-            ),
-          )
-        else
-          Text(
-            label,
-            style: const TextStyle(color: AppColors.greyColor),
-          ),
-      ],
-    );
+  static Widget getActiveBottomNavBarIcon(String key) {
+    switch (key) {
+      case BottomNavBarKeys.home:
+        return AppIcons.homeActiveIcon;
+      case BottomNavBarKeys.catalogue:
+        return AppIcons.catalogueActiveIcon;
+      case BottomNavBarKeys.favorite:
+        return AppIcons.favoriteActiveIcon;
+      case BottomNavBarKeys.profile:
+        return AppIcons.profileActiveIcon;
+      default:
+        return const SizedBox();
+    }
   }
 
-  Widget buildCartIcon() {
-    return ShaderMask(
-      shaderCallback: (bounds) {
-        return AppGradients.purpleGradient.createShader(bounds);
-      },
-      child: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
-    );
+  static Widget getInactiveBottomNavBarIcon(String key) {
+    switch (key) {
+      case BottomNavBarKeys.home:
+        return AppIcons.homeNotActiveIcon;
+      case BottomNavBarKeys.catalogue:
+        return AppIcons.catalogueNotActiveIcon;
+      case BottomNavBarKeys.favorite:
+        return AppIcons.favoriteNotActiveIcon;
+      case BottomNavBarKeys.profile:
+        return AppIcons.profileNotActiveIcon;
+      default:
+        return const SizedBox();
+    }
   }
 }

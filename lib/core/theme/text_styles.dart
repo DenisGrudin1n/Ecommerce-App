@@ -205,4 +205,34 @@ class HomePageTextStyles {
     height: 16 / 12,
     letterSpacing: 0,
   );
+
+  static TextStyle bottomNavBarNotActiveIconTextTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 10,
+    fontWeight: FontWeight.w700,
+    color: AppColors.greyColor,
+    height: 13 / 10,
+    letterSpacing: 0,
+  );
+
+  static TextStyle bottomNavBarActiveIconTextTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 10,
+    fontWeight: FontWeight.w700,
+    height: 13 / 10,
+    letterSpacing: 0,
+  );
+
+  static TextStyle bottomNavBarShoppingCartPriceTextStyle = const TextStyle(
+    color: AppColors.whiteColor,
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle bottomNavBarShoppingCartItemCountTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    color: AppColors.whiteColor,
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+  );
 }
