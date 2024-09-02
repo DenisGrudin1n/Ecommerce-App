@@ -36,7 +36,8 @@ class AuthRepository {
     required void Function(String message) verificationFailed,
   }) async {
     if (_forceResendingToken != null) {
-      log('Resending code to $phoneNumber with forceResendingToken $_forceResendingToken');
+      log('Resending code to $phoneNumber '
+          'with forceResendingToken $_forceResendingToken');
       await verifyPhoneNumber(
         phoneNumber: phoneNumber,
         codeSent: codeSent,
