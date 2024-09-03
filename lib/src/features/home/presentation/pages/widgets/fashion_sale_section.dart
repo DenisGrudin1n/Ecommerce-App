@@ -80,7 +80,7 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
             ),
           );
         } else if (state is ImageLoadFailure) {
-          return const Text('Failed to load image');
+          return Text(context.localization.errorFailedToLoadImageText);
         } else {
           return Container();
         }

@@ -81,12 +81,12 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
     final labelWidget = isSelected
         ? GradientText(
             text: label,
-            style: HomePageTextStyles.bottomNavBarActiveIconTextTextStyle,
+            style: BottomNavBarTextStyles.bottomNavBarActiveIconTextStyle,
             gradient: AppGradients.purpleGradient,
           )
         : Text(
             label,
-            style: HomePageTextStyles.bottomNavBarNotActiveIconTextTextStyle,
+            style: BottomNavBarTextStyles.bottomNavBarNotActiveIconTextStyle,
           );
 
     return GestureDetector(
@@ -135,7 +135,7 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
                     children: [
                       Text(
                         context.localization.bottomNavBarShoppingCartPriceText,
-                        style: HomePageTextStyles
+                        style: BottomNavBarTextStyles
                             .bottomNavBarShoppingCartPriceTextStyle,
                       ),
                       const SizedBox(
@@ -143,7 +143,7 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
                       ),
                       Text(
                         context.localization.bottomNavBarShoppingCartItemText,
-                        style: HomePageTextStyles
+                        style: BottomNavBarTextStyles
                             .bottomNavBarShoppingCartItemCountTextStyle,
                       ),
                     ],
@@ -155,32 +155,22 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
   }
 
   static Widget getActiveBottomNavBarIcon(String key) {
-    switch (key) {
-      case BottomNavBarKeys.home:
-        return AppIcons.homeActiveIcon;
-      case BottomNavBarKeys.catalogue:
-        return AppIcons.catalogueActiveIcon;
-      case BottomNavBarKeys.favorite:
-        return AppIcons.favoriteActiveIcon;
-      case BottomNavBarKeys.profile:
-        return AppIcons.profileActiveIcon;
-      default:
-        return const SizedBox();
-    }
+    return switch (key) {
+      BottomNavBarKeys.home => AppIcons.homeActiveIcon,
+      BottomNavBarKeys.catalogue => AppIcons.catalogueActiveIcon,
+      BottomNavBarKeys.favorite => AppIcons.favoriteActiveIcon,
+      BottomNavBarKeys.profile => AppIcons.profileActiveIcon,
+      _ => const SizedBox(),
+    };
   }
 
   static Widget getInactiveBottomNavBarIcon(String key) {
-    switch (key) {
-      case BottomNavBarKeys.home:
-        return AppIcons.homeNotActiveIcon;
-      case BottomNavBarKeys.catalogue:
-        return AppIcons.catalogueNotActiveIcon;
-      case BottomNavBarKeys.favorite:
-        return AppIcons.favoriteNotActiveIcon;
-      case BottomNavBarKeys.profile:
-        return AppIcons.profileNotActiveIcon;
-      default:
-        return const SizedBox();
-    }
+    return switch (key) {
+      BottomNavBarKeys.home => AppIcons.homeNotActiveIcon,
+      BottomNavBarKeys.catalogue => AppIcons.catalogueNotActiveIcon,
+      BottomNavBarKeys.favorite => AppIcons.favoriteNotActiveIcon,
+      BottomNavBarKeys.profile => AppIcons.profileNotActiveIcon,
+      _ => const SizedBox(),
+    };
   }
 }

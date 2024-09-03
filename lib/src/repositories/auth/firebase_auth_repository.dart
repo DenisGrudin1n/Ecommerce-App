@@ -1,13 +1,13 @@
 import 'dart:developer';
-
-import 'package:ecommerce_app/src/features/login/data/repositories/firebase_auth_repository.dart';
+import 'package:ecommerce_app/src/repositories/auth/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthRepository {
-  AuthRepository(this._firebaseAuthRepository);
-  final FirebaseAuthRepository _firebaseAuthRepository;
+class FirebaseAuthRepository implements AuthRepository {
+  FirebaseAuthRepository(this._firebaseAuth);
+  final FirebaseAuth _firebaseAuth;
   int? _forceResendingToken;
 
+  @override
   Future<void> verifyPhoneNumber({
     required String phoneNumber,
     required void Function(String verificationId, int? forceResendingToken)
@@ -16,19 +16,29 @@ class AuthRepository {
     required void Function(String message) verificationFailed,
     required void Function() verificationCompleted,
   }) async {
-    await _firebaseAuthRepository.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      codeSent: (verificationId, forceResendingToken) {
-        _forceResendingToken = forceResendingToken;
-        codeSent(verificationId, forceResendingToken);
-      },
-      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
-      verificationFailed: verificationFailed,
-      verificationCompleted: verificationCompleted,
-      forceResendingToken: _forceResendingToken,
-    );
+    try {
+      await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (credential) {
+          verificationCompleted();
+        },
+        verificationFailed: (e) {
+          verificationFailed(e.message ?? 'Verification failed');
+        },
+        codeSent: (verificationId, forceResendingToken) {
+          _forceResendingToken = forceResendingToken;
+          codeSent(verificationId, forceResendingToken);
+        },
+        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+        forceResendingToken: _forceResendingToken,
+      );
+    } catch (e) {
+      log('Verification failed with exception: $e');
+      verificationFailed(e.toString());
+    }
   }
 
+  @override
   Future<void> resendCode({
     required String phoneNumber,
     required void Function(String verificationId, int? forceResendingToken)
@@ -51,13 +61,23 @@ class AuthRepository {
     }
   }
 
+  @override
   Future<UserCredential?> signInWithCredential(
     String verificationId,
     String smsCode,
   ) async {
-    return _firebaseAuthRepository.signInWithCredential(
-      verificationId,
-      smsCode,
-    );
+    try {
+      final credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      );
+
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+      return userCredential;
+    } catch (e) {
+      log('Sign in failed with exception: $e');
+      return null;
+    }
   }
 }

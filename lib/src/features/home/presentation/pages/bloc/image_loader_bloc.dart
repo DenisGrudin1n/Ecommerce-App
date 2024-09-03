@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:ecommerce_app/src/features/home/repositories/storage_repository.dart';
+import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part 'image_loader_event.dart';
@@ -28,17 +28,6 @@ class ImageLoaderBloc extends Bloc<ImageLoaderEvent, ImageLoaderState> {
 
       if (downloadURL != null) {
         updatedImageUrls[event.imagePath] = downloadURL;
-
-        // Determine the correct collection path from the image path
-        final collectionPath = event.imagePath.split('/').take(2).join('/');
-
-        // Add URL to the correct collection
-        await storageRepository.addImageURLToCollection(
-          collectionPath,
-          'imageUrl',
-          downloadURL,
-        );
-
         emit(ImageLoaded(imageUrls: updatedImageUrls));
       } else {
         emit(ImageLoadFailure(imageUrls: updatedImageUrls));
@@ -62,13 +51,6 @@ class ImageLoaderBloc extends Bloc<ImageLoaderEvent, ImageLoaderState> {
         final downloadURL = await storageRepository.getDownloadURL(path);
         if (downloadURL != null) {
           updatedImageUrls[path] = downloadURL;
-
-          final collectionPath = path.split('/').take(2).join('/');
-          await storageRepository.addImageURLToCollection(
-            collectionPath,
-            'imageUrl',
-            downloadURL,
-          );
         }
       }).toList();
 

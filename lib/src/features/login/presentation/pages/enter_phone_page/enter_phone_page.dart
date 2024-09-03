@@ -6,34 +6,24 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/core/widgets/purple_figure.dart';
 import 'package:ecommerce_app/core/widgets/send_verification_code_button.dart';
+import 'package:ecommerce_app/core/widgets/snackbars.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/login/data/repositories/auth_repository.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/bloc/enter_phone_bloc.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/widgets/enter_phone_field.dart';
+import 'package:ecommerce_app/src/repositories/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class EnterPhonePage extends StatefulWidget {
+class EnterPhonePage extends StatelessWidget {
   const EnterPhonePage({super.key});
-
-  @override
-  State<EnterPhonePage> createState() => _EnterPhonePageState();
-}
-
-class _EnterPhonePageState extends State<EnterPhonePage> {
-  late final AuthRepository authRepository;
-
-  @override
-  void initState() {
-    super.initState();
-    authRepository = RepositoryProvider.of<AuthRepository>(context);
-  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EnterPhoneBloc(authRepository: authRepository),
+      create: (context) => EnterPhoneBloc(
+        authRepository: context.read<AuthRepository>(),
+      ),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -92,18 +82,33 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: SendVerificationCodeButton(
                         onPressed: () {
+                          final currentState = context
+                              .read<EnterPhoneBloc>()
+                              .state as EnterPhoneUpdated;
+                          final phoneNumber = currentState.phoneNumber;
+                          final phoneCode = currentState.country.phoneCode;
+
+                          // Check if phone number is valid
+                          if (phoneNumber.length < 8) {
+                            ErrorSnackBar.show(
+                              context: context,
+                              message: context.localization
+                                  .errorIncorrectPhoneNumberFormatText,
+                            );
+                            return;
+                          }
+
                           BlocProvider.of<EnterPhoneBloc>(context).add(
                             VerifyPhoneNumber(
                               verificationCompleted: () {},
-                              verificationFailed: log,
+                              verificationFailed: (exception) {
+                                ErrorSnackBar.show(
+                                  context: context,
+                                  message: exception,
+                                );
+                                log(exception);
+                              },
                               codeSent: (verificationId, forceResendingToken) {
-                                final currentState = context
-                                    .read<EnterPhoneBloc>()
-                                    .state as EnterPhoneUpdated;
-                                final phoneNumber = currentState.phoneNumber;
-                                final phoneCode =
-                                    currentState.country.phoneCode;
-
                                 context.router.push(
                                   VerificationRoute(
                                     phoneNumber: phoneNumber,
@@ -113,7 +118,11 @@ class _EnterPhonePageState extends State<EnterPhonePage> {
                                 );
                               },
                               codeAutoRetrievalTimeout: (verificationId) {
-                                log('Auto Retrieval Timeout');
+                                ErrorSnackBar.show(
+                                  context: context,
+                                  message: context.localization
+                                      .errorAutoRetrievalTimeoutText,
+                                );
                               },
                             ),
                           );

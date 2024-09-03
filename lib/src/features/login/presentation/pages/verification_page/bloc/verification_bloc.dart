@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:ecommerce_app/src/features/login/data/repositories/auth_repository.dart';
+import 'package:ecommerce_app/src/repositories/auth/auth_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part 'verification_event.dart';
