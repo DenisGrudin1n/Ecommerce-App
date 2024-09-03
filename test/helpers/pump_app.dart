@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/core/localization/localization.dart';
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

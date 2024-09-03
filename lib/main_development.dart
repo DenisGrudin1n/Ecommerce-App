@@ -8,5 +8,5 @@ void main() async {
 
   await Firebase.initializeApp();
 
-  bootstrap(() => const App());
+  await bootstrap(() => const App());
 }

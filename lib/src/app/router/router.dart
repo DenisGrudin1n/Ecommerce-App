@@ -3,6 +3,7 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/home_page.dar
 import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/enter_phone_page.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page/get_started_page.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/verification_page.dart';
+import 'package:flutter/material.dart';
 
 part 'router.gr.dart';
 
@@ -13,7 +14,7 @@ class AppRouter extends RootStackRouter {
         /// routes go here
         AutoRoute(
           page: GetStartedRoute.page,
-          initial: true,
+          //initial: true,
         ),
         AutoRoute(
           page: EnterPhoneRoute.page,
@@ -23,6 +24,7 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: HomeRoute.page,
+          initial: true,
         ),
       ];
 }
