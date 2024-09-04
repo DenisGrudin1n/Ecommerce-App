@@ -6,30 +6,28 @@ import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
-class HomeBottomNavigationBar extends StatefulWidget {
-  const HomeBottomNavigationBar({super.key});
+class AppBottomNavigationBar extends StatefulWidget {
+  const AppBottomNavigationBar({super.key});
 
   @override
-  State<HomeBottomNavigationBar> createState() =>
-      _HomeBottomNavigationBarState();
+  State<AppBottomNavigationBar> createState() => _AppBottomNavigationBarState();
 }
 
-class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
+class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   int _selectedIndex = 0;
   bool _isCartClosed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 105,
-      color: AppColors.transparentColor,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Container(
             height: 85,
             color: AppColors.whiteColor,
-            padding: const EdgeInsets.only(bottom: 25),
+            padding: const EdgeInsets.only(bottom: 20, left: 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -56,7 +54,7 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
                       context.localization.bottomNavBarProfileText,
                       3,
                     ),
-                    SizedBox(width: _isCartClosed ? 50 : 110),
+                    SizedBox(width: _isCartClosed ? 45 : 105),
                   ],
                 ),
               ],
@@ -99,6 +97,9 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
         mainAxisSize: MainAxisSize.min,
         children: [
           iconWidget,
+          const SizedBox(
+            height: 4,
+          ),
           labelWidget,
         ],
       ),
@@ -114,12 +115,15 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
       },
       child: Container(
         height: 60,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: AppGradients.purpleGradient,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            bottomLeft: Radius.circular(30),
+          ),
         ),
         padding: const EdgeInsets.symmetric(
-          horizontal: 22,
+          horizontal: 18,
           vertical: 10,
         ),
         child: _isCartClosed

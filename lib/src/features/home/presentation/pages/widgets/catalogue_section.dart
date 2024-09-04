@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/bloc/image_loader_bloc.dart';
@@ -16,8 +17,19 @@ class CatalogueSection extends StatefulWidget {
 class _CatalogueSectionState extends State<CatalogueSection> {
   final List<String> imagePaths = List.generate(
     8,
-    (index) => 'catalogue/catalogue/item${index + 1}.jpg',
+    (index) => 'home/catalogue/item${index + 1}.jpg',
   );
+
+  final List<String> catalogueNames = [
+    "Women's Fashion",
+    "Men's Fashion",
+    'Phones',
+    'Computers',
+    'Smart Home',
+    'Arts & Crafts',
+    'Baby',
+    'Sport',
+  ];
 
   @override
   void initState() {
@@ -56,7 +68,7 @@ class _CatalogueSectionState extends State<CatalogueSection> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
@@ -89,7 +101,24 @@ class _CatalogueSectionState extends State<CatalogueSection> {
                                   ? const Center(
                                       child: CircularProgressIndicator(),
                                     )
-                                  : null,
+                                  : Container(
+                                      padding: const EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        gradient: AppGradients
+                                            .catalogueSectionGradient,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Center(
+                                        child: Align(
+                                          child: Text(
+                                            catalogueNames[index],
+                                            textAlign: TextAlign.center,
+                                            style: HomePageTextStyles
+                                                .homePageCatalogueNameTextStyle,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                             ),
                           );
                         },
