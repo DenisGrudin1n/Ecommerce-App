@@ -17,121 +17,105 @@ class CatalogueSection extends StatefulWidget {
 }
 
 class _CatalogueSectionState extends State<CatalogueSection> {
-  final List<String> imagePaths = List.generate(
-    8,
-    (index) => 'home/catalogue/item${index + 1}.jpg',
-  );
-
-  final List<String> catalogueNames = [
-    "Women's Fashion",
-    "Men's Fashion",
-    'Phones',
-    'Computers',
-    'Smart Home',
-    'Arts & Crafts',
-    'Baby',
-    'Sport',
-  ];
-
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(
-          LoadImagesEvent(imagePaths: imagePaths),
-        );
+    context.read<HomeBloc>().add(LoadCatalogueEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    context.localization.homePageCatalogueText,
-                    style: HomePageTextStyles.homePageCatalogueTextStyle,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        context.localization.homePageSeeAllText,
-                        style: HomePageTextStyles.homePageSeeAllTextStyle,
-                      ),
-                      AppIcons.seeAllIcon,
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: SizedBox(
-                      height: 88,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: imagePaths.length,
-                        itemBuilder: (context, index) {
-                          final path = imagePaths[index];
-                          final imageUrl = state.imageUrls[path];
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                              right: 16,
-                            ),
-                            child: Container(
-                              width: 88,
-                              height: 88,
-                              decoration: BoxDecoration(
-                                color: AppColors.greyColor,
-                                borderRadius: BorderRadius.circular(12),
-                                image: imageUrl != null
-                                    ? DecorationImage(
-                                        image: NetworkImage(imageUrl),
-                                        fit: BoxFit.cover,
-                                      )
-                                    : null,
+        if (state is CatalogueSectionLoadingState) {
+          return const CircularProgressIndicator();
+        } else if (state is CatalogueSectionLoadedState) {
+          final categories = state.categories;
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      context.localization.homePageCatalogueText,
+                      style: HomePageTextStyles.homePageCatalogueTextStyle,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          context.localization.homePageSeeAllText,
+                          style: HomePageTextStyles.homePageSeeAllTextStyle,
+                        ),
+                        AppIcons.seeAllIcon,
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 88,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: categories.length,
+                          itemBuilder: (context, index) {
+                            final category = categories[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                right: 16,
                               ),
-                              child: imageUrl == null
-                                  ? const Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : Container(
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                        gradient: AppGradients
-                                            .catalogueSectionGradient,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Center(
-                                        child: Align(
-                                          child: Text(
-                                            catalogueNames[index],
-                                            textAlign: TextAlign.center,
-                                            style: HomePageTextStyles
-                                                .homePageCatalogueNameTextStyle,
-                                          ),
-                                        ),
+                              child: Container(
+                                width: 88,
+                                height: 88,
+                                decoration: BoxDecoration(
+                                  color: AppColors.greyColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                  image: DecorationImage(
+                                    image: NetworkImage(category.imageUrl),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    gradient:
+                                        AppGradients.catalogueSectionGradient,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: Align(
+                                      child: Text(
+                                        category.name,
+                                        textAlign: TextAlign.center,
+                                        style: HomePageTextStyles
+                                            .homePageCatalogueNameTextStyle,
                                       ),
                                     ),
-                            ),
-                          );
-                        },
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
+                  ],
+                ),
+              ],
+            ),
+          );
+        } else if (state is CatalogueSectionErrorState) {
+          return Text(context.localization.errorFailedToLoadImageText);
+        } else {
+          return Container();
+        }
       },
     );
   }

@@ -24,9 +24,7 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
   void initState() {
     super.initState();
     _pageController = PageController();
-    context.read<HomeBloc>().add(
-          const LoadImageEvent(imagePath: 'home/fashion_sale/item1.jpg'),
-        );
+    context.read<HomeBloc>().add(LoadFashionSaleImagesEvent());
   }
 
   @override
@@ -39,13 +37,13 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is ImageLoadingState) {
+        if (state is FashionSaleSectionLoadingState) {
           return const CircularProgressIndicator();
-        } else if (state is ImageLoadedState) {
-          final imageUrl = state.imageUrls['home/fashion_sale/item1.jpg'];
+        } else if (state is FashionSaleSectionLoadedState) {
+          final images = state.images;
           // Indicator Line Width = (Screen Width - Paddings Sum) / Lines Count
           final indictaorLineWidth =
-              (MediaQuery.of(context).size.width - 64) / 5;
+              (MediaQuery.of(context).size.width - 64) / images.length;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Stack(
@@ -58,51 +56,21 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
                   ),
                   child: PageView.builder(
                     controller: _pageController,
-                    itemCount: 5,
+                    itemCount: images.length,
                     itemBuilder: (context, index) {
+                      final image = images[index];
                       return Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          image: imageUrl != null
-                              ? DecorationImage(
-                                  image: NetworkImage(imageUrl),
-                                  fit: BoxFit.cover,
-                                )
-                              : null,
+                          image: DecorationImage(
+                            image: NetworkImage(image.imageUrl),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: AppGradients.fashionSaleSectionGradient,
                             borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 18),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 14,
-                                ),
-                                Text(
-                                  context.localization.homePageFashionSaleText,
-                                  style: HomePageTextStyles
-                                      .homeFashionSaleTextStyle,
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      context.localization.homePageSeeMoreText,
-                                      style: HomePageTextStyles
-                                          .homeSeeMoreTextStyle,
-                                    ),
-                                    AppIcons.seeMoreIcon,
-                                  ],
-                                ),
-                              ],
-                            ),
                           ),
                         ),
                       );
@@ -116,7 +84,7 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
                   child: Center(
                     child: SmoothPageIndicator(
                       controller: _pageController,
-                      count: 5,
+                      count: images.length,
                       effect: WormEffect(
                         activeDotColor: AppColors.whiteColor,
                         dotColor: AppColors.greyColor,
@@ -127,10 +95,35 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
                     ),
                   ),
                 ),
+                Positioned(
+                  left: 18,
+                  top: 14,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.localization.homePageFashionSaleText,
+                        style: HomePageTextStyles.homeFashionSaleTextStyle,
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            context.localization.homePageSeeMoreText,
+                            style: HomePageTextStyles.homeSeeMoreTextStyle,
+                          ),
+                          AppIcons.seeMoreIcon,
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           );
-        } else if (state is ImageLoadFailureState) {
+        } else if (state is FashionSaleSectionErrorState) {
           return Text(context.localization.errorFailedToLoadImageText);
         } else {
           return Container();

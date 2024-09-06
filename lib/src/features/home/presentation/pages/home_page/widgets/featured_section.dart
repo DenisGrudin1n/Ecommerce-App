@@ -28,11 +28,11 @@ class _FeaturedSectionState extends State<FeaturedSection> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is SearchLoadingState) {
+        if (state is FeaturedSectionLoadingState) {
           return const SliverToBoxAdapter(
             child: Center(child: CircularProgressIndicator()),
           );
-        } else if (state is SearchSuccessState) {
+        } else if (state is FeaturedSectionLoadedState) {
           final products = state.products;
 
           if (products.isEmpty) {
@@ -42,7 +42,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
           }
 
           return _buildProductGrid(products);
-        } else if (state is SearchErrorState) {
+        } else if (state is FeaturedSectionErrorState) {
           return SliverToBoxAdapter(
             child: Text('Error: ${state.message}'),
           );

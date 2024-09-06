@@ -9,6 +9,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({required this.storageRepository, required this.firestoreRepository})
       : super(const ImageLoaderInitialState()) {
     on<LoadFeaturedProductsEvent>(_onFeaturedProductsChanged);
+    on<LoadCatalogueEvent>(_onCatalogueChanged);
+    on<LoadFashionSaleImagesEvent>(_onFashionSaleImagesChanged);
     on<LoadImageEvent>(_onLoadImage);
     on<LoadImagesEvent>(_onLoadImages);
   }
@@ -23,15 +25,43 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     final query = event.query.trim().toLowerCase();
     currentQuery = query;
-    emit(SearchLoadingState());
+    emit(FeaturedSectionLoadingState());
 
     try {
       final filteredProducts = query.isEmpty
           ? await firestoreRepository.getAllFeaturedProducts()
           : await firestoreRepository.searchFeaturedProducts(query);
-      emit(SearchSuccessState(filteredProducts));
+      emit(FeaturedSectionLoadedState(filteredProducts));
     } catch (e) {
-      emit(SearchErrorState(e.toString()));
+      emit(FeaturedSectionErrorState(e.toString()));
+    }
+  }
+
+  Future<void> _onCatalogueChanged(
+    LoadCatalogueEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(CatalogueSectionLoadingState());
+
+    try {
+      final categories = await firestoreRepository.getAllCatalogueItems();
+      emit(CatalogueSectionLoadedState(categories));
+    } catch (e) {
+      emit(CatalogueSectionErrorState(e.toString()));
+    }
+  }
+
+  Future<void> _onFashionSaleImagesChanged(
+    LoadFashionSaleImagesEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(FashionSaleSectionLoadingState());
+
+    try {
+      final images = await firestoreRepository.getAllFashionSaleImages();
+      emit(FashionSaleSectionLoadedState(images));
+    } catch (e) {
+      emit(FashionSaleSectionErrorState(e.toString()));
     }
   }
 

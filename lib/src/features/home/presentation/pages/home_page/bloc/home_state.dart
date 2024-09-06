@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/src/features/home/models/catalogue_model.dart';
+import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,21 +10,57 @@ abstract class HomeState extends Equatable {
   List<Object> get props => [];
 }
 
-// States for Search
-//class SearchInitialState extends HomeState {}
+// States for Featured Section
+class FeaturedSectionInitialState extends HomeState {}
 
-class SearchLoadingState extends HomeState {}
+class FeaturedSectionLoadingState extends HomeState {}
 
-class SearchSuccessState extends HomeState {
-  const SearchSuccessState(this.products);
+class FeaturedSectionLoadedState extends HomeState {
+  const FeaturedSectionLoadedState(this.products);
   final List<FeaturedProductModel> products;
 
   @override
   List<Object> get props => [products];
 }
 
-class SearchErrorState extends HomeState {
-  const SearchErrorState(this.message);
+class FeaturedSectionErrorState extends HomeState {
+  const FeaturedSectionErrorState(this.message);
+  final String message;
+}
+
+// States for Catalogue
+class CatalogueSectionInitialState extends HomeState {}
+
+class CatalogueSectionLoadingState extends HomeState {}
+
+class CatalogueSectionLoadedState extends HomeState {
+  const CatalogueSectionLoadedState(this.categories);
+  final List<CatalogueModel> categories;
+
+  @override
+  List<Object> get props => [categories];
+}
+
+class CatalogueSectionErrorState extends HomeState {
+  const CatalogueSectionErrorState(this.message);
+  final String message;
+}
+
+// States for Fashion Sale
+class FashionSaleSectionInitialState extends HomeState {}
+
+class FashionSaleSectionLoadingState extends HomeState {}
+
+class FashionSaleSectionLoadedState extends HomeState {
+  const FashionSaleSectionLoadedState(this.images);
+  final List<FashionSaleModel> images;
+
+  @override
+  List<Object> get props => [images];
+}
+
+class FashionSaleSectionErrorState extends HomeState {
+  const FashionSaleSectionErrorState(this.message);
   final String message;
 }
 

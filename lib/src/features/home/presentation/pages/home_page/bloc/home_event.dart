@@ -6,7 +6,7 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-// Events for Search
+// Events for Featured
 class LoadFeaturedProductsEvent extends HomeEvent {
   const LoadFeaturedProductsEvent(this.query);
   final String query;
@@ -14,6 +14,12 @@ class LoadFeaturedProductsEvent extends HomeEvent {
   @override
   List<Object> get props => [query];
 }
+
+// Events for Catalogue
+class LoadCatalogueEvent extends HomeEvent {}
+
+// Events for Fashion Sale
+class LoadFashionSaleImagesEvent extends HomeEvent {}
 
 // Events for Images
 class LoadImageEvent extends HomeEvent {

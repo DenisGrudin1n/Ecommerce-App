@@ -1,6 +1,5 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
@@ -33,31 +32,25 @@ class HomeSearchBar extends StatelessWidget {
             ),
             child: Row(
               children: [
-                IconButton(
-                  icon: AppIcons.searchIcon,
-                  onPressed: () {
-                    final query = context.read<HomeBloc>().currentQuery;
-                    context
-                        .read<HomeBloc>()
-                        .add(LoadFeaturedProductsEvent(query));
-                  },
-                ),
-                const SizedBox(width: 10),
+                const Icon(Icons.search, color: AppColors.greyColor),
+                const SizedBox(width: 8),
                 Expanded(
-                  child: TextField(
-                    onChanged: (query) {
-                      context.read<HomeBloc>().currentQuery =
-                          query; // Update the currentQuery
-                      context
-                          .read<HomeBloc>()
-                          .add(LoadFeaturedProductsEvent(query));
-                    },
-                    decoration: InputDecoration(
-                      hintText:
-                          context.localization.homePageWhatAreYouLookingForText,
-                      hintStyle:
-                          HomePageTextStyles.homeWhatAreYouLookingforTextStyle,
-                      border: InputBorder.none,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 2),
+                    child: TextField(
+                      onChanged: (query) {
+                        query = context.read<HomeBloc>().currentQuery;
+                        context
+                            .read<HomeBloc>()
+                            .add(LoadFeaturedProductsEvent(query));
+                      },
+                      decoration: InputDecoration(
+                        hintText: context
+                            .localization.homePageWhatAreYouLookingForText,
+                        hintStyle: HomePageTextStyles
+                            .homeWhatAreYouLookingforTextStyle,
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
