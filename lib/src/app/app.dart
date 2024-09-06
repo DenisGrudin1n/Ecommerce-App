@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/theme.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/repositories/auth/auth_repository.dart';
 import 'package:ecommerce_app/src/repositories/auth/firebase_auth_repository.dart';
+import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
+import 'package:ecommerce_app/src/repositories/database/firestore_database_repository.dart';
 import 'package:ecommerce_app/src/repositories/storage/firebase_storage_repository.dart';
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +33,13 @@ class App extends StatelessWidget {
         ),
         RepositoryProvider<StorageRepository>(
           create: (context) => context.read<FirebaseStorageRepository>(),
+        ),
+        RepositoryProvider<FirestoreDatabaseRepository>(
+          create: (_) =>
+              FirestoreDatabaseRepository(FirebaseFirestore.instance),
+        ),
+        RepositoryProvider<DatabaseRepository>(
+          create: (context) => context.read<FirestoreDatabaseRepository>(),
         ),
       ],
       child: MaterialApp.router(

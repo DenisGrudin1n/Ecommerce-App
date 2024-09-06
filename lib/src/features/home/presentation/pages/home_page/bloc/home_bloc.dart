@@ -1,0 +1,86 @@
+import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
+import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
+import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  HomeBloc({required this.storageRepository, required this.firestoreRepository})
+      : super(const ImageLoaderInitialState()) {
+    on<LoadFeaturedProductsEvent>(_onFeaturedProductsChanged);
+    on<LoadImageEvent>(_onLoadImage);
+    on<LoadImagesEvent>(_onLoadImages);
+  }
+  final StorageRepository storageRepository;
+  final DatabaseRepository firestoreRepository;
+  List<FeaturedProductModel> allFeaturedProducts = [];
+  String currentQuery = '';
+
+  Future<void> _onFeaturedProductsChanged(
+    LoadFeaturedProductsEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    final query = event.query.trim().toLowerCase();
+    currentQuery = query;
+    emit(SearchLoadingState());
+
+    try {
+      final filteredProducts = query.isEmpty
+          ? await firestoreRepository.getAllFeaturedProducts()
+          : await firestoreRepository.searchFeaturedProducts(query);
+      emit(SearchSuccessState(filteredProducts));
+    } catch (e) {
+      emit(SearchErrorState(e.toString()));
+    }
+  }
+
+  Future<void> _onLoadImage(
+    LoadImageEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is ImageLoaderInitialState) {
+      final updatedImageUrls = Map<String, String>.from(currentState.imageUrls);
+      emit(ImageLoadingState(imageUrls: updatedImageUrls));
+
+      try {
+        final downloadURL =
+            await storageRepository.getDownloadURL(event.imagePath);
+        if (downloadURL != null) {
+          updatedImageUrls[event.imagePath] = downloadURL;
+          emit(ImageLoadedState(imageUrls: updatedImageUrls));
+        } else {
+          emit(ImageLoadFailureState(imageUrls: updatedImageUrls));
+        }
+      } catch (_) {
+        emit(ImageLoadFailureState(imageUrls: updatedImageUrls));
+      }
+    }
+  }
+
+  Future<void> _onLoadImages(
+    LoadImagesEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is ImageLoaderInitialState) {
+      final updatedImageUrls = Map<String, String>.from(currentState.imageUrls);
+      emit(ImageLoadingState(imageUrls: updatedImageUrls));
+
+      try {
+        final futures = event.imagePaths.map((path) async {
+          final downloadURL = await storageRepository.getDownloadURL(path);
+          if (downloadURL != null) {
+            updatedImageUrls[path] = downloadURL;
+          }
+        }).toList();
+
+        await Future.wait(futures);
+        emit(ImageLoadedState(imageUrls: updatedImageUrls));
+      } catch (_) {
+        emit(ImageLoadFailureState(imageUrls: updatedImageUrls));
+      }
+    }
+  }
+}

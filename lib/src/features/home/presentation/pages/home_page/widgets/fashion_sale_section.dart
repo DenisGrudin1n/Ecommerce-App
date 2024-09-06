@@ -3,7 +3,9 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/bloc/image_loader_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -22,8 +24,8 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
   void initState() {
     super.initState();
     _pageController = PageController();
-    context.read<ImageLoaderBloc>().add(
-          const LoadImage(imagePath: 'home/fashion_sale/item1.jpg'),
+    context.read<HomeBloc>().add(
+          const LoadImageEvent(imagePath: 'home/fashion_sale/item1.jpg'),
         );
   }
 
@@ -35,11 +37,11 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ImageLoaderBloc, ImageLoaderState>(
+    return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is ImageLoading) {
+        if (state is ImageLoadingState) {
           return const CircularProgressIndicator();
-        } else if (state is ImageLoaded) {
+        } else if (state is ImageLoadedState) {
           final imageUrl = state.imageUrls['home/fashion_sale/item1.jpg'];
           // Indicator Line Width = (Screen Width - Paddings Sum) / Lines Count
           final indictaorLineWidth =
@@ -128,7 +130,7 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
               ],
             ),
           );
-        } else if (state is ImageLoadFailure) {
+        } else if (state is ImageLoadFailureState) {
           return Text(context.localization.errorFailedToLoadImageText);
         } else {
           return Container();

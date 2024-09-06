@@ -3,7 +3,9 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/bloc/image_loader_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,14 +36,14 @@ class _CatalogueSectionState extends State<CatalogueSection> {
   @override
   void initState() {
     super.initState();
-    context.read<ImageLoaderBloc>().add(
-          LoadImages(imagePaths: imagePaths),
+    context.read<HomeBloc>().add(
+          LoadImagesEvent(imagePaths: imagePaths),
         );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ImageLoaderBloc, ImageLoaderState>(
+    return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(
