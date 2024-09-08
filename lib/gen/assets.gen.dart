@@ -15,6 +15,9 @@ class $AssetsFontsGen {
   /// File path: assets/fonts/SFPRODISPLAYBOLD.OTF
   String get sfprodisplaybold => 'assets/fonts/SFPRODISPLAYBOLD.OTF';
 
+  /// File path: assets/fonts/SFPRODISPLAYMEDIUM.OTF
+  String get sfprodisplaymedium => 'assets/fonts/SFPRODISPLAYMEDIUM.OTF';
+
   /// File path: assets/fonts/SFProText-Bold.ttf
   String get sFProTextBold => 'assets/fonts/SFProText-Bold.ttf';
 
@@ -23,7 +26,7 @@ class $AssetsFontsGen {
 
   /// List of all assets
   List<String> get values =>
-      [sfprodisplaybold, sFProTextBold, sFProTextRegular];
+      [sfprodisplaybold, sfprodisplaymedium, sFProTextBold, sFProTextRegular];
 }
 
 class $AssetsGifsGen {

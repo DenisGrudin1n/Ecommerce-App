@@ -100,3 +100,14 @@ class ImageLoadFailureState extends HomeState {
   @override
   List<Object> get props => [imageUrls];
 }
+
+// States for Bottombar navigation
+enum BottomNavTab { home, catalogue, favorite, profile }
+
+class BottomNavState extends HomeState {
+  const BottomNavState(this.selectedTab);
+  final BottomNavTab selectedTab;
+
+  @override
+  List<Object> get props => [selectedTab];
+}

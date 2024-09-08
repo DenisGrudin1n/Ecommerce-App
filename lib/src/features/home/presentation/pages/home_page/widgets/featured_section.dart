@@ -2,9 +2,9 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
+import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

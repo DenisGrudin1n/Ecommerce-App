@@ -87,4 +87,9 @@ class AppIcons {
     size: 28,
     gradient: AppGradients.purpleGradient,
   );
+
+  static const Icon arrowBackIcon = Icon(
+    Icons.arrow_back,
+    color: AppColors.whiteColor,
+  );
 }

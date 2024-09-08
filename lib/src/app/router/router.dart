@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/catalogue_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/home_page.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/enter_phone_page.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page/get_started_page.dart';
@@ -25,6 +26,10 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: HomeRoute.page,
           initial: true,
+        ),
+        AutoRoute(
+          page: CatalogueRoute.page,
+          //initial: true,
         ),
       ];
 }

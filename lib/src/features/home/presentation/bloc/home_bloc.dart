@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
+import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +13,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LoadFashionSaleImagesEvent>(_onFashionSaleImagesChanged);
     on<LoadImageEvent>(_onLoadImage);
     on<LoadImagesEvent>(_onLoadImages);
+    on<BottomNavEvent>((event, emit) {
+      emit(BottomNavState(event.tab));
+    });
   }
   final StorageRepository storageRepository;
   final DatabaseRepository firestoreRepository;

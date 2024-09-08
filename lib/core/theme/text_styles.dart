@@ -287,6 +287,25 @@ class HomePageTextStyles {
   );
 }
 
+class CataloguePageTextStyles {
+  static TextStyle catalogueTextStyle = GoogleFonts.inter(
+    fontSize: 19,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
+
+  static TextStyle catalogueNameTextStyle = const TextStyle(
+    fontSize: 17,
+    fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkColor,
+    height: 22 / 17,
+    letterSpacing: 0,
+  );
+}
+
 class BottomNavBarTextStyles {
   static TextStyle bottomNavBarNotActiveIconTextStyle = const TextStyle(
     fontFamily: 'SFProText',

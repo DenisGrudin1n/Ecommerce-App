@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeEvent extends Equatable {
@@ -36,4 +37,13 @@ class LoadImagesEvent extends HomeEvent {
 
   @override
   List<Object> get props => [imagePaths];
+}
+
+// Events for bottombar navigation
+class BottomNavEvent extends HomeEvent {
+  const BottomNavEvent(this.tab);
+  final BottomNavTab tab;
+
+  @override
+  List<Object> get props => [tab];
 }

@@ -14,6 +14,7 @@ class FeaturedProductModel {
     return FeaturedProductModel(
       name: data['name'] as String? ?? '',
       price: data['price'] as String? ?? '',
+      // ignore: use_if_null_to_convert_nulls_to_bools
       oldPrice: data.data()?.containsKey('oldPrice') == true
           ? data['oldPrice'] as String?
           : null,

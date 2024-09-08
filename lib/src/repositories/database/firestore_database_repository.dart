@@ -33,7 +33,8 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
 
   @override
   Future<List<FeaturedProductModel>> searchFeaturedProducts(
-      String query) async {
+    String query,
+  ) async {
     try {
       final snapshot = await _firestore
           .collection('home')

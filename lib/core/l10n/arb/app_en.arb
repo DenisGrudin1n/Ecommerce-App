@@ -30,6 +30,7 @@
     "bottomNavBarProfileText": "Profile",
     "bottomNavBarShoppingCartPriceText": "$239.98",
     "bottomNavBarShoppingCartItemText": "2 items",
+    "cataloguePageCatalogueText": "Catalogue",
     "errorIncorrectPhoneNumberFormatText": "Please, enter valid phone number",
     "errorAutoRetrievalTimeoutText": "Auto Retrieval Timeout",
     "errorIncorrectVerificationCodeText": "Verificataion Failed: Incorrect Code",
