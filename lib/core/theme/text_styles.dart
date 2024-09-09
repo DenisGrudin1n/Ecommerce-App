@@ -304,6 +304,23 @@ class CataloguePageTextStyles {
     height: 22 / 17,
     letterSpacing: 0,
   );
+
+  static TextStyle subcategoriesTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 32 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle subcategoriesCategoryNameTextStyle = GoogleFonts.inter(
+    fontSize: 19,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
 }
 
 class BottomNavBarTextStyles {

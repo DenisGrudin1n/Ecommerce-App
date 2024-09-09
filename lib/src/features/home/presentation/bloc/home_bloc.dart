@@ -10,6 +10,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       : super(const ImageLoaderInitialState()) {
     on<LoadFeaturedProductsEvent>(_onFeaturedProductsChanged);
     on<LoadCatalogueEvent>(_onCatalogueChanged);
+    on<LoadCatalogueSubcategoriesEvent>(_onCatalogueSubcategoriesChanged);
     on<LoadFashionSaleImagesEvent>(_onFashionSaleImagesChanged);
     on<LoadImageEvent>(_onLoadImage);
     on<LoadImagesEvent>(_onLoadImages);
@@ -51,6 +52,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(CatalogueSectionLoadedState(categories));
     } catch (e) {
       emit(CatalogueSectionErrorState(e.toString()));
+    }
+  }
+
+  Future<void> _onCatalogueSubcategoriesChanged(
+    LoadCatalogueSubcategoriesEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(CatalogueSubcategoriesLoadingState());
+
+    try {
+      final subcategories =
+          await firestoreRepository.getAllCatalogueSubcategories();
+      emit(CatalogueSubcategoriesLoadedState(subcategories));
+    } catch (e) {
+      emit(CatalogueSubcategoriesErrorState(e.toString()));
     }
   }
 

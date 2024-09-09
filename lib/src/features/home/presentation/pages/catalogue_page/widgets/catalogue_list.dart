@@ -4,6 +4,9 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/subcategory_window.dart';
+import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
+import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +22,24 @@ class _CatalogueListState extends State<CatalogueList> {
   void initState() {
     super.initState();
     context.read<HomeBloc>().add(LoadCatalogueEvent());
+  }
+
+  void _showSubcategoryWindow(String categoryName) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparentColor,
+      barrierColor: AppColors.blackColor.withOpacity(0.75),
+      builder: (context) {
+        return BlocProvider(
+          create: (context) => HomeBloc(
+            storageRepository: context.read<StorageRepository>(),
+            firestoreRepository: context.read<DatabaseRepository>(),
+          ),
+          child: SubcategoryWindow(categoryName: categoryName),
+        );
+      },
+    );
   }
 
   @override
@@ -40,46 +61,51 @@ class _CatalogueListState extends State<CatalogueList> {
                 padding: const EdgeInsets.only(
                   bottom: 16,
                 ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 88,
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Text(
-                        category.name,
-                        style: CataloguePageTextStyles.catalogueNameTextStyle,
-                      ),
-                      const Spacer(),
-                      Container(
-                        width: 88,
-                        height: 88,
-                        decoration: BoxDecoration(
-                          color: AppColors.greyColor,
-                          borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(8),
-                            topRight: Radius.circular(8),
-                          ),
-                          image: DecorationImage(
-                            image: NetworkImage(category.imageUrl),
-                            fit: BoxFit.cover,
+                child: GestureDetector(
+                  onTap: () {
+                    _showSubcategoryWindow(category.name);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 88,
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Text(
+                          category.name,
+                          style: CataloguePageTextStyles.catalogueNameTextStyle,
+                        ),
+                        const Spacer(),
+                        Container(
+                          width: 88,
+                          height: 88,
+                          decoration: BoxDecoration(
+                            color: AppColors.greyColor,
+                            borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(8),
+                              topRight: Radius.circular(8),
+                            ),
+                            image: DecorationImage(
+                              image: NetworkImage(category.imageUrl),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );
             },
           );
         } else if (state is CatalogueSectionErrorState) {
-          return Text(context.localization.errorFailedToLoadImageText);
+          return Text(context.localization.errorFailedToLoadDataText);
         } else {
           return Container();
         }

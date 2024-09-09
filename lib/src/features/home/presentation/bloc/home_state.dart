@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/src/features/home/models/catalogue_model.dart';
+import 'package:ecommerce_app/src/features/home/models/catalogue_subcategories_model.dart';
 import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:equatable/equatable.dart';
@@ -61,6 +62,24 @@ class FashionSaleSectionLoadedState extends HomeState {
 
 class FashionSaleSectionErrorState extends HomeState {
   const FashionSaleSectionErrorState(this.message);
+  final String message;
+}
+
+// States for Catalogue Subcategories
+class CatalogueSubcategoriesInitialState extends HomeState {}
+
+class CatalogueSubcategoriesLoadingState extends HomeState {}
+
+class CatalogueSubcategoriesLoadedState extends HomeState {
+  const CatalogueSubcategoriesLoadedState(this.subcategories);
+  final List<CatalogueSubcategoriesModel> subcategories;
+
+  @override
+  List<Object> get props => [subcategories];
+}
+
+class CatalogueSubcategoriesErrorState extends HomeState {
+  const CatalogueSubcategoriesErrorState(this.message);
   final String message;
 }
 

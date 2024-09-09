@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/src/features/home/models/catalogue_model.dart';
+import 'package:ecommerce_app/src/features/home/models/catalogue_subcategories_model.dart';
 import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
@@ -62,6 +63,14 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
     return fetchCollectionData<FashionSaleModel>(
       collectionPath: 'home/fashion_sale/fashionSaleImages',
       fromSnapshot: FashionSaleModel.fromSnapshot,
+    );
+  }
+
+  @override
+  Future<List<CatalogueSubcategoriesModel>> getAllCatalogueSubcategories() {
+    return fetchCollectionData<CatalogueSubcategoriesModel>(
+      collectionPath: 'catalogue/catalogue/subcategories',
+      fromSnapshot: CatalogueSubcategoriesModel.fromSnapshot,
     );
   }
 }

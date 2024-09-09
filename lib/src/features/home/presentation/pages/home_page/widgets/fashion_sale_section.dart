@@ -124,7 +124,7 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
             ),
           );
         } else if (state is FashionSaleSectionErrorState) {
-          return Text(context.localization.errorFailedToLoadImageText);
+          return Text(context.localization.errorFailedToLoadDataText);
         } else {
           return Container();
         }

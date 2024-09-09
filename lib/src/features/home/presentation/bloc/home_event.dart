@@ -47,3 +47,6 @@ class BottomNavEvent extends HomeEvent {
   @override
   List<Object> get props => [tab];
 }
+
+// Events for Catalogue Subcategories
+class LoadCatalogueSubcategoriesEvent extends HomeEvent {}
