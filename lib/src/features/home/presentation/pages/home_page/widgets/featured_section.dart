@@ -2,9 +2,9 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,23 +28,24 @@ class _FeaturedSectionState extends State<FeaturedSection> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is FeaturedSectionLoadingState) {
+        final featuredSectionProducts = state.featuredProducts;
+        final isLoading = state.isLoadingFeatured;
+        final errorMessage = state.featuredErrorMessage;
+        if (isLoading) {
           return const SliverToBoxAdapter(
             child: Center(child: CircularProgressIndicator()),
           );
-        } else if (state is FeaturedSectionLoadedState) {
-          final products = state.products;
-
-          if (products.isEmpty) {
+        } else if (featuredSectionProducts.isNotEmpty) {
+          if (featuredSectionProducts.isEmpty) {
             return const SliverToBoxAdapter(
               child: Text('No products found for this query'),
             );
           }
 
-          return _buildProductGrid(products);
-        } else if (state is FeaturedSectionErrorState) {
+          return _buildProductGrid(featuredSectionProducts);
+        } else if (errorMessage.isNotEmpty) {
           return SliverToBoxAdapter(
-            child: Text('Error: ${state.message}'),
+            child: Text('Error: $errorMessage'),
           );
         } else {
           return const SliverToBoxAdapter(

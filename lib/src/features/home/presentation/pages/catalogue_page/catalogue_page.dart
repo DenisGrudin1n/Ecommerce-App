@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/widgets/bottom_navigation_bar.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/catalogue_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/catalogue_list.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/catalogue_searchbar.dart';
@@ -16,41 +16,29 @@ class CataloguePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.lightGreyColor,
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          // AppBar & SearchBar
-          Stack(
-            children: [
-              const CatalogueAppbar(),
-              BlocProvider(
-                create: (context) => HomeBloc(
-                  storageRepository: context.read<StorageRepository>(),
-                  firestoreRepository: context.read<DatabaseRepository>(),
-                ),
-                child: const CatalogueSearchBar(),
-              ),
-            ],
-          ),
-
-          // Catalogue List
-          BlocProvider(
-            create: (context) => HomeBloc(
-              storageRepository: context.read<StorageRepository>(),
-              firestoreRepository: context.read<DatabaseRepository>(),
-            ),
-            child: const CatalogueList(),
-          ),
-        ],
+    return BlocProvider(
+      create: (context) => CatalogueBloc(
+        storageRepository: context.read<StorageRepository>(),
+        firestoreRepository: context.read<DatabaseRepository>(),
       ),
-      bottomNavigationBar: BlocProvider(
-        create: (context) => HomeBloc(
-          storageRepository: context.read<StorageRepository>(),
-          firestoreRepository: context.read<DatabaseRepository>(),
+      child: Scaffold(
+        backgroundColor: AppColors.lightGreyColor,
+        body: ListView(
+          padding: EdgeInsets.zero,
+          children: const [
+            // AppBar & SearchBar
+            Stack(
+              children: [
+                CatalogueAppbar(),
+                CatalogueSearchBar(),
+              ],
+            ),
+
+            // Catalogue List
+            CatalogueList(),
+          ],
         ),
-        child: const AppBottomNavigationBar(),
+        bottomNavigationBar: const AppBottomNavigationBar(),
       ),
     );
   }

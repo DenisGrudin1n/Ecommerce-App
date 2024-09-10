@@ -1,8 +1,8 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,7 +39,6 @@ class HomeSearchBar extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 2),
                     child: TextField(
                       onChanged: (query) {
-                        query = context.read<HomeBloc>().currentQuery;
                         context
                             .read<HomeBloc>()
                             .add(LoadFeaturedProductsEvent(query));

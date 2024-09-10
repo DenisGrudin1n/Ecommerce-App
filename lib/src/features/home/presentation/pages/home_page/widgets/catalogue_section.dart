@@ -3,9 +3,9 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,21 +20,22 @@ class _CatalogueSectionState extends State<CatalogueSection> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(LoadCatalogueEvent());
+    context.read<HomeBloc>().add(LoadHomeCatalogueEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is CatalogueSectionLoadingState) {
+        final isLoading = state.isLoadingHomeCatalogue;
+        final categories = state.homeCatalogueCategories;
+        final errorMessage = state.homeCatalogueErrorMessage;
+
+        if (isLoading) {
           return const CircularProgressIndicator();
-        } else if (state is CatalogueSectionLoadedState) {
-          final categories = state.categories;
+        } else if (categories.isNotEmpty) {
           return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,9 +69,7 @@ class _CatalogueSectionState extends State<CatalogueSection> {
                           itemBuilder: (context, index) {
                             final category = categories[index];
                             return Padding(
-                              padding: const EdgeInsets.only(
-                                right: 16,
-                              ),
+                              padding: const EdgeInsets.only(right: 16),
                               child: Container(
                                 width: 88,
                                 height: 88,
@@ -111,8 +110,8 @@ class _CatalogueSectionState extends State<CatalogueSection> {
               ],
             ),
           );
-        } else if (state is CatalogueSectionErrorState) {
-          return Text(context.localization.errorFailedToLoadDataText);
+        } else if (errorMessage.isNotEmpty) {
+          return Text(errorMessage);
         } else {
           return Container();
         }

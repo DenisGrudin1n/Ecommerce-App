@@ -1,9 +1,10 @@
-import 'package:ecommerce_app/core/l10n/l10n.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
+import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,17 +22,20 @@ class _SubcategoryWindowState extends State<SubcategoryWindow> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(LoadCatalogueSubcategoriesEvent());
+    context.read<CatalogueBloc>().add(LoadCatalogueSubcategoriesEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocBuilder<CatalogueBloc, CatalogueState>(
       builder: (context, state) {
-        if (state is CatalogueSubcategoriesLoadingState) {
+        final isLoading = state.isLoadingSubcategories;
+        final subcategories = state.catalogueSubcategories;
+        final errorMessage = state.subcategoriesErrorMessage;
+
+        if (isLoading) {
           return const CircularProgressIndicator();
-        } else if (state is CatalogueSubcategoriesLoadedState) {
-          final subcategories = state.subcategories;
+        } else if (subcategories.isNotEmpty) {
           return Container(
             constraints: BoxConstraints(
               minWidth: MediaQuery.of(context).size.width,
@@ -78,9 +82,13 @@ class _SubcategoryWindowState extends State<SubcategoryWindow> {
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
                         ),
-                        child: Text(
-                          subcategories[index].name,
-                          style: CataloguePageTextStyles.subcategoriesTextStyle,
+                        child: GestureDetector(
+                          onTap: () => context.router.push(const ItemsRoute()),
+                          child: Text(
+                            subcategories[index].name,
+                            style:
+                                CataloguePageTextStyles.subcategoriesTextStyle,
+                          ),
                         ),
                       );
                     },
@@ -92,8 +100,8 @@ class _SubcategoryWindowState extends State<SubcategoryWindow> {
               ],
             ),
           );
-        } else if (state is CatalogueSubcategoriesErrorState) {
-          return Text(context.localization.errorFailedToLoadDataText);
+        } else if (errorMessage.isNotEmpty) {
+          return Text(errorMessage);
         } else {
           return Container();
         }

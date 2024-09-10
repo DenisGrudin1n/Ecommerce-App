@@ -1,9 +1,8 @@
-import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_state.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/subcategory_window.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
@@ -21,7 +20,7 @@ class _CatalogueListState extends State<CatalogueList> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(LoadCatalogueEvent());
+    context.read<CatalogueBloc>().add(LoadCatalogueEvent());
   }
 
   void _showSubcategoryWindow(String categoryName) {
@@ -32,7 +31,7 @@ class _CatalogueListState extends State<CatalogueList> {
       barrierColor: AppColors.blackColor.withOpacity(0.75),
       builder: (context) {
         return BlocProvider(
-          create: (context) => HomeBloc(
+          create: (context) => CatalogueBloc(
             storageRepository: context.read<StorageRepository>(),
             firestoreRepository: context.read<DatabaseRepository>(),
           ),
@@ -44,12 +43,15 @@ class _CatalogueListState extends State<CatalogueList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocBuilder<CatalogueBloc, CatalogueState>(
       builder: (context, state) {
-        if (state is CatalogueSectionLoadingState) {
+        final isLoading = state.isLoadingCatalogue;
+        final categories = state.catalogueCategories;
+        final errorMessage = state.catalogueErrorMessage;
+
+        if (isLoading) {
           return const CircularProgressIndicator();
-        } else if (state is CatalogueSectionLoadedState) {
-          final categories = state.categories;
+        } else if (categories.isNotEmpty) {
           return ListView.builder(
             padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
             shrinkWrap: true,
@@ -104,8 +106,8 @@ class _CatalogueListState extends State<CatalogueList> {
               );
             },
           );
-        } else if (state is CatalogueSectionErrorState) {
-          return Text(context.localization.errorFailedToLoadDataText);
+        } else if (errorMessage.isNotEmpty) {
+          return Text(errorMessage);
         } else {
           return Container();
         }

@@ -1,16 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/constants/keys.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBottomNavigationBar extends StatefulWidget {
   const AppBottomNavigationBar({super.key});
@@ -21,90 +15,72 @@ class AppBottomNavigationBar extends StatefulWidget {
 
 class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   bool _isCartClosed = false;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(const BottomNavEvent(BottomNavTab.home));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is BottomNavState) {
-          return SizedBox(
-            height: 105,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
+    return SizedBox(
+      height: 105,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Container(
+            height: 85,
+            color: AppColors.whiteColor,
+            padding: const EdgeInsets.only(bottom: 20, left: 5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 85,
-                  color: AppColors.whiteColor,
-                  padding: const EdgeInsets.only(bottom: 20, left: 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          buildIcon(
-                            BottomNavBarKeys.home,
-                            context.localization.bottomNavBarHomeText,
-                            BottomNavTab.home,
-                            state.selectedTab,
-                            context,
-                          ),
-                          buildIcon(
-                            BottomNavBarKeys.catalogue,
-                            context.localization.bottomNavBarCatalogueText,
-                            BottomNavTab.catalogue,
-                            state.selectedTab,
-                            context,
-                          ),
-                          buildIcon(
-                            BottomNavBarKeys.favorite,
-                            context.localization.bottomNavBarFavoriteText,
-                            BottomNavTab.favorite,
-                            state.selectedTab,
-                            context,
-                          ),
-                          buildIcon(
-                            BottomNavBarKeys.profile,
-                            context.localization.bottomNavBarProfileText,
-                            BottomNavTab.profile,
-                            state.selectedTab,
-                            context,
-                          ),
-                          SizedBox(width: _isCartClosed ? 45 : 105),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 45,
-                  child: buildCartButton(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    buildIcon(
+                      BottomNavBarKeys.home,
+                      context.localization.bottomNavBarHomeText,
+                      0,
+                    ),
+                    buildIcon(
+                      BottomNavBarKeys.catalogue,
+                      context.localization.bottomNavBarCatalogueText,
+                      1,
+                    ),
+                    buildIcon(
+                      BottomNavBarKeys.favorite,
+                      context.localization.bottomNavBarFavoriteText,
+                      2,
+                    ),
+                    buildIcon(
+                      BottomNavBarKeys.profile,
+                      context.localization.bottomNavBarProfileText,
+                      3,
+                    ),
+                    SizedBox(width: _isCartClosed ? 45 : 105),
+                  ],
                 ),
               ],
             ),
-          );
-        } else {
-          return const SizedBox();
-        }
-      },
+          ),
+          Positioned(
+            right: 0,
+            bottom: 45,
+            child: buildCartButton(),
+          ),
+        ],
+      ),
     );
   }
 
   Widget buildIcon(
     String iconKey,
     String label,
-    BottomNavTab tab,
-    BottomNavTab selectedTab,
-    BuildContext context,
+    int index,
   ) {
-    final isSelected = selectedTab == tab;
+    final isSelected = _selectedIndex == index;
     final iconWidget = isSelected
         ? getActiveBottomNavBarIcon(iconKey)
         : getInactiveBottomNavBarIcon(iconKey);
@@ -122,18 +98,9 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
 
     return GestureDetector(
       onTap: () {
-        context.read<HomeBloc>().add(BottomNavEvent(tab));
-
-        switch (tab) {
-          case BottomNavTab.home:
-            context.router.replace(const HomeRoute());
-          case BottomNavTab.catalogue:
-            context.router.replace(const CatalogueRoute());
-          case BottomNavTab.favorite:
-            break;
-          case BottomNavTab.profile:
-            break;
-        }
+        setState(() {
+          _selectedIndex = index;
+        });
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,

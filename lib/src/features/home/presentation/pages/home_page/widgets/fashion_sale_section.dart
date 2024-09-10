@@ -3,9 +3,9 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -37,13 +37,16 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is FashionSaleSectionLoadingState) {
+        final fashionSaleImages = state.fashionSaleImages;
+        final isLoading = state.isLoadingFashionSale;
+        final errorMessage = state.fashionSaleErrorMessage;
+
+        if (isLoading) {
           return const CircularProgressIndicator();
-        } else if (state is FashionSaleSectionLoadedState) {
-          final images = state.images;
+        } else if (fashionSaleImages.isNotEmpty) {
           // Indicator Line Width = (Screen Width - Paddings Sum) / Lines Count
-          final indictaorLineWidth =
-              (MediaQuery.of(context).size.width - 64) / images.length;
+          final indictaorLineWidth = (MediaQuery.of(context).size.width - 64) /
+              fashionSaleImages.length;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Stack(
@@ -56,9 +59,9 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
                   ),
                   child: PageView.builder(
                     controller: _pageController,
-                    itemCount: images.length,
+                    itemCount: fashionSaleImages.length,
                     itemBuilder: (context, index) {
-                      final image = images[index];
+                      final image = fashionSaleImages[index];
                       return Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -84,7 +87,7 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
                   child: Center(
                     child: SmoothPageIndicator(
                       controller: _pageController,
-                      count: images.length,
+                      count: fashionSaleImages.length,
                       effect: WormEffect(
                         activeDotColor: AppColors.whiteColor,
                         dotColor: AppColors.greyColor,
@@ -123,7 +126,7 @@ class _FashionSaleSectionState extends State<FashionSaleSection> {
               ],
             ),
           );
-        } else if (state is FashionSaleSectionErrorState) {
+        } else if (errorMessage.isNotEmpty) {
           return Text(context.localization.errorFailedToLoadDataText);
         } else {
           return Container();
