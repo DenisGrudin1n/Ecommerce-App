@@ -51,6 +51,14 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
   }
 
   @override
+  Future<List<CatalogueModel>> getAllHomeCatalogueItems() {
+    return fetchCollectionData<CatalogueModel>(
+      collectionPath: 'home/catalogue/catalogueCategories',
+      fromSnapshot: CatalogueModel.fromSnapshot,
+    );
+  }
+
+  @override
   Future<List<CatalogueModel>> getAllCatalogueItems() {
     return fetchCollectionData<CatalogueModel>(
       collectionPath: 'home/catalogue/catalogueCategories',

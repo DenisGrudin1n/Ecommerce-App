@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_bloc.dart';
@@ -51,66 +52,70 @@ class _CatalogueListState extends State<CatalogueList> {
 
         if (isLoading) {
           return const CircularProgressIndicator();
-        } else if (categories.isNotEmpty) {
-          return ListView.builder(
-            padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: categories.length,
-            itemBuilder: (context, index) {
-              final category = categories[index];
-              return Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 16,
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    _showSubcategoryWindow(category.name);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 88,
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      children: [
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Text(
-                          category.name,
-                          style: CataloguePageTextStyles.catalogueNameTextStyle,
-                        ),
-                        const Spacer(),
-                        Container(
-                          width: 88,
-                          height: 88,
-                          decoration: BoxDecoration(
-                            color: AppColors.greyColor,
-                            borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(8),
-                              topRight: Radius.circular(8),
-                            ),
-                            image: DecorationImage(
-                              image: NetworkImage(category.imageUrl),
-                              fit: BoxFit.cover,
-                            ),
+        }
+
+        if (categories.isEmpty) {
+          return Text(context.localization.noItemsFoundText);
+        }
+
+        if (errorMessage.isNotEmpty) {
+          return Text(errorMessage);
+        }
+
+        return ListView.builder(
+          padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: categories.length,
+          itemBuilder: (context, index) {
+            final category = categories[index];
+            return Padding(
+              padding: const EdgeInsets.only(
+                bottom: 16,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  _showSubcategoryWindow(category.name);
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 88,
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteColor,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Text(
+                        category.name,
+                        style: CataloguePageTextStyles.catalogueNameTextStyle,
+                      ),
+                      const Spacer(),
+                      Container(
+                        width: 88,
+                        height: 88,
+                        decoration: BoxDecoration(
+                          color: AppColors.greyColor,
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                          image: DecorationImage(
+                            image: NetworkImage(category.imageUrl),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-          );
-        } else if (errorMessage.isNotEmpty) {
-          return Text(errorMessage);
-        } else {
-          return Container();
-        }
+              ),
+            );
+          },
+        );
       },
     );
   }

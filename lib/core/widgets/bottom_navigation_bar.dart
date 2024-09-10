@@ -14,7 +14,7 @@ class AppBottomNavigationBar extends StatefulWidget {
 }
 
 class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
-  bool _isCartClosed = false;
+  bool _isCartClosed = true;
   int _selectedIndex = 0;
 
   @override
@@ -59,7 +59,11 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                       context.localization.bottomNavBarProfileText,
                       3,
                     ),
-                    SizedBox(width: _isCartClosed ? 45 : 105),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                      width: _isCartClosed ? 45 : 105,
+                    ),
                   ],
                 ),
               ],
@@ -122,8 +126,11 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
           _isCartClosed = !_isCartClosed;
         });
       },
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
         height: 60,
+        width: _isCartClosed ? 65 : 120,
         decoration: const BoxDecoration(
           gradient: AppGradients.purpleGradient,
           borderRadius: BorderRadius.only(

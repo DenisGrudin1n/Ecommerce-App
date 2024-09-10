@@ -56,7 +56,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
 
     try {
-      final categories = await firestoreRepository.getAllCatalogueItems();
+      final categories = await firestoreRepository.getAllHomeCatalogueItems();
       emit(
         state.copyWith(
           homeCatalogueCategories: categories,

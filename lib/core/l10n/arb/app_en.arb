@@ -31,6 +31,8 @@
     "bottomNavBarShoppingCartPriceText": "$239.98",
     "bottomNavBarShoppingCartItemText": "2 items",
     "cataloguePageCatalogueText": "Catalogue",
+    "noItemsFoundText": "No items found",
+    "noItemsFoundForQueryText": "No items found for this query",
     "errorIncorrectPhoneNumberFormatText": "Please, enter valid phone number",
     "errorAutoRetrievalTimeoutText": "Auto Retrieval Timeout",
     "errorIncorrectVerificationCodeText": "Verificataion Failed: Incorrect Code",

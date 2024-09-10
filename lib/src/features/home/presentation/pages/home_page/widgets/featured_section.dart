@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
@@ -31,27 +32,27 @@ class _FeaturedSectionState extends State<FeaturedSection> {
         final featuredSectionProducts = state.featuredProducts;
         final isLoading = state.isLoadingFeatured;
         final errorMessage = state.featuredErrorMessage;
+
+        // Обробка стейтів
         if (isLoading) {
           return const SliverToBoxAdapter(
             child: Center(child: CircularProgressIndicator()),
           );
-        } else if (featuredSectionProducts.isNotEmpty) {
-          if (featuredSectionProducts.isEmpty) {
-            return const SliverToBoxAdapter(
-              child: Text('No products found for this query'),
-            );
-          }
+        }
 
-          return _buildProductGrid(featuredSectionProducts);
-        } else if (errorMessage.isNotEmpty) {
+        if (errorMessage.isNotEmpty) {
           return SliverToBoxAdapter(
-            child: Text('Error: $errorMessage'),
-          );
-        } else {
-          return const SliverToBoxAdapter(
-            child: Text('Error loading products'),
+            child: Text(errorMessage),
           );
         }
+
+        if (featuredSectionProducts.isEmpty) {
+          return SliverToBoxAdapter(
+            child: Text(context.localization.noItemsFoundForQueryText),
+          );
+        }
+
+        return _buildProductGrid(featuredSectionProducts);
       },
     );
   }
@@ -77,78 +78,82 @@ class _FeaturedSectionState extends State<FeaturedSection> {
   Widget _buildFeaturedProductTile(FeaturedProductModel product, int index) {
     return Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: AppColors.lightGreyColor,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Image Section
-              Container(
-                height: 170,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  image: product.imageUrl.isNotEmpty
-                      ? DecorationImage(
-                          image: NetworkImage(product.imageUrl),
-                          fit: BoxFit.cover,
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.lightGreyColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Image Section
+                Container(
+                  height: 170,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: product.imageUrl.isNotEmpty
+                        ? DecorationImage(
+                            image: NetworkImage(product.imageUrl),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
+                    color: AppColors.greyColor,
+                  ),
+                  child: product.imageUrl.isEmpty
+                      ? const Center(
+                          child: CircularProgressIndicator(),
                         )
                       : null,
-                  color: AppColors.greyColor,
                 ),
-                child: product.imageUrl.isEmpty
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : null,
-              ),
-              const SizedBox(height: 8),
-              // Star Ratings
-              Row(
-                children: List.generate(
-                  5,
-                  (starIndex) => const Icon(
-                    Icons.star,
-                    color: AppColors.orangeColor,
-                    size: 12,
+                const SizedBox(height: 8),
+                // Star Ratings
+                Row(
+                  children: List.generate(
+                    5,
+                    (starIndex) => const Icon(
+                      Icons.star,
+                      color: AppColors.orangeColor,
+                      size: 12,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              // Product Name
-              Text(
-                product.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: HomePageTextStyles.homePageFeaturedProductNameTextStyle,
-              ),
-              const SizedBox(height: 6),
-              // Price Section
-              if (product.oldPrice != null && product.oldPrice!.isNotEmpty)
-                Row(
-                  children: [
-                    Text(
-                      '\$${product.price}',
-                      style: HomePageTextStyles
-                          .homePageFeaturedProductRedPriceTextStyle,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      '\$${product.oldPrice}',
-                      style: HomePageTextStyles
-                          .homePageFeaturedProductGreyPriceTextStyle,
-                    ),
-                  ],
-                )
-              else
+                const SizedBox(height: 8),
+                // Product Name
                 Text(
-                  '\$${product.price}',
-                  style: HomePageTextStyles
-                      .homePageFeaturedProductDarkPriceTextStyle,
+                  product.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style:
+                      HomePageTextStyles.homePageFeaturedProductNameTextStyle,
                 ),
-            ],
+                const SizedBox(height: 6),
+                // Price Section
+                if (product.oldPrice != null && product.oldPrice!.isNotEmpty)
+                  Row(
+                    children: [
+                      Text(
+                        '\$${product.price}',
+                        style: HomePageTextStyles
+                            .homePageFeaturedProductRedPriceTextStyle,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        '\$${product.oldPrice}',
+                        style: HomePageTextStyles
+                            .homePageFeaturedProductGreyPriceTextStyle,
+                      ),
+                    ],
+                  )
+                else
+                  Text(
+                    '\$${product.price}',
+                    style: HomePageTextStyles
+                        .homePageFeaturedProductDarkPriceTextStyle,
+                  ),
+              ],
+            ),
           ),
         ),
 

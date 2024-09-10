@@ -6,6 +6,7 @@ import 'package:ecommerce_app/src/features/home/models/featured_product_model.da
 abstract class DatabaseRepository {
   Future<List<FeaturedProductModel>> searchFeaturedProducts(String query);
   Future<List<FeaturedProductModel>> getAllFeaturedProducts();
+  Future<List<CatalogueModel>> getAllHomeCatalogueItems();
   Future<List<CatalogueModel>> getAllCatalogueItems();
   Future<List<FashionSaleModel>> getAllFashionSaleImages();
   Future<List<CatalogueSubcategoriesModel>> getAllCatalogueSubcategories();
