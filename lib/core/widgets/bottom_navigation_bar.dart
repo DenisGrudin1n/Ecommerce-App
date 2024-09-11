@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/constants/keys.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
@@ -7,7 +8,13 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AppBottomNavigationBar extends StatefulWidget {
-  const AppBottomNavigationBar({super.key});
+  const AppBottomNavigationBar({
+    required this.selectedIndex,
+    required this.onTap,
+    super.key,
+  });
+  final int selectedIndex;
+  final ValueChanged<int> onTap;
 
   @override
   State<AppBottomNavigationBar> createState() => _AppBottomNavigationBarState();
@@ -15,17 +22,13 @@ class AppBottomNavigationBar extends StatefulWidget {
 
 class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   bool _isCartClosed = true;
-  int _selectedIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    final tabsRouter = AutoTabsRouter.of(context);
+    return Container(
       height: 105,
+      color: AppColors.lightGreyColor,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -43,21 +46,25 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                       BottomNavBarKeys.home,
                       context.localization.bottomNavBarHomeText,
                       0,
+                      tabsRouter,
                     ),
                     buildIcon(
                       BottomNavBarKeys.catalogue,
                       context.localization.bottomNavBarCatalogueText,
                       1,
+                      tabsRouter,
                     ),
                     buildIcon(
                       BottomNavBarKeys.favorite,
                       context.localization.bottomNavBarFavoriteText,
                       2,
+                      tabsRouter,
                     ),
                     buildIcon(
                       BottomNavBarKeys.profile,
                       context.localization.bottomNavBarProfileText,
                       3,
+                      tabsRouter,
                     ),
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
@@ -83,8 +90,9 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
     String iconKey,
     String label,
     int index,
+    TabsRouter tabsRouter,
   ) {
-    final isSelected = _selectedIndex == index;
+    final isSelected = widget.selectedIndex == index;
     final iconWidget = isSelected
         ? getActiveBottomNavBarIcon(iconKey)
         : getInactiveBottomNavBarIcon(iconKey);
@@ -103,7 +111,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedIndex = index;
+          widget.onTap(index);
         });
       },
       child: Column(

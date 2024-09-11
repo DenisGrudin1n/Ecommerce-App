@@ -143,6 +143,25 @@ class ItemsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MainTabsPage]
+class MainTabsRoute extends PageRouteInfo<void> {
+  const MainTabsRoute({List<PageRouteInfo>? children})
+      : super(
+          MainTabsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MainTabsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MainTabsPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ProfilePage]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})

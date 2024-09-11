@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/catalogue_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/catalogue_list.dart';
@@ -38,7 +37,6 @@ class CataloguePage extends StatelessWidget {
             CatalogueList(),
           ],
         ),
-        bottomNavigationBar: const AppBottomNavigationBar(),
       ),
     );
   }

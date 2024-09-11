@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/widgets/catalogue_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/widgets/fashion_sale_section.dart';
@@ -74,7 +73,6 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: const AppBottomNavigationBar(),
       ),
     );
   }
