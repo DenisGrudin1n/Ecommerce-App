@@ -28,6 +28,12 @@ class AppIcons {
     color: AppColors.yellowColor,
   );
 
+  static const Icon seeAllIcon = Icon(
+    Icons.arrow_forward_ios,
+    size: 16,
+    color: AppColors.greyColor,
+  );
+
   static const Icon shoppingCartIcon = Icon(
     Icons.shopping_cart_outlined,
     color: AppColors.whiteColor,
@@ -80,5 +86,10 @@ class AppIcons {
     icon: Icons.person_outline,
     size: 28,
     gradient: AppGradients.purpleGradient,
+  );
+
+  static const Icon arrowBackIcon = Icon(
+    Icons.arrow_back,
+    color: AppColors.whiteColor,
   );
 }

@@ -1,11 +1,10 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
-class HomeSearchBar extends StatelessWidget {
-  const HomeSearchBar({super.key});
+class CatalogueSearchBar extends StatelessWidget {
+  const CatalogueSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +29,22 @@ class HomeSearchBar extends StatelessWidget {
             ),
             child: Row(
               children: [
-                AppIcons.searchIcon,
-                const SizedBox(width: 10),
-                Text(
-                  context.localization.homePageWhatAreYouLookingForText,
-                  style: HomePageTextStyles.homeWhatAreYouLookingforTextStyle,
+                const Icon(Icons.search, color: AppColors.greyColor),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 2),
+                    child: TextField(
+                      onChanged: (query) {},
+                      decoration: InputDecoration(
+                        hintText: context
+                            .localization.homePageWhatAreYouLookingForText,
+                        hintStyle: HomePageTextStyles
+                            .homeWhatAreYouLookingforTextStyle,
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

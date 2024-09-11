@@ -1,0 +1,89 @@
+import 'package:ecommerce_app/core/l10n/l10n.dart';
+import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class CatalogueList extends StatefulWidget {
+  const CatalogueList({super.key});
+
+  @override
+  State<CatalogueList> createState() => _CatalogueListState();
+}
+
+class _CatalogueListState extends State<CatalogueList> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(LoadCatalogueEvent());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is CatalogueSectionLoadingState) {
+          return const CircularProgressIndicator();
+        } else if (state is CatalogueSectionLoadedState) {
+          final categories = state.categories;
+          return ListView.builder(
+            padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: categories.length,
+            itemBuilder: (context, index) {
+              final category = categories[index];
+              return Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 16,
+                ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 88,
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteColor,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Text(
+                        category.name,
+                        style: CataloguePageTextStyles.catalogueNameTextStyle,
+                      ),
+                      const Spacer(),
+                      Container(
+                        width: 88,
+                        height: 88,
+                        decoration: BoxDecoration(
+                          color: AppColors.greyColor,
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                          image: DecorationImage(
+                            image: NetworkImage(category.imageUrl),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        } else if (state is CatalogueSectionErrorState) {
+          return Text(context.localization.errorFailedToLoadImageText);
+        } else {
+          return Container();
+        }
+      },
+    );
+  }
+}

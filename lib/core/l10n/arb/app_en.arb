@@ -21,10 +21,19 @@
     "homePageWhatAreYouLookingForText": "What are you looking for?",
     "homePageFashionSaleText": "Fashion Sale",
     "homePageSeeMoreText": "See More",
+    "homePageCatalogueText": "Catalogue",
+    "homePageSeeAllText": "See All",
+    "homePageFeaturedText": "Featured",
     "bottomNavBarHomeText": "Home",
     "bottomNavBarCatalogueText": "Catalogue",
     "bottomNavBarFavoriteText": "Favorite",
     "bottomNavBarProfileText": "Profile",
     "bottomNavBarShoppingCartPriceText": "$239.98",
-    "bottomNavBarShoppingCartItemText": "2 items"
+    "bottomNavBarShoppingCartItemText": "2 items",
+    "cataloguePageCatalogueText": "Catalogue",
+    "errorIncorrectPhoneNumberFormatText": "Please, enter valid phone number",
+    "errorAutoRetrievalTimeoutText": "Auto Retrieval Timeout",
+    "errorIncorrectVerificationCodeText": "Verificataion Failed: Incorrect Code",
+    "errorNotEnteredVerificationCodeText": "Please enter the verification code.",
+    "errorFailedToLoadImageText": "Failed to load image"
 }

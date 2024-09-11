@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:ecommerce_app/src/features/login/data/repositories/auth_repository.dart';
+import 'package:ecommerce_app/src/repositories/auth/auth_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part 'enter_phone_event.dart';

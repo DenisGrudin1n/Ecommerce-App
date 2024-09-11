@@ -4,15 +4,16 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/core/widgets/purple_figure.dart';
 import 'package:ecommerce_app/core/widgets/send_verification_code_button.dart';
+import 'package:ecommerce_app/core/widgets/snackbars.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/login/data/repositories/auth_repository.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/bloc/verification_bloc.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/widgets/verification_code_input_field.dart';
+import 'package:ecommerce_app/src/repositories/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class VerificationPage extends StatefulWidget {
+class VerificationPage extends StatelessWidget {
   const VerificationPage({
     required this.phoneNumber,
     required this.phoneCode,
@@ -24,22 +25,11 @@ class VerificationPage extends StatefulWidget {
   final String verificationId;
 
   @override
-  State<VerificationPage> createState() => _VerificationPageState();
-}
-
-class _VerificationPageState extends State<VerificationPage> {
-  late final AuthRepository authRepository;
-
-  @override
-  void initState() {
-    super.initState();
-    authRepository = RepositoryProvider.of<AuthRepository>(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => VerificationBloc(authRepository: authRepository),
+      create: (context) => VerificationBloc(
+        authRepository: context.read<AuthRepository>(),
+      ),
       child: BlocListener<VerificationBloc, VerificationState>(
         listener: (context, state) {
           if (state is VerificationCodeVerified) {
@@ -48,10 +38,9 @@ class _VerificationPageState extends State<VerificationPage> {
               predicate: (route) => false,
             );
           } else if (state is VerificationCodeFailed) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Verification Failed: Incorrect Code'),
-              ),
+            ErrorSnackBar.show(
+              context: context,
+              message: context.localization.errorIncorrectVerificationCodeText,
             );
           }
         },
@@ -108,7 +97,7 @@ class _VerificationPageState extends State<VerificationPage> {
                           children: [
                             Expanded(
                               child: Text(
-                                '+${widget.phoneCode}${widget.phoneNumber}',
+                                '+$phoneCode$phoneNumber',
                                 style: VerificationPageTextStyles
                                     .phoneNumberTextStyle,
                               ),
@@ -138,7 +127,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     child: BlocBuilder<VerificationBloc, VerificationState>(
                       builder: (context, state) {
                         return VerificationCodeInputField(
-                          verificationId: widget.verificationId,
+                          verificationId: verificationId,
                         );
                       },
                     ),
@@ -158,17 +147,15 @@ class _VerificationPageState extends State<VerificationPage> {
                             if (state is VerificationCodeUpdated) {
                               bloc.add(
                                 VerificationCodeChanged(
-                                  widget.verificationId,
+                                  verificationId,
                                   state.code,
                                 ),
                               );
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Please enter the verification code.',
-                                  ),
-                                ),
+                              ErrorSnackBar.show(
+                                context: context,
+                                message: context.localization
+                                    .errorNotEnteredVerificationCodeText,
                               );
                             }
                           },
@@ -186,7 +173,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     onPressed: () {
                       BlocProvider.of<VerificationBloc>(context).add(
                         ResendCodeRequested(
-                          '+${widget.phoneCode}${widget.phoneNumber}',
+                          '+$phoneCode$phoneNumber',
                         ),
                       );
                     },

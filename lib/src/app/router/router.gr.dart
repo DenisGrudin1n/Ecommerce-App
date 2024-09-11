@@ -10,6 +10,25 @@
 part of 'router.dart';
 
 /// generated route for
+/// [CataloguePage]
+class CatalogueRoute extends PageRouteInfo<void> {
+  const CatalogueRoute({List<PageRouteInfo>? children})
+      : super(
+          CatalogueRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CatalogueRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CataloguePage();
+    },
+  );
+}
+
+/// generated route for
 /// [EnterPhonePage]
 class EnterPhoneRoute extends PageRouteInfo<void> {
   const EnterPhoneRoute({List<PageRouteInfo>? children})

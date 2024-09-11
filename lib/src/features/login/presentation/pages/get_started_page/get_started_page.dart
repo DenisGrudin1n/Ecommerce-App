@@ -6,7 +6,6 @@ import 'package:ecommerce_app/core/theme/opacities.dart';
 import 'package:ecommerce_app/gen/assets.gen.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page/widgets/get_started_window.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 @RoutePage()
 class GetStartedPage extends StatefulWidget {
@@ -20,9 +19,6 @@ class _GetStartedPageState extends State<GetStartedPage> {
   @override
   void initState() {
     super.initState();
-
-    // Closing keyboard after hot restart
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
 
   @override
