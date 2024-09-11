@@ -14,14 +14,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final StorageRepository storageRepository;
   final DatabaseRepository firestoreRepository;
-  String currentQuery = '';
 
   Future<void> _onFeaturedProductsChanged(
     LoadFeaturedProductsEvent event,
     Emitter<HomeState> emit,
   ) async {
-    final query = event.query.trim().toLowerCase();
-    currentQuery = query;
+    final query = event.query;
     emit(state.copyWith(isLoadingFeatured: true, featuredErrorMessage: ''));
 
     try {

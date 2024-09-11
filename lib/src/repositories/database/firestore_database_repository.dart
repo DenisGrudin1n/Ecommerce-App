@@ -42,8 +42,43 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
           .doc('featured')
           .collection('featuredProducts')
           .orderBy('name')
-          .startAt([query]).endAt(['$query\uf8ff']).get();
-      return snapshot.docs.map(FeaturedProductModel.fromSnapshot).toList();
+          .get();
+
+      final regex = RegExp(query, caseSensitive: false);
+      final filteredProducts = snapshot.docs
+          .where((doc) {
+            final name = doc['name'] as String?;
+            return name != null && regex.hasMatch(name);
+          })
+          .map(FeaturedProductModel.fromSnapshot)
+          .toList();
+      return filteredProducts;
+    } catch (e) {
+      log('Error during search: $e');
+      return [];
+    }
+  }
+
+  @override
+  Future<List<CatalogueModel>> searchCatalogueItems(
+    String query,
+  ) async {
+    try {
+      final snapshot = await _firestore
+          .collection('home')
+          .doc('catalogue')
+          .collection('catalogueCategories')
+          .orderBy('name')
+          .get();
+      final regex = RegExp(query, caseSensitive: false);
+      final filteredProducts = snapshot.docs
+          .where((doc) {
+            final name = doc['name'] as String?;
+            return name != null && regex.hasMatch(name);
+          })
+          .map(CatalogueModel.fromSnapshot)
+          .toList();
+      return filteredProducts;
     } catch (e) {
       log('Error during search: $e');
       return [];

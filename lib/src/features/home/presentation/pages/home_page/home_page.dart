@@ -34,25 +34,30 @@ class HomePage extends StatelessWidget {
         backgroundColor: AppColors.lightGreyColor,
         body: Builder(
           builder: (BuildContext context) {
+            final searchController = TextEditingController();
             final refreshController = RefreshController();
 
             return CustomScrollView(
               slivers: [
                 // AppBar & SearchBar
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Stack(
                     children: [
-                      HomeAppbar(),
-                      HomeSearchBar(),
+                      const HomeAppbar(),
+                      HomeSearchBar(controller: searchController),
                     ],
                   ),
                 ),
 
                 const SliverPadding(padding: EdgeInsets.only(top: 20)),
+
+                // Pull to refresh feature
                 SliverFillRemaining(
                   child: RefreshableScrollView(
                     refreshController: refreshController,
                     onRefresh: () async {
+                      // Clear search query
+                      searchController.clear();
                       // Dispatch events to refresh the data
                       context
                           .read<HomeBloc>()

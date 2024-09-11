@@ -21,7 +21,7 @@ class _CatalogueListState extends State<CatalogueList> {
   @override
   void initState() {
     super.initState();
-    context.read<CatalogueBloc>().add(LoadCatalogueEvent());
+    context.read<CatalogueBloc>().add(const LoadCatalogueItemsEvent(''));
   }
 
   void _showSubcategoryWindow(String categoryName) {

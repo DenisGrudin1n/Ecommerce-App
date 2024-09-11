@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeSearchBar extends StatelessWidget {
-  const HomeSearchBar({super.key});
+  const HomeSearchBar({required this.controller, super.key});
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,7 @@ class HomeSearchBar extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 2),
                     child: TextField(
+                      controller: controller,
                       onChanged: (query) {
                         context
                             .read<HomeBloc>()

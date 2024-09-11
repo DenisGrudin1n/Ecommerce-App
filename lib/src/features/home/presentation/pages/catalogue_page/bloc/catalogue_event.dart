@@ -7,7 +7,13 @@ abstract class CatalogueEvent extends Equatable {
 }
 
 // Events for Catalogue
-class LoadCatalogueEvent extends CatalogueEvent {}
+class LoadCatalogueItemsEvent extends CatalogueEvent {
+  const LoadCatalogueItemsEvent(this.query);
+  final String query;
+
+  @override
+  List<Object> get props => [query];
+}
 
 // Events for Catalogue Subcategories
 class LoadCatalogueSubcategoriesEvent extends CatalogueEvent {}

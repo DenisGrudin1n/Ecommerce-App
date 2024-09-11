@@ -18,20 +18,23 @@ class CataloguePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final searchController = TextEditingController();
     return BlocProvider(
       create: (context) => CatalogueBloc(
         storageRepository: context.read<StorageRepository>(),
         firestoreRepository: context.read<DatabaseRepository>(),
-      ),
+      )..add(const LoadCatalogueItemsEvent('')),
       child: Scaffold(
         backgroundColor: AppColors.lightGreyColor,
         body: Column(
           children: [
             // AppBar & SearchBar
-            const Stack(
+            Stack(
               children: [
-                CatalogueAppbar(),
-                CatalogueSearchBar(),
+                const CatalogueAppbar(),
+                CatalogueSearchBar(
+                  controller: searchController,
+                ),
               ],
             ),
             Expanded(
@@ -42,8 +45,12 @@ class CataloguePage extends StatelessWidget {
                   return RefreshableScrollView(
                     refreshController: refreshController,
                     onRefresh: () async {
+                      // Clear search query
+                      searchController.clear();
                       // Dispatch events to refresh the data
-                      context.read<CatalogueBloc>().add(LoadCatalogueEvent());
+                      context
+                          .read<CatalogueBloc>()
+                          .add(const LoadCatalogueItemsEvent(''));
                       // Complete the refresh
                       refreshController.refreshCompleted();
                     },

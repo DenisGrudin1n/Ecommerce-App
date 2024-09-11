@@ -9,7 +9,7 @@ class CatalogueBloc extends Bloc<CatalogueEvent, CatalogueState> {
     required this.storageRepository,
     required this.firestoreRepository,
   }) : super(const CatalogueState()) {
-    on<LoadCatalogueEvent>(_onCatalogueChanged);
+    on<LoadCatalogueItemsEvent>(_onCatalogueChanged);
     on<LoadCatalogueSubcategoriesEvent>(_onCatalogueSubcategoriesChanged);
   }
 
@@ -17,13 +17,16 @@ class CatalogueBloc extends Bloc<CatalogueEvent, CatalogueState> {
   final DatabaseRepository firestoreRepository;
 
   Future<void> _onCatalogueChanged(
-    LoadCatalogueEvent event,
+    LoadCatalogueItemsEvent event,
     Emitter<CatalogueState> emit,
   ) async {
+    final query = event.query;
     emit(state.copyWith(isLoadingCatalogue: true, catalogueErrorMessage: ''));
 
     try {
-      final categories = await firestoreRepository.getAllCatalogueItems();
+      final categories = query.isEmpty
+          ? await firestoreRepository.getAllCatalogueItems()
+          : await firestoreRepository.searchCatalogueItems(query);
       emit(
         state.copyWith(
           catalogueCategories: categories,
