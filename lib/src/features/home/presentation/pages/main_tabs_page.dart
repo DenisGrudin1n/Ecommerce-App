@@ -13,6 +13,7 @@ class MainTabsPage extends StatelessWidget {
       routes: const [
         HomeRoute(),
         CatalogueRoute(),
+        ItemsRoute(),
         FavoriteRoute(),
         ProfileRoute(),
       ],

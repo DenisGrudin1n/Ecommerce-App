@@ -57,13 +57,13 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                     buildIcon(
                       BottomNavBarKeys.favorite,
                       context.localization.bottomNavBarFavoriteText,
-                      2,
+                      3,
                       tabsRouter,
                     ),
                     buildIcon(
                       BottomNavBarKeys.profile,
                       context.localization.bottomNavBarProfileText,
-                      3,
+                      4,
                       tabsRouter,
                     ),
                     AnimatedContainer(
