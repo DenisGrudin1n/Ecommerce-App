@@ -96,10 +96,10 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                     image: product.imageUrl.isNotEmpty
                         ? DecorationImage(
                             image: NetworkImage(product.imageUrl),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           )
                         : null,
-                    color: AppColors.greyColor,
+                    color: AppColors.whiteColor,
                   ),
                   child: product.imageUrl.isEmpty
                       ? const Center(

@@ -14,8 +14,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 @RoutePage()
-class ItemsPage extends StatelessWidget {
+class ItemsPage extends StatefulWidget {
   const ItemsPage({super.key});
+
+  @override
+  State<ItemsPage> createState() => _ItemsPageState();
+}
+
+class _ItemsPageState extends State<ItemsPage> {
+  String selectedCategory = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +54,14 @@ class ItemsPage extends StatelessWidget {
 
                 const SliverPadding(padding: EdgeInsets.only(top: 20)),
 
-                const SliverToBoxAdapter(
-                  child: ItemsCategories(),
+                SliverToBoxAdapter(
+                  child: ItemsCategories(
+                    onCategorySelected: (categoryName) {
+                      setState(() {
+                        selectedCategory = categoryName;
+                      });
+                    },
+                  ),
                 ),
 
                 const SliverPadding(padding: EdgeInsets.only(top: 24)),
@@ -66,11 +79,34 @@ class ItemsPage extends StatelessWidget {
                       // Complete the refresh
                       refreshController.refreshCompleted();
                     },
-                    slivers: const [
+                    slivers: [
                       // Items Section as SliverGrid
+                      const SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
+                          child: Row(
+                            children: [
+                              Text('166 items'),
+                              Spacer(),
+                              Row(
+                                children: [
+                                  Text('Sort by: '),
+                                  Text('Featured '),
+                                  Icon(Icons.keyboard_arrow_down),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SliverPadding(padding: EdgeInsets.only(bottom: 16)),
                       SliverPadding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        sliver: ItemsSection(),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        sliver: ItemsSection(
+                          selectedCategory: selectedCategory,
+                        ),
                       ),
                     ],
                   ),

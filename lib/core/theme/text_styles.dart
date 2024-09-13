@@ -323,6 +323,26 @@ class CataloguePageTextStyles {
   );
 }
 
+class ItemsPageTextStyles {
+  static TextStyle allCategoryTextStyle = const TextStyle(
+    fontSize: 13,
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w500,
+    color: AppColors.whiteColor,
+    height: 18 / 13,
+    letterSpacing: -0.08,
+  );
+
+  static TextStyle categoriesTextStyle = const TextStyle(
+    fontSize: 13,
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w500,
+    color: AppColors.darkGreyColor,
+    height: 18 / 13,
+    letterSpacing: -0.08,
+  );
+}
+
 class BottomNavBarTextStyles {
   static TextStyle bottomNavBarNotActiveIconTextStyle = const TextStyle(
     fontFamily: 'SFProText',

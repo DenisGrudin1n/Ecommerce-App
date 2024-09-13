@@ -5,6 +5,7 @@ class ItemsModel {
     required this.name,
     required this.price,
     required this.imageUrl,
+    required this.category,
     this.oldPrice,
   });
 
@@ -19,10 +20,12 @@ class ItemsModel {
           ? data['oldPrice'] as String?
           : null,
       imageUrl: data['imageUrl'] as String? ?? '',
+      category: data['category'] as String? ?? '',
     );
   }
   final String name;
   final String price;
   final String? oldPrice;
   final String imageUrl;
+  final String category;
 }

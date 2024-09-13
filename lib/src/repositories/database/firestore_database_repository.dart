@@ -7,6 +7,7 @@ import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
 import 'package:ecommerce_app/src/features/home/models/items_model.dart';
+import 'package:ecommerce_app/src/features/login/models/get_started_gif_model.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 
 class FirestoreDatabaseRepository implements DatabaseRepository {
@@ -106,6 +107,14 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
   }
 
   @override
+  Future<List<GetStartedGifModel>> getAllGetStartedGifs() {
+    return fetchCollectionData<GetStartedGifModel>(
+      collectionPath: 'getStarted/gifs/gifs',
+      fromSnapshot: GetStartedGifModel.fromSnapshot,
+    );
+  }
+
+  @override
   Future<List<CatalogueModel>> getAllHomeCatalogueItems() {
     return fetchCollectionData<CatalogueModel>(
       collectionPath: 'home/catalogue/catalogueCategories',
@@ -124,7 +133,7 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
   @override
   Future<List<CatalogueModel>> getAllCatalogueItems() {
     return fetchCollectionData<CatalogueModel>(
-      collectionPath: 'home/catalogue/catalogueCategories',
+      collectionPath: 'catalogue/categories/catalogueCategories',
       fromSnapshot: CatalogueModel.fromSnapshot,
     );
   }

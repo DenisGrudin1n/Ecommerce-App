@@ -11,8 +11,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ItemsSection extends StatefulWidget {
   const ItemsSection({
+    required this.selectedCategory,
     super.key,
   });
+  final String selectedCategory;
 
   @override
   State<ItemsSection> createState() => _ItemsSectionState();
@@ -33,7 +35,12 @@ class _ItemsSectionState extends State<ItemsSection> {
         final isLoading = state.isLoadingItems;
         final errorMessage = state.itemsErrorMessage;
 
-        // Обробка стейтів
+        final filteredItems = widget.selectedCategory == 'All'
+            ? items
+            : items
+                .where((item) => item.category == widget.selectedCategory)
+                .toList();
+
         if (isLoading) {
           return const SliverToBoxAdapter(
             child: Center(child: CircularProgressIndicator()),
@@ -46,13 +53,15 @@ class _ItemsSectionState extends State<ItemsSection> {
           );
         }
 
-        if (items.isEmpty) {
+        if (filteredItems.isEmpty) {
           return SliverToBoxAdapter(
-            child: Text(context.localization.noItemsFoundForQueryText),
+            child: Center(
+              child: Text(context.localization.noItemsFoundForQueryText),
+            ),
           );
         }
 
-        return _buildItemsGrid(items);
+        return _buildItemsGrid(filteredItems);
       },
     );
   }
@@ -96,10 +105,10 @@ class _ItemsSectionState extends State<ItemsSection> {
                     image: item.imageUrl.isNotEmpty
                         ? DecorationImage(
                             image: NetworkImage(item.imageUrl),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           )
                         : null,
-                    color: AppColors.greyColor,
+                    color: AppColors.whiteColor,
                   ),
                   child: item.imageUrl.isEmpty
                       ? const Center(
