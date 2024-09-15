@@ -16,3 +16,11 @@ class LoadItemsEvent extends ItemsEvent {
 }
 
 class LoadItemsCategoriesEvent extends ItemsEvent {}
+
+class ChangeItemsCategoryEvent extends ItemsEvent {
+  const ChangeItemsCategoryEvent(this.selectedCategory);
+  final String selectedCategory;
+
+  @override
+  List<Object> get props => [selectedCategory];
+}

@@ -8,12 +8,14 @@ class ItemsState extends Equatable {
     this.itemsCategories = const [],
     this.isLoadingItems = false,
     this.isLoadingItemsCategories = false,
+    this.selectedCategory = 'All',
     this.itemsErrorMessage = '',
     this.itemsCategoriesErrorMessage = '',
   });
 
   final List<ItemsModel> items;
   final List<ItemsCategoriesModel> itemsCategories;
+  final String selectedCategory;
 
   // Loading states for each section
   final bool isLoadingItems;
@@ -28,6 +30,7 @@ class ItemsState extends Equatable {
     List<ItemsCategoriesModel>? itemsCategories,
     bool? isLoadingItems,
     bool? isLoadingItemsCategories,
+    String? selectedCategory,
     String? itemsErrorMessage,
     String? itemsCategoriesErrorMessage,
   }) {
@@ -37,6 +40,7 @@ class ItemsState extends Equatable {
       isLoadingItems: isLoadingItems ?? this.isLoadingItems,
       isLoadingItemsCategories:
           isLoadingItemsCategories ?? this.isLoadingItemsCategories,
+      selectedCategory: selectedCategory ?? this.selectedCategory,
       itemsErrorMessage: itemsErrorMessage ?? this.itemsErrorMessage,
       itemsCategoriesErrorMessage:
           itemsCategoriesErrorMessage ?? this.itemsCategoriesErrorMessage,
@@ -49,6 +53,7 @@ class ItemsState extends Equatable {
         itemsCategories,
         isLoadingItems,
         isLoadingItemsCategories,
+        selectedCategory,
         itemsErrorMessage,
         itemsCategoriesErrorMessage,
       ];

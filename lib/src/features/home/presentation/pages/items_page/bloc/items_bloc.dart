@@ -11,6 +11,7 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
   }) : super(const ItemsState()) {
     on<LoadItemsEvent>(_onLoadItemsChanged);
     on<LoadItemsCategoriesEvent>(_onLoadItemsCategoriesChanged);
+    on<ChangeItemsCategoryEvent>(_onItemsCategoryChanged);
   }
 
   final StorageRepository storageRepository;
@@ -67,6 +68,41 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
         state.copyWith(
           itemsCategoriesErrorMessage: e.toString(),
           isLoadingItemsCategories: false,
+        ),
+      );
+    }
+  }
+
+  Future<void> _onItemsCategoryChanged(
+    ChangeItemsCategoryEvent event,
+    Emitter<ItemsState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        isLoadingItems: true,
+        selectedCategory: event.selectedCategory,
+      ),
+    );
+
+    try {
+      final filteredItems = event.selectedCategory == 'All'
+          ? state.items
+          : state.items
+              .where((item) => item.category == event.selectedCategory)
+              .toList();
+
+      emit(
+        state.copyWith(
+          items: filteredItems,
+          isLoadingItems: false,
+          itemsErrorMessage: '',
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          isLoadingItems: false,
+          itemsErrorMessage: e.toString(),
         ),
       );
     }

@@ -65,7 +65,7 @@ class _ItemsCategoriesState extends State<ItemsCategories> {
                       width: index == 0 ? 40 : 75,
                       height: 26,
                       decoration: BoxDecoration(
-                        color: index == 0
+                        color: selectedCategory == category.name
                             ? AppColors.yellowColor
                             : AppColors.whiteColor,
                         borderRadius: BorderRadius.circular(40),
@@ -74,7 +74,7 @@ class _ItemsCategoriesState extends State<ItemsCategories> {
                         child: Text(
                           category.name,
                           textAlign: TextAlign.center,
-                          style: index == 0
+                          style: selectedCategory == category.name
                               ? ItemsPageTextStyles.allCategoryTextStyle
                               : ItemsPageTextStyles.categoriesTextStyle,
                         ),
