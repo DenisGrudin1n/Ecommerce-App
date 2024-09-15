@@ -11,40 +11,58 @@ class ItemsAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 110,
-      decoration: const BoxDecoration(
-        gradient: AppGradients.purpleGradient,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-        ),
-        child: Stack(
-          children: [
-            Align(
-              child: Text(
-                context.localization.cataloguePageCatalogueText,
-                style: CataloguePageTextStyles.catalogueTextStyle,
-              ),
+    return Stack(
+      children: [
+        Container(
+          height: 110,
+          decoration: const BoxDecoration(
+            gradient: AppGradients.purpleGradient,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
             ),
-            Positioned(
-              left: 0,
-              top: 0,
-              bottom: 0,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: AppIcons.arrowBackIcon,
-                  onPressed: () {
-                    context.router.push(const HomeRoute());
-                  },
+            child: Stack(
+              children: [
+                Align(
+                  child: Text(
+                    context.localization.cataloguePageCatalogueText,
+                    style: CataloguePageTextStyles.catalogueTextStyle,
+                  ),
                 ),
-              ),
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      icon: AppIcons.arrowBackIcon,
+                      onPressed: () {
+                        context.router.push(const HomeRoute());
+                      },
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: AppIcons.filterIcon,
+                      onPressed: () {
+                        context.router.push(const FilterRoute());
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
