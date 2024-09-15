@@ -92,4 +92,9 @@ class AppIcons {
     Icons.arrow_back,
     color: AppColors.whiteColor,
   );
+
+  static const Icon itemsSectionFeaturedIcon = Icon(
+    Icons.keyboard_arrow_down,
+    color: AppColors.darkColor,
+  );
 }

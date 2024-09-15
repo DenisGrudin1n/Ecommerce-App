@@ -341,6 +341,24 @@ class ItemsPageTextStyles {
     height: 18 / 13,
     letterSpacing: -0.08,
   );
+
+  static TextStyle sortByTextStyle = const TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 12,
+    fontFamily: 'SFProText',
+    color: AppColors.greyColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+  );
+
+  static TextStyle featuredTextStyle = const TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 12,
+    fontFamily: 'SFProText',
+    color: AppColors.darkColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+  );
 }
 
 class BottomNavBarTextStyles {

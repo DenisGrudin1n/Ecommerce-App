@@ -81,27 +81,6 @@ class _ItemsPageState extends State<ItemsPage> {
                     },
                     slivers: [
                       // Items Section as SliverGrid
-                      const SliverToBoxAdapter(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16,
-                          ),
-                          child: Row(
-                            children: [
-                              Text('166 items'),
-                              Spacer(),
-                              Row(
-                                children: [
-                                  Text('Sort by: '),
-                                  Text('Featured '),
-                                  Icon(Icons.keyboard_arrow_down),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SliverPadding(padding: EdgeInsets.only(bottom: 16)),
                       SliverPadding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         sliver: ItemsSection(
