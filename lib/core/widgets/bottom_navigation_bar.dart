@@ -28,7 +28,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
     final tabsRouter = AutoTabsRouter.of(context);
     return Container(
       height: 105,
-      color: AppColors.lightGreyColor,
+      color: AppColors.lightBackgroundColor,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [

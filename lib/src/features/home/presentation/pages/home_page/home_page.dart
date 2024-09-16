@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         ..add(LoadHomeCatalogueEvent())
         ..add(LoadFashionSaleImagesEvent()),
       child: Scaffold(
-        backgroundColor: AppColors.lightGreyColor,
+        backgroundColor: AppColors.lightBackgroundColor,
         body: Builder(
           builder: (BuildContext context) {
             return CustomScrollView(

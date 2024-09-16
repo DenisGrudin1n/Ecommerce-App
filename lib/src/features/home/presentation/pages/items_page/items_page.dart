@@ -51,7 +51,7 @@ class _ItemsPageState extends State<ItemsPage> {
         ..add(const LoadItemsEvent(''))
         ..add(LoadItemsCategoriesEvent()),
       child: Scaffold(
-        backgroundColor: AppColors.lightGreyColor,
+        backgroundColor: AppColors.lightBackgroundColor,
         body: Builder(
           builder: (BuildContext context) {
             return CustomScrollView(

@@ -361,6 +361,17 @@ class ItemsPageTextStyles {
   );
 }
 
+class FilterPageTextStyles {
+  static TextStyle clearTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    color: AppColors.whiteColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+}
+
 class BottomNavBarTextStyles {
   static TextStyle bottomNavBarNotActiveIconTextStyle = const TextStyle(
     fontFamily: 'SFProText',

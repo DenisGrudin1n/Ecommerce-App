@@ -28,6 +28,8 @@
     "itemsPageItemsText": "items",
     "itemsPageSortByText": "Sort by: ",
     "itemsPageFeaturedText": "Featured",
+    "filterPageClearText": "Clear",
+    "filterPageFilterText": "Filter",
     "bottomNavBarHomeText": "Home",
     "bottomNavBarCatalogueText": "Catalogue",
     "bottomNavBarFavoriteText": "Favorite",

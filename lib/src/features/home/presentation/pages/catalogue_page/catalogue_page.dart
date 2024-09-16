@@ -46,7 +46,7 @@ class _CataloguePageState extends State<CataloguePage> {
         firestoreRepository: context.read<DatabaseRepository>(),
       )..add(const LoadCatalogueItemsEvent('')),
       child: Scaffold(
-        backgroundColor: AppColors.lightGreyColor,
+        backgroundColor: AppColors.lightBackgroundColor,
         body: Column(
           children: [
             // AppBar & SearchBar

@@ -37,7 +37,6 @@ class _FeaturedSectionState extends State<FeaturedSection> {
       (bloc) => bloc.state.featuredErrorMessage,
     );
 
-    // Обробка стейтів
     if (isLoading) {
       return const SliverToBoxAdapter(
         child: Center(child: CircularProgressIndicator()),
@@ -84,7 +83,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
           onTap: () {},
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.lightGreyColor,
+              color: AppColors.lightBackgroundColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(

@@ -115,7 +115,7 @@ class _ItemsSectionState extends State<ItemsSection> {
           onTap: () {},
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.lightGreyColor,
+              color: AppColors.lightBackgroundColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
