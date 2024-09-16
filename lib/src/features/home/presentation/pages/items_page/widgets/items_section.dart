@@ -6,7 +6,6 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/models/items_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,67 +30,81 @@ class _ItemsSectionState extends State<ItemsSection> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ItemsBloc, ItemsState>(
-      builder: (context, state) {
-        final items = state.items;
-        final isLoading = state.isLoadingItems;
-        final errorMessage = state.itemsErrorMessage;
-
-        final filteredItems = widget.selectedCategory == 'All'
-            ? items
-            : items
-                .where((item) => item.category == widget.selectedCategory)
-                .toList();
-
-        if (isLoading) {
-          return const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        if (errorMessage.isNotEmpty) {
-          return SliverToBoxAdapter(
-            child: Text(errorMessage),
-          );
-        }
-
-        if (filteredItems.isEmpty) {
-          return SliverToBoxAdapter(
-            child: Center(
-              child: Text(context.localization.noItemsFoundForQueryText),
-            ),
-          );
-        }
-
-        return SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              _buildHeader(context, filteredItems),
-              const Padding(padding: EdgeInsets.only(bottom: 16)),
-              _buildItemsGrid(filteredItems),
-            ],
-          ),
-        );
-      },
+    final items = context.select<ItemsBloc, List<ItemsModel>>(
+      (bloc) => bloc.state.items,
     );
-  }
+    final isLoading = context.select<ItemsBloc, bool>(
+      (bloc) => bloc.state.isLoadingItems,
+    );
+    final errorMessage = context.select<ItemsBloc, String>(
+      (bloc) => bloc.state.itemsErrorMessage,
+    );
 
-  Widget _buildItemsGrid(List<ItemsModel> items) {
-    return GridView.builder(
-      padding: EdgeInsets.zero,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        childAspectRatio: 0.6,
+    final filteredItems = widget.selectedCategory == 'All'
+        ? items
+        : items
+            .where((item) => item.category == widget.selectedCategory)
+            .toList();
+
+    if (isLoading) {
+      return const SliverToBoxAdapter(
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (errorMessage.isNotEmpty) {
+      return SliverToBoxAdapter(
+        child: Text(errorMessage),
+      );
+    }
+
+    if (filteredItems.isEmpty) {
+      return SliverToBoxAdapter(
+        child: Center(
+          child: Text(context.localization.noItemsFoundForQueryText),
+        ),
+      );
+    }
+
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          if (index == 0) {
+            return _buildHeader(context, filteredItems);
+          }
+
+          final itemIndex = (index - 1) * 2;
+
+          if (itemIndex < filteredItems.length) {
+            final firstItem = filteredItems[itemIndex];
+            final secondItem = itemIndex + 1 < filteredItems.length
+                ? filteredItems[itemIndex + 1]
+                : null;
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _buildItemsTile(firstItem, itemIndex),
+                  ),
+                  const SizedBox(width: 16),
+                  if (secondItem != null)
+                    Expanded(
+                      child: _buildItemsTile(secondItem, itemIndex + 1),
+                    )
+                  else
+                    Expanded(
+                      child: Container(),
+                    ),
+                ],
+              ),
+            );
+          }
+          return null;
+        },
+        childCount: (filteredItems.length / 2).ceil() + 1,
       ),
-      itemCount: items.length,
-      itemBuilder: (BuildContext context, int index) {
-        final item = items[index];
-        return _buildItemsTile(item, index);
-      },
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
     );
   }
 

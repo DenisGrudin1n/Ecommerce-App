@@ -5,7 +5,6 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,34 +26,37 @@ class _FeaturedSectionState extends State<FeaturedSection> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        final featuredSectionProducts = state.featuredProducts;
-        final isLoading = state.isLoadingFeatured;
-        final errorMessage = state.featuredErrorMessage;
-
-        // Обробка стейтів
-        if (isLoading) {
-          return const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        if (errorMessage.isNotEmpty) {
-          return SliverToBoxAdapter(
-            child: Text(errorMessage),
-          );
-        }
-
-        if (featuredSectionProducts.isEmpty) {
-          return SliverToBoxAdapter(
-            child: Text(context.localization.noItemsFoundForQueryText),
-          );
-        }
-
-        return _buildProductGrid(featuredSectionProducts);
-      },
+    final featuredSectionProducts =
+        context.select<HomeBloc, List<FeaturedProductModel>>(
+      (bloc) => bloc.state.featuredProducts,
     );
+    final isLoading = context.select<HomeBloc, bool>(
+      (bloc) => bloc.state.isLoadingFeatured,
+    );
+    final errorMessage = context.select<HomeBloc, String>(
+      (bloc) => bloc.state.featuredErrorMessage,
+    );
+
+    // Обробка стейтів
+    if (isLoading) {
+      return const SliverToBoxAdapter(
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (errorMessage.isNotEmpty) {
+      return SliverToBoxAdapter(
+        child: Text(errorMessage),
+      );
+    }
+
+    if (featuredSectionProducts.isEmpty) {
+      return SliverToBoxAdapter(
+        child: Text(context.localization.noItemsFoundForQueryText),
+      );
+    }
+
+    return _buildProductGrid(featuredSectionProducts);
   }
 
   Widget _buildProductGrid(List<FeaturedProductModel> products) {

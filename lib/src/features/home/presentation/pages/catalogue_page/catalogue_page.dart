@@ -13,12 +13,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 @RoutePage()
-class CataloguePage extends StatelessWidget {
+class CataloguePage extends StatefulWidget {
   const CataloguePage({super.key});
 
   @override
+  State<CataloguePage> createState() => _CataloguePageState();
+}
+
+class _CataloguePageState extends State<CataloguePage> {
+  late TextEditingController searchController;
+  late RefreshController refreshController;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = TextEditingController();
+    refreshController = RefreshController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
+    refreshController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final searchController = TextEditingController();
     return BlocProvider(
       create: (context) => CatalogueBloc(
         storageRepository: context.read<StorageRepository>(),
@@ -40,8 +61,6 @@ class CataloguePage extends StatelessWidget {
             Expanded(
               child: Builder(
                 builder: (BuildContext context) {
-                  final refreshController = RefreshController();
-
                   return RefreshableScrollView(
                     refreshController: refreshController,
                     onRefresh: () async {
@@ -54,13 +73,7 @@ class CataloguePage extends StatelessWidget {
                       // Complete the refresh
                       refreshController.refreshCompleted();
                     },
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      children: const [
-                        // Catalogue List
-                        CatalogueList(),
-                      ],
-                    ),
+                    child: const CatalogueList(),
                   );
                 },
               ),

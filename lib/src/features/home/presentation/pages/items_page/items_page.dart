@@ -22,7 +22,24 @@ class ItemsPage extends StatefulWidget {
 }
 
 class _ItemsPageState extends State<ItemsPage> {
-  String selectedCategory = 'All';
+  late String selectedCategory;
+  late TextEditingController searchController;
+  late RefreshController refreshController;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedCategory = 'All';
+    searchController = TextEditingController();
+    refreshController = RefreshController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
+    refreshController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +54,6 @@ class _ItemsPageState extends State<ItemsPage> {
         backgroundColor: AppColors.lightGreyColor,
         body: Builder(
           builder: (BuildContext context) {
-            final searchController = TextEditingController();
-            final refreshController = RefreshController();
-
             return CustomScrollView(
               slivers: [
                 // AppBar & SearchBar

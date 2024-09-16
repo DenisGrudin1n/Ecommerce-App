@@ -17,8 +17,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 @RoutePage()
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late TextEditingController searchController;
+  late RefreshController refreshController;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = TextEditingController();
+    refreshController = RefreshController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
+    refreshController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +56,6 @@ class HomePage extends StatelessWidget {
         backgroundColor: AppColors.lightGreyColor,
         body: Builder(
           builder: (BuildContext context) {
-            final searchController = TextEditingController();
-            final refreshController = RefreshController();
-
             return CustomScrollView(
               slivers: [
                 // AppBar & SearchBar
