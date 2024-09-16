@@ -304,6 +304,61 @@ class CataloguePageTextStyles {
     height: 22 / 17,
     letterSpacing: 0,
   );
+
+  static TextStyle subcategoriesTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 32 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle subcategoriesCategoryNameTextStyle = GoogleFonts.inter(
+    fontSize: 19,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
+}
+
+class ItemsPageTextStyles {
+  static TextStyle allCategoryTextStyle = const TextStyle(
+    fontSize: 13,
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w500,
+    color: AppColors.whiteColor,
+    height: 18 / 13,
+    letterSpacing: -0.08,
+  );
+
+  static TextStyle categoriesTextStyle = const TextStyle(
+    fontSize: 13,
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w500,
+    color: AppColors.darkGreyColor,
+    height: 18 / 13,
+    letterSpacing: -0.08,
+  );
+
+  static TextStyle sortByTextStyle = const TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 12,
+    fontFamily: 'SFProText',
+    color: AppColors.greyColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+  );
+
+  static TextStyle featuredTextStyle = const TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 12,
+    fontFamily: 'SFProText',
+    color: AppColors.darkColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+  );
 }
 
 class BottomNavBarTextStyles {

@@ -24,16 +24,21 @@
     "homePageCatalogueText": "Catalogue",
     "homePageSeeAllText": "See All",
     "homePageFeaturedText": "Featured",
+    "cataloguePageCatalogueText": "Catalogue",
+    "itemsPageItemsText": "items",
+    "itemsPageSortByText": "Sort by:",
+    "itemsPageFeaturedText": "Featured",
     "bottomNavBarHomeText": "Home",
     "bottomNavBarCatalogueText": "Catalogue",
     "bottomNavBarFavoriteText": "Favorite",
     "bottomNavBarProfileText": "Profile",
     "bottomNavBarShoppingCartPriceText": "$239.98",
     "bottomNavBarShoppingCartItemText": "2 items",
-    "cataloguePageCatalogueText": "Catalogue",
+    "noItemsFoundText": "No items found",
+    "noItemsFoundForQueryText": "No items found for this query",
     "errorIncorrectPhoneNumberFormatText": "Please, enter valid phone number",
     "errorAutoRetrievalTimeoutText": "Auto Retrieval Timeout",
     "errorIncorrectVerificationCodeText": "Verificataion Failed: Incorrect Code",
     "errorNotEnteredVerificationCodeText": "Please enter the verification code.",
-    "errorFailedToLoadImageText": "Failed to load image"
+    "errorFailedToLoadDataText": "Failed to load data"
 }

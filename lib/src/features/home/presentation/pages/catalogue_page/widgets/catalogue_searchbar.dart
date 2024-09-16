@@ -1,10 +1,14 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CatalogueSearchBar extends StatelessWidget {
-  const CatalogueSearchBar({super.key});
+  const CatalogueSearchBar({required this.controller, super.key});
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,12 @@ class CatalogueSearchBar extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 2),
                     child: TextField(
-                      onChanged: (query) {},
+                      controller: controller,
+                      onChanged: (query) {
+                        context
+                            .read<CatalogueBloc>()
+                            .add(LoadCatalogueItemsEvent(query));
+                      },
                       decoration: InputDecoration(
                         hintText: context
                             .localization.homePageWhatAreYouLookingForText,

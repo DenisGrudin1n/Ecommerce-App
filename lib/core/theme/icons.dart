@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:flutter/material.dart';
@@ -91,5 +93,35 @@ class AppIcons {
   static const Icon arrowBackIcon = Icon(
     Icons.arrow_back,
     color: AppColors.whiteColor,
+  );
+
+  static const Icon itemsSectionFeaturedIcon = Icon(
+    Icons.keyboard_arrow_down,
+    color: AppColors.darkColor,
+  );
+
+  static Stack filterIcon = Stack(
+    alignment: Alignment.center,
+    children: [
+      Transform.rotate(
+        angle: 90 * math.pi / 180,
+        child: const Icon(
+          Icons.tune,
+          color: AppColors.whiteColor,
+        ),
+      ),
+      Positioned(
+        right: 0,
+        top: 0,
+        child: Container(
+          width: 8,
+          height: 8,
+          decoration: const BoxDecoration(
+            color: AppColors.yellowColor,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
+    ],
   );
 }

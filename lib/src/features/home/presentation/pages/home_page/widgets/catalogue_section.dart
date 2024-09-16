@@ -1,11 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/bloc/home_state.dart';
+import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,32 +22,51 @@ class _CatalogueSectionState extends State<CatalogueSection> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(LoadCatalogueEvent());
+    context.read<HomeBloc>().add(LoadHomeCatalogueEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is CatalogueSectionLoadingState) {
+        final isLoading = state.isLoadingHomeCatalogue;
+        final categories = state.homeCatalogueCategories;
+        final errorMessage = state.homeCatalogueErrorMessage;
+
+        if (isLoading) {
           return const CircularProgressIndicator();
-        } else if (state is CatalogueSectionLoadedState) {
-          final categories = state.categories;
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
+        }
+
+        if (categories.isEmpty) {
+          return Text(context.localization.noItemsFoundText);
+        }
+
+        if (errorMessage.isNotEmpty) {
+          return Text(errorMessage);
+        }
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      context.router.push(const CatalogueRoute());
+                    },
+                    child: Text(
                       context.localization.homePageCatalogueText,
                       style: HomePageTextStyles.homePageCatalogueTextStyle,
                     ),
-                    Row(
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      context.router.push(const CatalogueRoute());
+                    },
+                    child: Row(
                       children: [
                         Text(
                           context.localization.homePageSeeAllText,
@@ -54,23 +75,23 @@ class _CatalogueSectionState extends State<CatalogueSection> {
                         AppIcons.seeAllIcon,
                       ],
                     ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 88,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: categories.length,
-                          itemBuilder: (context, index) {
-                            final category = categories[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                right: 16,
-                              ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 88,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: categories.length,
+                        itemBuilder: (context, index) {
+                          final category = categories[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: GestureDetector(
                               child: Container(
                                 width: 88,
                                 height: 88,
@@ -101,21 +122,17 @@ class _CatalogueSectionState extends State<CatalogueSection> {
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        } else if (state is CatalogueSectionErrorState) {
-          return Text(context.localization.errorFailedToLoadImageText);
-        } else {
-          return Container();
-        }
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
       },
     );
   }

@@ -48,6 +48,44 @@ class EnterPhoneRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [FavoritePage]
+class FavoriteRoute extends PageRouteInfo<void> {
+  const FavoriteRoute({List<PageRouteInfo>? children})
+      : super(
+          FavoriteRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FavoriteRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FavoritePage();
+    },
+  );
+}
+
+/// generated route for
+/// [FilterPage]
+class FilterRoute extends PageRouteInfo<void> {
+  const FilterRoute({List<PageRouteInfo>? children})
+      : super(
+          FilterRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FilterRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FilterPage();
+    },
+  );
+}
+
+/// generated route for
 /// [GetStartedPage]
 class GetStartedRoute extends PageRouteInfo<void> {
   const GetStartedRoute({List<PageRouteInfo>? children})
@@ -81,6 +119,63 @@ class HomeRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const HomePage();
+    },
+  );
+}
+
+/// generated route for
+/// [ItemsPage]
+class ItemsRoute extends PageRouteInfo<void> {
+  const ItemsRoute({List<PageRouteInfo>? children})
+      : super(
+          ItemsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ItemsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ItemsPage();
+    },
+  );
+}
+
+/// generated route for
+/// [MainTabsPage]
+class MainTabsRoute extends PageRouteInfo<void> {
+  const MainTabsRoute({List<PageRouteInfo>? children})
+      : super(
+          MainTabsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MainTabsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MainTabsPage();
+    },
+  );
+}
+
+/// generated route for
+/// [ProfilePage]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProfilePage();
     },
   );
 }

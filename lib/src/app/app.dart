@@ -22,24 +22,16 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<FirebaseAuthRepository>(
-          create: (_) => FirebaseAuthRepository(FirebaseAuth.instance),
-        ),
         RepositoryProvider<AuthRepository>(
-          create: (context) => context.read<FirebaseAuthRepository>(),
-        ),
-        RepositoryProvider<FirebaseStorageRepository>(
-          create: (_) => FirebaseStorageRepository(FirebaseStorage.instance),
+          create: (context) => FirebaseAuthRepository(FirebaseAuth.instance),
         ),
         RepositoryProvider<StorageRepository>(
-          create: (context) => context.read<FirebaseStorageRepository>(),
-        ),
-        RepositoryProvider<FirestoreDatabaseRepository>(
-          create: (_) =>
-              FirestoreDatabaseRepository(FirebaseFirestore.instance),
+          create: (context) =>
+              FirebaseStorageRepository(FirebaseStorage.instance),
         ),
         RepositoryProvider<DatabaseRepository>(
-          create: (context) => context.read<FirestoreDatabaseRepository>(),
+          create: (context) =>
+              FirestoreDatabaseRepository(FirebaseFirestore.instance),
         ),
       ],
       child: MaterialApp.router(
