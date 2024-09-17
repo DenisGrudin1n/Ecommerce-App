@@ -370,6 +370,15 @@ class FilterPageTextStyles {
     height: 19 / 14,
     letterSpacing: -0.15,
   );
+
+  static TextStyle priceTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.greyColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
 }
 
 class BottomNavBarTextStyles {
