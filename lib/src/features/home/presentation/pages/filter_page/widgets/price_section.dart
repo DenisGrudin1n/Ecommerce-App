@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
@@ -60,8 +61,8 @@ class _PriceSectionState extends State<PriceSection> {
       children: [
         // Price label
         Text(
-          'Price',
-          style: FilterPageTextStyles.priceTextStyle,
+          context.localization.filterPagePriceText,
+          style: FilterPageTextStyles.sectionNameTextStyle,
         ),
 
         // Applying custom theme for RangeSlider
@@ -69,11 +70,11 @@ class _PriceSectionState extends State<PriceSection> {
           data: SliderTheme.of(context).copyWith(
             activeTrackColor: AppColors.yellowColor,
             inactiveTrackColor: AppColors.lightGreyColor,
-            thumbColor: Colors.white,
+            thumbColor: AppColors.whiteColor,
             thumbShape: const RoundSliderThumbShape(
               enabledThumbRadius: 12,
             ),
-            overlayColor: Colors.black.withOpacity(0.1),
+            overlayColor: AppColors.blackColor.withOpacity(0.1),
             overlayShape: const RoundSliderOverlayShape(),
             trackHeight: 4,
             rangeThumbShape: const RoundRangeSliderThumbShape(
@@ -99,7 +100,7 @@ class _PriceSectionState extends State<PriceSection> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Minimum price input
-            _buildLeftPriceInputField(
+            _buildPriceInputField(
               controller: minPriceController,
               onEditingComplete: () {
                 final minValue = minPriceController.text.isEmpty
@@ -112,10 +113,14 @@ class _PriceSectionState extends State<PriceSection> {
                     .read<FilterBloc>()
                     .add(ChangeMinValueEvent(minValue.toDouble()));
               },
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(8),
+                topLeft: Radius.circular(8),
+              ),
             ),
 
             // Maximum price input
-            _buildRightPriceInputField(
+            _buildPriceInputField(
               controller: maxPriceController,
               onEditingComplete: () {
                 final maxValue = maxPriceController.text.isEmpty
@@ -128,6 +133,10 @@ class _PriceSectionState extends State<PriceSection> {
                     .read<FilterBloc>()
                     .add(ChangeMaxValueEvent(maxValue.toDouble()));
               },
+              borderRadius: const BorderRadius.only(
+                bottomRight: Radius.circular(8),
+                topRight: Radius.circular(8),
+              ),
             ),
           ],
         ),
@@ -136,90 +145,34 @@ class _PriceSectionState extends State<PriceSection> {
   }
 
   // Function to build price input fields for min/max
-  Widget _buildLeftPriceInputField({
+  Widget _buildPriceInputField({
     required TextEditingController controller,
     required VoidCallback onEditingComplete,
+    required BorderRadius borderRadius,
   }) {
     return Expanded(
       child: TextFormField(
         controller: controller,
         keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
+        style: FilterPageTextStyles.valueTextStyle,
+        decoration: InputDecoration(
           filled: true,
           fillColor: AppColors.whiteColor,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8),
-              topLeft: Radius.circular(8),
-            ),
-            borderSide: BorderSide(
+            borderRadius: borderRadius,
+            borderSide: const BorderSide(
               color: AppColors.lightGreyColor,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8),
-              topLeft: Radius.circular(8),
-            ),
-            borderSide: BorderSide(
+            borderRadius: borderRadius,
+            borderSide: const BorderSide(
               color: AppColors.lightGreyColor,
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8),
-              topLeft: Radius.circular(8),
-            ),
-            borderSide: BorderSide(
-              color: AppColors.lightGreyColor,
-            ),
-          ),
-        ),
-        textAlign: TextAlign.center,
-        onEditingComplete: onEditingComplete,
-        onFieldSubmitted: (value) {
-          onEditingComplete();
-        },
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(5),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRightPriceInputField({
-    required TextEditingController controller,
-    required VoidCallback onEditingComplete,
-  }) {
-    return Expanded(
-      child: TextFormField(
-        controller: controller,
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          filled: true,
-          fillColor: AppColors.whiteColor,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(8),
-              topRight: Radius.circular(8),
-            ),
-            borderSide: BorderSide(color: AppColors.lightGreyColor),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(8),
-              topRight: Radius.circular(8),
-            ),
-            borderSide: BorderSide(
-              color: AppColors.lightGreyColor,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(8),
-              topRight: Radius.circular(8),
-            ),
-            borderSide: BorderSide(
+            borderRadius: borderRadius,
+            borderSide: const BorderSide(
               color: AppColors.lightGreyColor,
             ),
           ),

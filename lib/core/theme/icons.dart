@@ -124,4 +124,16 @@ class AppIcons {
       ),
     ],
   );
+
+  static const Icon filterPageCategoriesOpenedIcon = Icon(
+    Icons.keyboard_arrow_down,
+    color: AppColors.greyColor,
+    size: 28,
+  );
+
+  static const Icon filterPageCategoriesNotOpenedIcon = Icon(
+    Icons.arrow_forward_ios,
+    color: AppColors.greyColor,
+    size: 18,
+  );
 }

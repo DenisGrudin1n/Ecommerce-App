@@ -30,6 +30,8 @@
     "itemsPageFeaturedText": "Featured",
     "filterPageClearText": "Clear",
     "filterPageFilterText": "Filter",
+    "filterPagePriceText": "Price",
+    "filterPageCategoriesText": "Categories",
     "bottomNavBarHomeText": "Home",
     "bottomNavBarCatalogueText": "Catalogue",
     "bottomNavBarFavoriteText": "Favorite",

@@ -371,11 +371,19 @@ class FilterPageTextStyles {
     letterSpacing: -0.15,
   );
 
-  static TextStyle priceTextStyle = const TextStyle(
+  static TextStyle sectionNameTextStyle = const TextStyle(
     fontFamily: 'SFProDisplay',
     fontSize: 14,
     fontWeight: FontWeight.w600,
     color: AppColors.greyColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle valueTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
     height: 19 / 14,
     letterSpacing: -0.15,
   );

@@ -1,5 +1,7 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
@@ -47,18 +49,15 @@ class _CategoriesSectionState extends State<CategoriesSection> {
     }
 
     if (categoriesErrorMessage.isNotEmpty) {
-      return Center(child: Text('Error: $categoriesErrorMessage'));
+      return Center(child: Text(categoriesErrorMessage));
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Categories',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+        Text(
+          context.localization.filterPageCategoriesText,
+          style: FilterPageTextStyles.sectionNameTextStyle,
         ),
         const SizedBox(height: 8),
         GestureDetector(
@@ -71,7 +70,7 @@ class _CategoriesSectionState extends State<CategoriesSection> {
             decoration: BoxDecoration(
               color: AppColors.whiteColor,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppColors.darkGreyColor),
+              border: Border.all(color: AppColors.greyColor, width: 0.5),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,13 +79,13 @@ class _CategoriesSectionState extends State<CategoriesSection> {
                   child: Text(
                     selectedCategory,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 16),
+                    style: FilterPageTextStyles.valueTextStyle,
                   ),
                 ),
-                Icon(
-                  isDropdownOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                  color: AppColors.darkGreyColor,
-                ),
+                if (isDropdownOpen)
+                  AppIcons.filterPageCategoriesOpenedIcon
+                else
+                  AppIcons.filterPageCategoriesNotOpenedIcon,
               ],
             ),
           ),
@@ -110,7 +109,7 @@ class _CategoriesSectionState extends State<CategoriesSection> {
                   color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: AppColors.darkGreyColor,
+                    color: AppColors.greyColor,
                     width: 0.5,
                   ),
                 ),
@@ -121,7 +120,7 @@ class _CategoriesSectionState extends State<CategoriesSection> {
                       child: Text(
                         category.name,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 14),
+                        style: FilterPageTextStyles.valueTextStyle,
                       ),
                     ),
                     if (selectedCategory == category.name)
