@@ -1,4 +1,5 @@
-part of 'filter_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class FilterEvent extends Equatable {
   const FilterEvent();
@@ -30,3 +31,15 @@ class ChangeRangeSliderEvent extends FilterEvent {
   @override
   List<Object?> get props => [rangeValues];
 }
+
+class LoadCategoriesEvent extends FilterEvent {}
+
+class ChangeCategoryEvent extends FilterEvent {
+  const ChangeCategoryEvent(this.selectedCategory);
+  final String selectedCategory;
+
+  @override
+  List<Object?> get props => [selectedCategory];
+}
+
+class ToggleDropdownEvent extends FilterEvent {}

@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/categories_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/filter_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/price_section.dart';
+import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
+import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +21,10 @@ class _FilterPageState extends State<FilterPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => FilterBloc(),
+      create: (context) => FilterBloc(
+        storageRepository: context.read<StorageRepository>(),
+        firestoreRepository: context.read<DatabaseRepository>(),
+      ),
       child: Scaffold(
         backgroundColor: AppColors.lightBackgroundColor,
         body: ListView(
@@ -41,7 +47,7 @@ class _FilterPageState extends State<FilterPage> {
                   const SizedBox(height: 24),
 
                   // Categories
-                  _buildDropdown(context, 'Categories', 'Dresses'),
+                  const CategoriesSection(),
 
                   const SizedBox(height: 8),
 
