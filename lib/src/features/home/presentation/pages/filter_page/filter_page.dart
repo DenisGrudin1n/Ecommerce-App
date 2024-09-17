@@ -21,121 +21,112 @@ class _FilterPageState extends State<FilterPage> {
       create: (context) => FilterBloc(),
       child: Scaffold(
         backgroundColor: AppColors.lightBackgroundColor,
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            // Calculate available height excluding the app bar
-            final availableHeight = constraints.maxHeight - kToolbarHeight;
+        body: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const FilterAppbar(), // Fixed Appbar
+            // Body
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: 24,
+                bottom: 34,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // PriceSection widget
+                  const PriceSection(),
+                  const SizedBox(height: 24),
 
-            return Column(
-              children: [
-                const FilterAppbar(), // Fixed Appbar
-                // Body
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 24,
-                      bottom: 34,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // PriceSection widget
-                        const PriceSection(),
-                        const SizedBox(height: 8),
+                  // Categories
+                  _buildDropdown(context, 'Categories', 'Dresses'),
 
-                        // Categories
-                        _buildDropdown(context, 'Categories', 'Dresses'),
+                  const SizedBox(height: 8),
 
-                        const SizedBox(height: 8),
+                  // Brand
+                  _buildDropdown(
+                    context,
+                    'Brand',
+                    'Lark & Ro, Astylish, ECOWISH, Angashion',
+                  ),
 
-                        // Brand
-                        _buildDropdown(
-                          context,
-                          'Brand',
-                          'Lark & Ro, Astylish, ECOWISH, Angashion',
-                        ),
+                  const SizedBox(height: 8),
 
-                        const SizedBox(height: 8),
-
-                        // Colors
-                        const Text(
-                          'Colors',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _buildColorCircle(AppColors.darkColor),
-                            _buildColorCircle(AppColors.redColor),
-                            _buildColorCircle(AppColors.greenColor),
-                            _buildColorCircle(AppColors.blueColor),
-                            _buildColorCircle(AppColors.purpleColor),
-                            _buildColorCircle(AppColors.lightYellowColor),
-                          ],
-                        ),
-
-                        const SizedBox(height: 8),
-
-                        // Sizes
-                        const Text(
-                          'Sizes',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: ['XXS', 'XS', 'S', 'M', 'L', 'XL']
-                              .map(_buildSizeButton)
-                              .toList(),
-                        ),
-
-                        const SizedBox(height: 8),
-
-                        // Sort by
-                        _buildDropdown(context, 'Sort by', 'Featured'),
-
-                        // Adjust the spacing
-                        const SizedBox(height: 8),
-                        if (availableHeight > 0) const Spacer(),
-
-                        // Results button
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.yellowColor,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text(
-                              'Results (166)',
-                              style: TextStyle(
-                                color: AppColors.whiteColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                  // Colors
+                  const Text(
+                    'Colors',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildColorCircle(AppColors.darkColor),
+                      _buildColorCircle(AppColors.redColor),
+                      _buildColorCircle(AppColors.greenColor),
+                      _buildColorCircle(AppColors.blueColor),
+                      _buildColorCircle(AppColors.purpleColor),
+                      _buildColorCircle(AppColors.lightYellowColor),
+                    ],
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Sizes
+                  const Text(
+                    'Sizes',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: ['XXS', 'XS', 'S', 'M', 'L', 'XL']
+                        .map(_buildSizeButton)
+                        .toList(),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Sort by
+                  _buildDropdown(context, 'Sort by', 'Featured'),
+
+                  // Adjust the spacing
+                  const SizedBox(height: 32),
+
+                  // Results button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.yellowColor,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Results (166)',
+                        style: TextStyle(
+                          color: AppColors.whiteColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

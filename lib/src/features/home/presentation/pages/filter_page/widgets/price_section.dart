@@ -20,10 +20,10 @@ class _PriceSectionState extends State<PriceSection> {
     super.initState();
     final filterBloc = context.read<FilterBloc>();
     minPriceController = TextEditingController(
-      text: filterBloc.state.minValue.toStringAsFixed(0),
+      text: '\$${filterBloc.state.minValue.toStringAsFixed(0)}',
     );
     maxPriceController = TextEditingController(
-      text: filterBloc.state.maxValue.toStringAsFixed(0),
+      text: '\$${filterBloc.state.maxValue.toStringAsFixed(0)}',
     );
   }
 
@@ -38,8 +38,8 @@ class _PriceSectionState extends State<PriceSection> {
   Widget build(BuildContext context) {
     return BlocConsumer<FilterBloc, FilterState>(
       listener: (context, state) {
-        minPriceController.text = state.minValue.toStringAsFixed(0);
-        maxPriceController.text = state.maxValue.toStringAsFixed(0);
+        minPriceController.text = '\$${state.minValue.toStringAsFixed(0)}';
+        maxPriceController.text = '\$${state.maxValue.toStringAsFixed(0)}';
       },
       builder: (context, state) {
         return Column(
@@ -89,7 +89,7 @@ class _PriceSectionState extends State<PriceSection> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Minimum price input
-                _buildPriceInputField(
+                _buildLeftPriceInputField(
                   controller: minPriceController,
                   onChanged: (newValue) {
                     final minValue = double.tryParse(newValue) ?? 0;
@@ -99,10 +99,8 @@ class _PriceSectionState extends State<PriceSection> {
                   },
                 ),
 
-                const SizedBox(width: 16),
-
                 // Maximum price input
-                _buildPriceInputField(
+                _buildRightPriceInputField(
                   controller: maxPriceController,
                   onChanged: (newValue) {
                     final maxValue = double.tryParse(newValue) ?? 5000;
@@ -120,7 +118,7 @@ class _PriceSectionState extends State<PriceSection> {
   }
 
   // Function to build price input fields for min/max
-  Widget _buildPriceInputField({
+  Widget _buildLeftPriceInputField({
     required TextEditingController controller,
     required void Function(String) onChanged,
   }) {
@@ -128,12 +126,78 @@ class _PriceSectionState extends State<PriceSection> {
       child: TextFormField(
         controller: controller,
         keyboardType: TextInputType.number,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           filled: true,
           fillColor: AppColors.whiteColor,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(8),
+              topLeft: Radius.circular(8),
+            ),
+            borderSide: BorderSide(
+              color: AppColors.lightGreyColor,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(8),
+              topLeft: Radius.circular(8),
+            ),
+            borderSide: BorderSide(
+              color: AppColors.lightGreyColor,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(8),
+              topLeft: Radius.circular(8),
+            ),
+            borderSide: BorderSide(
+              color: AppColors.lightGreyColor,
+            ),
+          ),
+        ),
+        textAlign: TextAlign.center,
+        onChanged: onChanged,
+      ),
+    );
+  }
+
+  Widget _buildRightPriceInputField({
+    required TextEditingController controller,
+    required void Function(String) onChanged,
+  }) {
+    return Expanded(
+      child: TextFormField(
+        controller: controller,
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+          filled: true,
+          fillColor: AppColors.whiteColor,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(8),
+              topRight: Radius.circular(8),
+            ),
+            borderSide: BorderSide(color: AppColors.lightGreyColor),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(8),
+              topRight: Radius.circular(8),
+            ),
+            borderSide: BorderSide(
+              color: AppColors.lightGreyColor,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(8),
+              topRight: Radius.circular(8),
+            ),
+            borderSide: BorderSide(
+              color: AppColors.lightGreyColor,
+            ),
           ),
         ),
         textAlign: TextAlign.center,
