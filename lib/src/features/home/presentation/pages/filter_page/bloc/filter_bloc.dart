@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_state.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
@@ -19,6 +20,8 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     on<LoadBrandsEvent>(_onLoadBrandsChanged);
     on<ChangeBrandEvent>(_onBrandChanged);
     on<ToggleBrandDropdownEvent>(_onToggleBrandDropdown);
+    on<LoadColorsEvent>(_onLoadColors);
+    on<ChangeColorEvent>(_onColorChanged);
   }
 
   final StorageRepository storageRepository;
@@ -161,23 +164,18 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     final currentSelectedBrands = List<String>.from(state.selectedBrands);
 
     if (brandName == 'All') {
-      // Якщо вибрано "All", то всі інші бренди знімаються
       currentSelectedBrands
         ..clear()
         ..add('All');
     } else {
-      // Якщо вибрано інший бренд, прибираємо "All"
       currentSelectedBrands.remove('All');
 
       if (currentSelectedBrands.contains(brandName)) {
-        // Якщо бренд вже обрано, то знімаємо його
         currentSelectedBrands.remove(brandName);
       } else {
-        // Додаємо новий бренд
         currentSelectedBrands.add(brandName);
       }
 
-      // Якщо після цього список порожній, додаємо "All"
       if (currentSelectedBrands.isEmpty) {
         currentSelectedBrands.add('All');
       }
@@ -199,5 +197,27 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
         isBrandDropdownOpen: !state.isBrandDropdownOpen,
       ),
     );
+  }
+
+  void _onLoadColors(LoadColorsEvent event, Emitter<FilterState> emit) {
+    final colors = [
+      AppColors.darkColor,
+      AppColors.redColor,
+      AppColors.greenColor,
+      AppColors.blueColor,
+      AppColors.purpleColor,
+      AppColors.lightYellowColor,
+    ];
+    emit(state.copyWith(colors: colors));
+  }
+
+  void _onColorChanged(ChangeColorEvent event, Emitter<FilterState> emit) {
+    final selectedColors = List<Color>.from(state.selectedColors);
+    if (selectedColors.contains(event.color)) {
+      selectedColors.remove(event.color);
+    } else {
+      selectedColors.add(event.color);
+    }
+    emit(state.copyWith(selectedColors: selectedColors));
   }
 }

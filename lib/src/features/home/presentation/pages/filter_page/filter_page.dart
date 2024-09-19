@@ -3,6 +3,7 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/brand_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/categories_section.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/colors_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/filter_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/price_section.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
@@ -51,35 +52,17 @@ class _FilterPageState extends State<FilterPage> {
                   // Categories
                   const CategoriesSection(),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 24),
 
                   // Brand
                   const BrandSection(),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 24),
 
                   // Colors
-                  const Text(
-                    'Colors',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildColorCircle(AppColors.darkColor),
-                      _buildColorCircle(AppColors.redColor),
-                      _buildColorCircle(AppColors.greenColor),
-                      _buildColorCircle(AppColors.blueColor),
-                      _buildColorCircle(AppColors.purpleColor),
-                      _buildColorCircle(AppColors.lightYellowColor),
-                    ],
-                  ),
+                  const ColorsSection(),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 24),
 
                   // Sizes
                   const Text(
@@ -97,7 +80,7 @@ class _FilterPageState extends State<FilterPage> {
                         .toList(),
                   ),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 24),
 
                   // Sort by
                   _buildDropdown(context, 'Sort by', 'Featured'),
@@ -174,22 +157,6 @@ class _FilterPageState extends State<FilterPage> {
           ),
         ),
       ],
-    );
-  }
-
-  // Widget for choosing colors
-  Widget _buildColorCircle(Color color) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: Colors.grey[300]!,
-          width: 2,
-        ),
-      ),
     );
   }
 

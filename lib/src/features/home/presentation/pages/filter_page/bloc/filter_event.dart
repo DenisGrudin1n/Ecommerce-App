@@ -55,3 +55,13 @@ class ChangeBrandEvent extends FilterEvent {
 }
 
 class ToggleBrandDropdownEvent extends FilterEvent {}
+
+class LoadColorsEvent extends FilterEvent {}
+
+class ChangeColorEvent extends FilterEvent {
+  const ChangeColorEvent(this.color);
+  final Color color;
+
+  @override
+  List<Object?> get props => [color];
+}

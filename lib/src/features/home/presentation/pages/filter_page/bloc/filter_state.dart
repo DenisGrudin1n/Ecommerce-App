@@ -11,6 +11,8 @@ class FilterState extends Equatable {
     this.categories = const [],
     this.brands = const [],
     this.selectedBrands = const ['All'],
+    this.colors = const [],
+    this.selectedColors = const [],
     this.isLoadingCategories = false,
     this.isLoadingBrands = false,
     this.isCategoryDropdownOpen = false,
@@ -18,21 +20,30 @@ class FilterState extends Equatable {
     this.selectedCategory = 'All',
     this.categoriesErrorMessage = '',
     this.brandsErrorMessage = '',
+    this.colorsErrorMessage = '',
   });
 
   final double minValue;
   final double maxValue;
+
   final RangeValues rangeValues;
+
   final List<ItemsCategoriesModel> categories;
   final List<BrandModel> brands;
   final List<String> selectedBrands;
+  final List<Color> colors;
+  final List<Color> selectedColors;
+
   final bool isLoadingCategories;
   final bool isLoadingBrands;
   final bool isCategoryDropdownOpen;
   final bool isBrandDropdownOpen;
+
   final String selectedCategory;
+
   final String categoriesErrorMessage;
   final String brandsErrorMessage;
+  final String colorsErrorMessage;
 
   FilterState copyWith({
     double? minValue,
@@ -41,6 +52,8 @@ class FilterState extends Equatable {
     List<ItemsCategoriesModel>? categories,
     List<BrandModel>? brands,
     List<String>? selectedBrands,
+    List<Color>? colors,
+    List<Color>? selectedColors,
     bool? isLoadingCategories,
     bool? isLoadingBrands,
     bool? isCategoryDropdownOpen,
@@ -48,6 +61,7 @@ class FilterState extends Equatable {
     String? selectedCategory,
     String? categoriesErrorMessage,
     String? brandsErrorMessage,
+    String? colorsErrorMessage,
   }) {
     return FilterState(
       minValue: minValue ?? this.minValue,
@@ -56,6 +70,8 @@ class FilterState extends Equatable {
       categories: categories ?? this.categories,
       brands: brands ?? this.brands,
       selectedBrands: selectedBrands ?? this.selectedBrands,
+      colors: colors ?? this.colors,
+      selectedColors: selectedColors ?? this.selectedColors,
       isLoadingCategories: isLoadingCategories ?? this.isLoadingCategories,
       isLoadingBrands: isLoadingBrands ?? this.isLoadingBrands,
       isCategoryDropdownOpen:
@@ -65,6 +81,7 @@ class FilterState extends Equatable {
       categoriesErrorMessage:
           categoriesErrorMessage ?? this.categoriesErrorMessage,
       brandsErrorMessage: brandsErrorMessage ?? this.brandsErrorMessage,
+      colorsErrorMessage: colorsErrorMessage ?? this.colorsErrorMessage,
     );
   }
 
@@ -76,6 +93,8 @@ class FilterState extends Equatable {
         categories,
         brands,
         selectedBrands,
+        colors,
+        selectedColors,
         isLoadingCategories,
         isLoadingBrands,
         isCategoryDropdownOpen,
@@ -83,5 +102,6 @@ class FilterState extends Equatable {
         selectedCategory,
         categoriesErrorMessage,
         brandsErrorMessage,
+        colorsErrorMessage,
       ];
 }
