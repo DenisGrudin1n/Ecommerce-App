@@ -6,6 +6,7 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/w
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/colors_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/filter_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/price_section.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/size_section.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
@@ -65,20 +66,7 @@ class _FilterPageState extends State<FilterPage> {
                   const SizedBox(height: 24),
 
                   // Sizes
-                  const Text(
-                    'Sizes',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: ['XXS', 'XS', 'S', 'M', 'L', 'XL']
-                        .map(_buildSizeButton)
-                        .toList(),
-                  ),
+                  const SizeSection(),
 
                   const SizedBox(height: 24),
 
@@ -157,28 +145,6 @@ class _FilterPageState extends State<FilterPage> {
           ),
         ),
       ],
-    );
-  }
-
-  // Widget for choosing sizes
-  Widget _buildSizeButton(String size) {
-    return Container(
-      height: 47,
-      width: 47,
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 14),
-      decoration: BoxDecoration(
-        color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Center(
-        child: Text(
-          size,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      ),
     );
   }
 }

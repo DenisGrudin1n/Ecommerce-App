@@ -22,6 +22,8 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     on<ToggleBrandDropdownEvent>(_onToggleBrandDropdown);
     on<LoadColorsEvent>(_onLoadColors);
     on<ChangeColorEvent>(_onColorChanged);
+    on<LoadSizesEvent>(_onLoadSizesChanged);
+    on<ChangeSizeEvent>(_onSizeChanged);
   }
 
   final StorageRepository storageRepository;
@@ -219,5 +221,44 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
       selectedColors.add(event.color);
     }
     emit(state.copyWith(selectedColors: selectedColors));
+  }
+
+  Future<void> _onLoadSizesChanged(
+    LoadSizesEvent event,
+    Emitter<FilterState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        isLoadingSizes: true,
+        sizesErrorMessage: '',
+      ),
+    );
+
+    try {
+      final sizes = await firestoreRepository.getAllSizes();
+      emit(
+        state.copyWith(
+          sizes: sizes,
+          isLoadingSizes: false,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          sizesErrorMessage: e.toString(),
+          isLoadingSizes: false,
+        ),
+      );
+    }
+  }
+
+  void _onSizeChanged(ChangeSizeEvent event, Emitter<FilterState> emit) {
+    final selectedSizes = List<String>.from(state.selectedSizes);
+    if (selectedSizes.contains(event.size)) {
+      selectedSizes.remove(event.size);
+    } else {
+      selectedSizes.add(event.size);
+    }
+    emit(state.copyWith(selectedSizes: selectedSizes));
   }
 }

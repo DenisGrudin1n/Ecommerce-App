@@ -5,6 +5,7 @@ import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
 import 'package:ecommerce_app/src/features/home/models/items_model.dart';
+import 'package:ecommerce_app/src/features/home/models/size_model.dart';
 import 'package:ecommerce_app/src/features/login/models/get_started_gif_model.dart';
 
 abstract class DatabaseRepository {
@@ -20,4 +21,5 @@ abstract class DatabaseRepository {
   Future<List<FashionSaleModel>> getAllFashionSaleImages();
   Future<List<CatalogueSubcategoriesModel>> getAllCatalogueSubcategories();
   Future<List<BrandModel>> getAllBrands();
+  Future<List<SizeModel>> getAllSizes();
 }

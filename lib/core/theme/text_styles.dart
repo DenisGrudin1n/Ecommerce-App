@@ -387,6 +387,14 @@ class FilterPageTextStyles {
     height: 19 / 14,
     letterSpacing: -0.15,
   );
+
+  static TextStyle selectedValueTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.whiteColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
 }
 
 class BottomNavBarTextStyles {

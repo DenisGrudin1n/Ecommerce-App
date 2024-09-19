@@ -47,16 +47,27 @@ class _ColorsSectionState extends State<ColorsSection> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: colors.map((color) {
-            if (color == AppColors.blueColor)
+            if (color == AppColors.blueColor) {
               return Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
-                  _buildColorCircle(color, selectedColors),
+                  GestureDetector(
+                    onTap: () {
+                      context.read<FilterBloc>().add(ChangeColorEvent(color));
+                    },
+                    child: _buildColorCircle(color, selectedColors),
+                  ),
                 ],
               );
-            return _buildColorCircle(color, selectedColors);
+            }
+            return GestureDetector(
+              onTap: () {
+                context.read<FilterBloc>().add(ChangeColorEvent(color));
+              },
+              child: _buildColorCircle(color, selectedColors),
+            );
           }).toList(),
         ),
       ],
@@ -65,36 +76,31 @@ class _ColorsSectionState extends State<ColorsSection> {
 
   // Widget for choosing colors
   Widget _buildColorCircle(Color color, List<Color> selectedColors) {
-    return GestureDetector(
-      onTap: () {
-        context.read<FilterBloc>().add(ChangeColorEvent(color));
-      },
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            width: 47,
-            height: 47,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: selectedColors.contains(color)
-                    ? AppColors.yellowColor
-                    : AppColors.transparentColor,
-                width: 2,
-              ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          width: 47,
+          height: 47,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: selectedColors.contains(color)
+                  ? AppColors.yellowColor
+                  : AppColors.transparentColor,
+              width: 2,
             ),
           ),
-          Container(
-            width: 37,
-            height: 37,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-            ),
+        ),
+        Container(
+          width: 37,
+          height: 37,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

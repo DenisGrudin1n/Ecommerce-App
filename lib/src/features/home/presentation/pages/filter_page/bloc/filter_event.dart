@@ -65,3 +65,13 @@ class ChangeColorEvent extends FilterEvent {
   @override
   List<Object?> get props => [color];
 }
+
+class LoadSizesEvent extends FilterEvent {}
+
+class ChangeSizeEvent extends FilterEvent {
+  const ChangeSizeEvent(this.size);
+  final String size;
+
+  @override
+  List<Object?> get props => [size];
+}

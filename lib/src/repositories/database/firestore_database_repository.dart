@@ -8,6 +8,7 @@ import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
 import 'package:ecommerce_app/src/features/home/models/items_model.dart';
+import 'package:ecommerce_app/src/features/home/models/size_model.dart';
 import 'package:ecommerce_app/src/features/login/models/get_started_gif_model.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 
@@ -176,6 +177,14 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
     return fetchCollectionData<BrandModel>(
       collectionPath: 'catalogue/catalogue/filters/brands/brands',
       fromSnapshot: BrandModel.fromSnapshot,
+    );
+  }
+
+  @override
+  Future<List<SizeModel>> getAllSizes() {
+    return fetchCollectionData<SizeModel>(
+      collectionPath: 'catalogue/catalogue/filters/sizes/sizes',
+      fromSnapshot: SizeModel.fromSnapshot,
     );
   }
 }
