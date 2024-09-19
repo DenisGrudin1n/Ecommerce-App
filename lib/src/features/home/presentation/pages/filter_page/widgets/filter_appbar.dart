@@ -4,7 +4,10 @@ import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterAppbar extends StatelessWidget {
   const FilterAppbar({super.key});
@@ -36,7 +39,9 @@ class FilterAppbar extends StatelessWidget {
               style: CataloguePageTextStyles.catalogueTextStyle,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                context.read<FilterBloc>().add(ClearFiltersEvent());
+              },
               child: Text(
                 context.localization.filterPageClearText,
                 style: FilterPageTextStyles.clearTextStyle,

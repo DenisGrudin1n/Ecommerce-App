@@ -87,3 +87,5 @@ class ChangeSortByEvent extends FilterEvent {
 }
 
 class ToggleSortByDropdownEvent extends FilterEvent {}
+
+class ClearFiltersEvent extends FilterEvent {}

@@ -1,5 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/src/features/home/models/brand_model.dart';
+import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
+import 'package:ecommerce_app/src/features/home/models/size_model.dart';
+import 'package:ecommerce_app/src/features/home/models/sort_by_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_state.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
@@ -27,7 +31,14 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     on<LoadSortByEvent>(_onLoadSortByChanged);
     on<ChangeSortByEvent>(_onSortByChanged);
     on<ToggleSortByDropdownEvent>(_onToggleSortByDropdown);
+    on<ClearFiltersEvent>(_onClearFilters);
   }
+
+  List<SizeModel> _initialSizes = [];
+  List<ItemsCategoriesModel> _initialCategories = [];
+  List<BrandModel> _initialBrands = [];
+  List<Color> _initialColors = [];
+  List<SortByModel> _initialSortBy = [];
 
   final StorageRepository storageRepository;
   final DatabaseRepository firestoreRepository;
@@ -94,6 +105,8 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
 
     try {
       final categories = await firestoreRepository.getAllItemsCategories();
+      _initialCategories = categories;
+
       emit(
         state.copyWith(
           categories: categories,
@@ -145,6 +158,8 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
 
     try {
       final brands = await firestoreRepository.getAllBrands();
+      _initialBrands = brands;
+
       emit(
         state.copyWith(
           brands: brands,
@@ -213,6 +228,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
       AppColors.purpleColor,
       AppColors.lightYellowColor,
     ];
+    _initialColors = colors;
     emit(state.copyWith(colors: colors));
   }
 
@@ -239,6 +255,8 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
 
     try {
       final sizes = await firestoreRepository.getAllSizes();
+      _initialSizes = sizes;
+
       emit(
         state.copyWith(
           sizes: sizes,
@@ -278,6 +296,8 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
 
     try {
       final sortBy = await firestoreRepository.getAllSortBy();
+      _initialSortBy = sortBy;
+
       emit(
         state.copyWith(
           sortBy: sortBy,
@@ -312,6 +332,38 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     emit(
       state.copyWith(
         isSortByDropdownOpen: !state.isSortByDropdownOpen,
+      ),
+    );
+  }
+
+  void _onClearFilters(
+    ClearFiltersEvent event,
+    Emitter<FilterState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        minValue: 0,
+        maxValue: 9999,
+        rangeValues: const RangeValues(0, 9999),
+        categories: _initialCategories,
+        brands: _initialBrands,
+        selectedBrands: const ['All'],
+        colors: _initialColors,
+        selectedColors: const [],
+        sizes: _initialSizes,
+        selectedSizes: const [],
+        sortBy: _initialSortBy,
+        selectedCategory: 'All',
+        selectedSortBy: 'Featured',
+        isLoadingCategories: false,
+        isLoadingBrands: false,
+        isLoadingSizes: false,
+        isLoadingSortBy: false,
+        categoriesErrorMessage: '',
+        brandsErrorMessage: '',
+        colorsErrorMessage: '',
+        sizesErrorMessage: '',
+        sortByErrorMessage: '',
       ),
     );
   }
