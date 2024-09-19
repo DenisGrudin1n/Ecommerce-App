@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/brand_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/categories_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/filter_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/price_section.dart';
@@ -44,6 +45,7 @@ class _FilterPageState extends State<FilterPage> {
                 children: [
                   // PriceSection widget
                   const PriceSection(),
+
                   const SizedBox(height: 24),
 
                   // Categories
@@ -52,11 +54,7 @@ class _FilterPageState extends State<FilterPage> {
                   const SizedBox(height: 8),
 
                   // Brand
-                  _buildDropdown(
-                    context,
-                    'Brand',
-                    'Lark & Ro, Astylish, ECOWISH, Angashion',
-                  ),
+                  const BrandSection(),
 
                   const SizedBox(height: 8),
 

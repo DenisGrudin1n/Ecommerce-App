@@ -2,67 +2,67 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
+import 'package:ecommerce_app/src/features/home/models/brand_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CategoriesSection extends StatefulWidget {
-  const CategoriesSection({super.key});
+class BrandSection extends StatefulWidget {
+  const BrandSection({super.key});
 
   @override
-  State<CategoriesSection> createState() => _CategoriesSectionState();
+  State<BrandSection> createState() => _BrandSectionState();
 }
 
-class _CategoriesSectionState extends State<CategoriesSection> {
+class _BrandSectionState extends State<BrandSection> {
   @override
   void initState() {
     super.initState();
-    context.read<FilterBloc>().add(LoadCategoriesEvent());
+    context.read<FilterBloc>().add(LoadBrandsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    final categories = context.select<FilterBloc, List<ItemsCategoriesModel>>(
-      (bloc) => bloc.state.categories,
+    final brands = context.select<FilterBloc, List<BrandModel>>(
+      (bloc) => bloc.state.brands,
     );
-    final isLoadingCategories = context.select<FilterBloc, bool>(
-      (bloc) => bloc.state.isLoadingCategories,
+    final isLoadingBrands = context.select<FilterBloc, bool>(
+      (bloc) => bloc.state.isLoadingBrands,
     );
-    final categoriesErrorMessage = context.select<FilterBloc, String>(
-      (bloc) => bloc.state.categoriesErrorMessage,
+    final brandsErrorMessage = context.select<FilterBloc, String>(
+      (bloc) => bloc.state.brandsErrorMessage,
     );
-    final selectedCategory = context.select<FilterBloc, String>(
-      (bloc) => bloc.state.selectedCategory,
+    final selectedBrands = context.select<FilterBloc, List<String>>(
+      (bloc) => bloc.state.selectedBrands,
     );
-    final isDropdownOpen = context.select<FilterBloc, bool>(
-      (bloc) => bloc.state.isCategoryDropdownOpen,
+    final isBrandDropdownOpen = context.select<FilterBloc, bool>(
+      (bloc) => bloc.state.isBrandDropdownOpen,
     );
 
-    if (isLoadingCategories) {
+    if (isLoadingBrands) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (categories.isEmpty) {
+    if (brands.isEmpty) {
       return Text(context.localization.noItemsFoundText);
     }
 
-    if (categoriesErrorMessage.isNotEmpty) {
-      return Center(child: Text(categoriesErrorMessage));
+    if (brandsErrorMessage.isNotEmpty) {
+      return Center(child: Text(brandsErrorMessage));
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.localization.filterPageCategoriesText,
+          context.localization.filterPageBrandsText,
           style: FilterPageTextStyles.sectionNameTextStyle,
         ),
         const SizedBox(height: 8),
         GestureDetector(
           onTap: () {
-            context.read<FilterBloc>().add(ToggleCategoryDropdownEvent());
+            context.read<FilterBloc>().add(ToggleBrandDropdownEvent());
           },
           child: Container(
             height: 48,
@@ -77,12 +77,12 @@ class _CategoriesSectionState extends State<CategoriesSection> {
               children: [
                 Expanded(
                   child: Text(
-                    selectedCategory,
+                    selectedBrands.join(', '),
                     overflow: TextOverflow.ellipsis,
                     style: FilterPageTextStyles.valueTextStyle,
                   ),
                 ),
-                if (isDropdownOpen)
+                if (isBrandDropdownOpen)
                   AppIcons.filterPageCategoriesOpenedIcon
                 else
                   AppIcons.filterPageCategoriesNotOpenedIcon,
@@ -90,15 +90,12 @@ class _CategoriesSectionState extends State<CategoriesSection> {
             ),
           ),
         ),
-        if (isDropdownOpen) ...[
+        if (isBrandDropdownOpen) ...[
           const SizedBox(height: 8),
-          ...categories.map(
-            (category) => GestureDetector(
+          ...brands.map(
+            (brand) => GestureDetector(
               onTap: () {
-                context
-                    .read<FilterBloc>()
-                    .add(ChangeCategoryEvent(category.name));
-                context.read<FilterBloc>().add(ToggleCategoryDropdownEvent());
+                context.read<FilterBloc>().add(ChangeBrandEvent(brand.name));
               },
               child: Container(
                 width: 175,
@@ -118,12 +115,12 @@ class _CategoriesSectionState extends State<CategoriesSection> {
                   children: [
                     Expanded(
                       child: Text(
-                        category.name,
+                        brand.name,
                         overflow: TextOverflow.ellipsis,
                         style: FilterPageTextStyles.valueTextStyle,
                       ),
                     ),
-                    if (selectedCategory == category.name)
+                    if (selectedBrands.contains(brand.name))
                       const Icon(
                         Icons.check,
                         color: AppColors.greyColor,

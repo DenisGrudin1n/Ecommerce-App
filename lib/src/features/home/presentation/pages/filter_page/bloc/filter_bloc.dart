@@ -15,7 +15,10 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     on<ChangeRangeSliderEvent>(_onRangeSliderChanged);
     on<LoadCategoriesEvent>(_onLoadCategoriesChanged);
     on<ChangeCategoryEvent>(_onCategoryChanged);
-    on<ToggleDropdownEvent>(_onToggleDropdown);
+    on<ToggleCategoryDropdownEvent>(_onToggleCategoryDropdown);
+    on<LoadBrandsEvent>(_onLoadBrandsChanged);
+    on<ChangeBrandEvent>(_onBrandChanged);
+    on<ToggleBrandDropdownEvent>(_onToggleBrandDropdown);
   }
 
   final StorageRepository storageRepository;
@@ -110,13 +113,90 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     );
   }
 
-  void _onToggleDropdown(
-    ToggleDropdownEvent event,
+  void _onToggleCategoryDropdown(
+    ToggleCategoryDropdownEvent event,
     Emitter<FilterState> emit,
   ) {
     emit(
       state.copyWith(
-        isDropdownOpen: !state.isDropdownOpen,
+        isCategoryDropdownOpen: !state.isCategoryDropdownOpen,
+      ),
+    );
+  }
+
+  Future<void> _onLoadBrandsChanged(
+    LoadBrandsEvent event,
+    Emitter<FilterState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        isLoadingBrands: true,
+        brandsErrorMessage: '',
+      ),
+    );
+
+    try {
+      final brands = await firestoreRepository.getAllBrands();
+      emit(
+        state.copyWith(
+          brands: brands,
+          isLoadingBrands: false,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          brandsErrorMessage: e.toString(),
+          isLoadingBrands: false,
+        ),
+      );
+    }
+  }
+
+  void _onBrandChanged(
+    ChangeBrandEvent event,
+    Emitter<FilterState> emit,
+  ) {
+    final brandName = event.brandName;
+    final currentSelectedBrands = List<String>.from(state.selectedBrands);
+
+    if (brandName == 'All') {
+      // Якщо вибрано "All", то всі інші бренди знімаються
+      currentSelectedBrands
+        ..clear()
+        ..add('All');
+    } else {
+      // Якщо вибрано інший бренд, прибираємо "All"
+      currentSelectedBrands.remove('All');
+
+      if (currentSelectedBrands.contains(brandName)) {
+        // Якщо бренд вже обрано, то знімаємо його
+        currentSelectedBrands.remove(brandName);
+      } else {
+        // Додаємо новий бренд
+        currentSelectedBrands.add(brandName);
+      }
+
+      // Якщо після цього список порожній, додаємо "All"
+      if (currentSelectedBrands.isEmpty) {
+        currentSelectedBrands.add('All');
+      }
+    }
+
+    emit(
+      state.copyWith(
+        selectedBrands: currentSelectedBrands,
+      ),
+    );
+  }
+
+  void _onToggleBrandDropdown(
+    ToggleBrandDropdownEvent event,
+    Emitter<FilterState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isBrandDropdownOpen: !state.isBrandDropdownOpen,
       ),
     );
   }

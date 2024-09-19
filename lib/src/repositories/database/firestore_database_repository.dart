@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_app/src/features/home/models/brand_model.dart';
 import 'package:ecommerce_app/src/features/home/models/catalogue_model.dart';
 import 'package:ecommerce_app/src/features/home/models/catalogue_subcategories_model.dart';
 import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
@@ -167,6 +168,14 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
     return fetchCollectionData<ItemsCategoriesModel>(
       collectionPath: 'catalogue/catalogue/itemsCategories',
       fromSnapshot: ItemsCategoriesModel.fromSnapshot,
+    );
+  }
+
+  @override
+  Future<List<BrandModel>> getAllBrands() {
+    return fetchCollectionData<BrandModel>(
+      collectionPath: 'catalogue/catalogue/filters/brands/brands',
+      fromSnapshot: BrandModel.fromSnapshot,
     );
   }
 }

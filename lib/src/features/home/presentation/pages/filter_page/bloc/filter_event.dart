@@ -42,4 +42,16 @@ class ChangeCategoryEvent extends FilterEvent {
   List<Object?> get props => [selectedCategory];
 }
 
-class ToggleDropdownEvent extends FilterEvent {}
+class ToggleCategoryDropdownEvent extends FilterEvent {}
+
+class LoadBrandsEvent extends FilterEvent {}
+
+class ChangeBrandEvent extends FilterEvent {
+  const ChangeBrandEvent(this.brandName);
+  final String brandName;
+
+  @override
+  List<Object?> get props => [brandName];
+}
+
+class ToggleBrandDropdownEvent extends FilterEvent {}

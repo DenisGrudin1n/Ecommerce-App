@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/src/features/home/models/brand_model.dart';
 import 'package:ecommerce_app/src/features/home/models/catalogue_model.dart';
 import 'package:ecommerce_app/src/features/home/models/catalogue_subcategories_model.dart';
 import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
@@ -18,4 +19,5 @@ abstract class DatabaseRepository {
   Future<List<ItemsCategoriesModel>> getAllItemsCategories();
   Future<List<FashionSaleModel>> getAllFashionSaleImages();
   Future<List<CatalogueSubcategoriesModel>> getAllCatalogueSubcategories();
+  Future<List<BrandModel>> getAllBrands();
 }
