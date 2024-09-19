@@ -9,6 +9,7 @@ import 'package:ecommerce_app/src/features/home/models/featured_product_model.da
 import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
 import 'package:ecommerce_app/src/features/home/models/items_model.dart';
 import 'package:ecommerce_app/src/features/home/models/size_model.dart';
+import 'package:ecommerce_app/src/features/home/models/sort_by_model.dart';
 import 'package:ecommerce_app/src/features/login/models/get_started_gif_model.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 
@@ -185,6 +186,14 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
     return fetchCollectionData<SizeModel>(
       collectionPath: 'catalogue/catalogue/filters/sizes/sizes',
       fromSnapshot: SizeModel.fromSnapshot,
+    );
+  }
+
+  @override
+  Future<List<SortByModel>> getAllSortBy() {
+    return fetchCollectionData<SortByModel>(
+      collectionPath: 'catalogue/catalogue/filters/sortBy/sortBy',
+      fromSnapshot: SortByModel.fromSnapshot,
     );
   }
 }

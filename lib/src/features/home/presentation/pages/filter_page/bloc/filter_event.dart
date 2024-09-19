@@ -75,3 +75,15 @@ class ChangeSizeEvent extends FilterEvent {
   @override
   List<Object?> get props => [size];
 }
+
+class LoadSortByEvent extends FilterEvent {}
+
+class ChangeSortByEvent extends FilterEvent {
+  const ChangeSortByEvent(this.selectedSortBy);
+  final String selectedSortBy;
+
+  @override
+  List<Object?> get props => [selectedSortBy];
+}
+
+class ToggleSortByDropdownEvent extends FilterEvent {}

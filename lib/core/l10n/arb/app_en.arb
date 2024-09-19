@@ -36,6 +36,8 @@
     "filterPageBrandsText": "Brands",
     "filterPageColorsText": "Colors",
     "filterPageSizesText": "Sizes",
+    "filterPageSortByText": "Sort By",
+    "filterPageResultsText": "Results",
     "bottomNavBarHomeText": "Home",
     "bottomNavBarCatalogueText": "Catalogue",
     "bottomNavBarFavoriteText": "Favorite",

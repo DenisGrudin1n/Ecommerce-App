@@ -395,6 +395,15 @@ class FilterPageTextStyles {
     height: 19 / 14,
     letterSpacing: -0.15,
   );
+
+  static TextStyle resultsTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+    height: 22 / 17,
+    letterSpacing: 0,
+  );
 }
 
 class BottomNavBarTextStyles {

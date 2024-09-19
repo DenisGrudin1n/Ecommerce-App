@@ -6,7 +6,9 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/w
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/colors_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/filter_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/price_section.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/results_button.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/size_section.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/sort_by_section.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +34,11 @@ class _FilterPageState extends State<FilterPage> {
         backgroundColor: AppColors.lightBackgroundColor,
         body: ListView(
           padding: EdgeInsets.zero,
-          children: [
-            const FilterAppbar(), // Fixed Appbar
+          children: const [
+            FilterAppbar(), // Fixed Appbar
             // Body
             Padding(
-              padding: const EdgeInsets.only(
+              padding: EdgeInsets.only(
                 left: 16,
                 right: 16,
                 top: 24,
@@ -46,105 +48,43 @@ class _FilterPageState extends State<FilterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // PriceSection widget
-                  const PriceSection(),
+                  PriceSection(),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Categories
-                  const CategoriesSection(),
+                  CategoriesSection(),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Brand
-                  const BrandSection(),
+                  BrandSection(),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Colors
-                  const ColorsSection(),
+                  ColorsSection(),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Sizes
-                  const SizeSection(),
+                  SizeSection(),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Sort by
-                  _buildDropdown(context, 'Sort by', 'Featured'),
+                  SortBySection(),
 
-                  // Adjust the spacing
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32),
 
                   // Results button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.yellowColor,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text(
-                        'Results (166)',
-                        style: TextStyle(
-                          color: AppColors.whiteColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
+                  ResultsButton(),
                 ],
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  // Drop down menu widget
-  Widget _buildDropdown(BuildContext context, String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        GestureDetector(
-          onTap: () {
-            // Logic for opening/closing menu
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-            decoration: BoxDecoration(
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    value,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                const Icon(Icons.chevron_right, color: AppColors.darkGreyColor),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -24,6 +24,9 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     on<ChangeColorEvent>(_onColorChanged);
     on<LoadSizesEvent>(_onLoadSizesChanged);
     on<ChangeSizeEvent>(_onSizeChanged);
+    on<LoadSortByEvent>(_onLoadSortByChanged);
+    on<ChangeSortByEvent>(_onSortByChanged);
+    on<ToggleSortByDropdownEvent>(_onToggleSortByDropdown);
   }
 
   final StorageRepository storageRepository;
@@ -260,5 +263,56 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
       selectedSizes.add(event.size);
     }
     emit(state.copyWith(selectedSizes: selectedSizes));
+  }
+
+  Future<void> _onLoadSortByChanged(
+    LoadSortByEvent event,
+    Emitter<FilterState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        isLoadingSortBy: true,
+        sortByErrorMessage: '',
+      ),
+    );
+
+    try {
+      final sortBy = await firestoreRepository.getAllSortBy();
+      emit(
+        state.copyWith(
+          sortBy: sortBy,
+          isLoadingSortBy: false,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          sortByErrorMessage: e.toString(),
+          isLoadingSortBy: false,
+        ),
+      );
+    }
+  }
+
+  void _onSortByChanged(
+    ChangeSortByEvent event,
+    Emitter<FilterState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedSortBy: event.selectedSortBy,
+      ),
+    );
+  }
+
+  void _onToggleSortByDropdown(
+    ToggleSortByDropdownEvent event,
+    Emitter<FilterState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isSortByDropdownOpen: !state.isSortByDropdownOpen,
+      ),
+    );
   }
 }
