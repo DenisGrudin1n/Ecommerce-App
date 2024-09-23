@@ -9,6 +9,7 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/profile_page/
 import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/enter_phone_page.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page/get_started_page.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/verification_page.dart';
+import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/product_page.dart';
 import 'package:flutter/material.dart';
 
 part 'router.gr.dart';
@@ -45,6 +46,10 @@ class AppRouter extends RootStackRouter {
 
         AutoRoute(
           page: FilterRoute.page,
+          //initial: true,
+        ),
+        AutoRoute(
+          page: ProductRoute.page,
           initial: true,
         ),
       ];

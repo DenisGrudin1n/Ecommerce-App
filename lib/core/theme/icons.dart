@@ -136,4 +136,16 @@ class AppIcons {
     color: AppColors.greyColor,
     size: 18,
   );
+
+  static const Icon starIcon = Icon(
+    Icons.star,
+    color: AppColors.orangeColor,
+    size: 12,
+  );
+
+  static const Icon productPageStarIcon = Icon(
+    Icons.star,
+    color: AppColors.orangeColor,
+    size: 16,
+  );
 }

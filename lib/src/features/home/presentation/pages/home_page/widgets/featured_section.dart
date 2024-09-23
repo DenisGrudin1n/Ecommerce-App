@@ -1,7 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
@@ -80,7 +83,9 @@ class _FeaturedSectionState extends State<FeaturedSection> {
     return Stack(
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            context.router.push(const ProductRoute());
+          },
           child: Container(
             decoration: BoxDecoration(
               color: AppColors.lightBackgroundColor,
@@ -113,11 +118,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                 Row(
                   children: List.generate(
                     5,
-                    (starIndex) => const Icon(
-                      Icons.star,
-                      color: AppColors.orangeColor,
-                      size: 12,
-                    ),
+                    (starIndex) => AppIcons.starIcon,
                   ),
                 ),
                 const SizedBox(height: 8),

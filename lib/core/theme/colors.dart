@@ -13,7 +13,8 @@ class AppColors {
   static const Color redColor = Color.fromARGB(255, 206, 62, 62);
   static const Color orangeColor = Color.fromARGB(255, 242, 153, 74);
   static const Color blackColor = Colors.black;
-  static const Color greenColor = Color.fromARGB(255, 118, 181, 89);
+  static const Color lightGreenColor = Color.fromARGB(255, 118, 181, 89);
+  static const Color greenColor = Color.fromARGB(255, 70, 171, 98);
   static const Color blueColor = Color.fromARGB(255, 93, 114, 225);
   static const Color purpleColor = Color.fromARGB(255, 183, 104, 185);
   static const Color lightYellowColor = Color.fromARGB(255, 229, 210, 39);

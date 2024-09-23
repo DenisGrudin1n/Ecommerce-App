@@ -223,7 +223,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     final colors = [
       AppColors.darkColor,
       AppColors.redColor,
-      AppColors.greenColor,
+      AppColors.lightGreenColor,
       AppColors.blueColor,
       AppColors.purpleColor,
       AppColors.lightYellowColor,

@@ -406,6 +406,64 @@ class FilterPageTextStyles {
   );
 }
 
+class ProductPageTextStyles {
+  static TextStyle reviewsCountTextStyle = const TextStyle(
+    fontSize: 12,
+    fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+  );
+
+  static TextStyle inStockTextStyle = const TextStyle(
+    fontSize: 12,
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w700,
+    color: AppColors.lightGreenColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+  );
+
+  static TextStyle productNameTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
+    fontSize: 19,
+    color: AppColors.darkColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
+
+  static TextStyle productRedPriceTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    color: AppColors.redColor,
+    fontSize: 25,
+    fontWeight: FontWeight.w700,
+    height: 31 / 25,
+    letterSpacing: 0.35,
+  );
+
+  static TextStyle productGreyPriceTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    color: AppColors.greyColor,
+    fontSize: 22,
+    fontWeight: FontWeight.w400,
+    height: 27 / 22,
+    letterSpacing: 0.2,
+    decoration: TextDecoration.lineThrough,
+    decorationColor: AppColors.greyColor,
+  );
+
+  static TextStyle productDarkPriceTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    color: AppColors.darkColor,
+    fontSize: 25,
+    fontWeight: FontWeight.w700,
+    height: 31 / 25,
+    letterSpacing: 0.35,
+  );
+}
+
 class BottomNavBarTextStyles {
   static TextStyle bottomNavBarNotActiveIconTextStyle = const TextStyle(
     fontFamily: 'SFProText',
