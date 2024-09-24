@@ -16,39 +16,37 @@ class FilterAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 88,
+      padding: const EdgeInsets.only(
+        left: 16,
+        right: 16,
+        top: 30,
+      ),
       decoration: const BoxDecoration(
         gradient: AppGradients.purpleGradient,
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 16,
-          right: 16,
-          top: 30,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: AppIcons.arrowBackIcon,
-              onPressed: () {
-                context.router.push(const ItemsRoute());
-              },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: AppIcons.arrowBackIcon,
+            onPressed: () {
+              context.router.push(const ItemsRoute());
+            },
+          ),
+          Text(
+            context.localization.filterPageFilterText,
+            style: CataloguePageTextStyles.catalogueTextStyle,
+          ),
+          GestureDetector(
+            onTap: () {
+              context.read<FilterBloc>().add(ClearFiltersEvent());
+            },
+            child: Text(
+              context.localization.filterPageClearText,
+              style: FilterPageTextStyles.clearTextStyle,
             ),
-            Text(
-              context.localization.filterPageFilterText,
-              style: CataloguePageTextStyles.catalogueTextStyle,
-            ),
-            GestureDetector(
-              onTap: () {
-                context.read<FilterBloc>().add(ClearFiltersEvent());
-              },
-              child: Text(
-                context.localization.filterPageClearText,
-                style: FilterPageTextStyles.clearTextStyle,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

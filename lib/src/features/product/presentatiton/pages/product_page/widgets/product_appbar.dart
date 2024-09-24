@@ -82,174 +82,176 @@ class _ProductAppbarState extends State<ProductAppbar> {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Image Section
-            if (isLoadingAppbarProduct)
-              const Center(child: CircularProgressIndicator())
-            else
-              Stack(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width,
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                appbarProducts[0].imageUrls[index],
-                              ),
-                              fit: BoxFit.contain,
+    return Container(
+      padding: const EdgeInsets.only(
+        left: 16,
+        right: 16,
+        bottom: 24,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Image Section
+          if (isLoadingAppbarProduct)
+            const Center(child: CircularProgressIndicator())
+          else
+            Stack(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.width,
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              appbarProducts[0].imageUrls[index],
                             ),
-                            color: AppColors.whiteColor,
+                            fit: BoxFit.contain,
                           ),
-                          child: appbarProducts[0].imageUrls[0].isEmpty
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : null,
-                        );
-                      },
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 25,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: SmoothPageIndicator(
-                        controller: _pageController,
-                        count: 3,
-                        effect: WormEffect(
-                          activeDotColor: AppColors.whiteColor,
-                          dotColor: AppColors.lightGreyColor.withOpacity(0.5),
-                          dotHeight: 8,
-                          dotWidth: 8,
-                          spacing: 4,
+                          color: AppColors.whiteColor,
                         ),
+                        child: appbarProducts[0].imageUrls[0].isEmpty
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : null,
+                      );
+                    },
+                  ),
+                ),
+                Positioned(
+                  bottom: 25,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: SmoothPageIndicator(
+                      controller: _pageController,
+                      count: 3,
+                      effect: WormEffect(
+                        activeDotColor: AppColors.whiteColor,
+                        dotColor: AppColors.lightGreyColor.withOpacity(0.5),
+                        dotHeight: 8,
+                        dotWidth: 8,
+                        spacing: 4,
                       ),
                     ),
                   ),
-                ],
-              ),
-            Row(
-              children: [
-                Row(
-                  children: List.generate(
-                    5,
-                    (starIndex) => AppIcons.productPageStarIcon,
-                  ),
-                ),
-                const SizedBox(
-                  width: 4,
-                ),
-                Text(
-                  context.localization.productPageReviewsCountText,
-                  style: ProductPageTextStyles.reviewsCountTextStyle,
-                ),
-                const Spacer(),
-                Text(
-                  context.localization.productPageInStockText,
-                  style: ProductPageTextStyles.inStockTextStyle,
                 ),
               ],
             ),
-            const SizedBox(height: 14),
-            // Product Name
-            Text(
-              appbarProducts[0].name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: ProductPageTextStyles.productNameTextStyle,
-            ),
-            const SizedBox(height: 14),
-            // Price Section
-            if (appbarProducts[0].oldPrice != null &&
-                appbarProducts[0].oldPrice!.isNotEmpty)
+          Row(
+            children: [
               Row(
-                children: [
-                  Text(
-                    '\$${appbarProducts[0].price}',
-                    style: ProductPageTextStyles.productRedPriceTextStyle,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    '\$${appbarProducts[0].oldPrice}',
-                    style: ProductPageTextStyles.productGreyPriceTextStyle,
-                  ),
-                ],
-              )
-            else
-              Text(
-                '\$${appbarProducts[0].price}',
-                style: ProductPageTextStyles.productDarkPriceTextStyle,
+                children: List.generate(
+                  5,
+                  (starIndex) => AppIcons.productPageStarIcon,
+                ),
               ),
-
-            const SizedBox(height: 16),
-
-            if (isLoadingColorsPics)
-              const Center(child: CircularProgressIndicator())
-            else if (colorsPicsErrorMessage.isNotEmpty)
-              Text(errorMessage)
-            else
-              Text(
-                context.localization.filterPageColorsText,
-                style: FilterPageTextStyles.sectionNameTextStyle,
+              const SizedBox(
+                width: 4,
               ),
-            const SizedBox(height: 8),
+              Text(
+                context.localization.productPageReviewsCountText,
+                style: ProductPageTextStyles.reviewsCountTextStyle,
+              ),
+              const Spacer(),
+              Text(
+                context.localization.productPageInStockText,
+                style: ProductPageTextStyles.inStockTextStyle,
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          // Product Name
+          Text(
+            appbarProducts[0].name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: ProductPageTextStyles.productNameTextStyle,
+          ),
+          const SizedBox(height: 14),
+          // Price Section
+          if (appbarProducts[0].oldPrice != null &&
+              appbarProducts[0].oldPrice!.isNotEmpty)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: colorsPics.map((colorPic) {
-                return GestureDetector(
-                  onTap: () {
-                    context
-                        .read<ProductBloc>()
-                        .add(ChangeAppbarColorPicEvent(colorPic.imageUrl));
-                  },
-                  child: _buildColorsPicsItem(colorPic, selectedColorPic),
-                );
-              }).toList(),
+              children: [
+                Text(
+                  '\$${appbarProducts[0].price}',
+                  style: ProductPageTextStyles.productRedPriceTextStyle,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  '\$${appbarProducts[0].oldPrice}',
+                  style: ProductPageTextStyles.productGreyPriceTextStyle,
+                ),
+              ],
+            )
+          else
+            Text(
+              '\$${appbarProducts[0].price}',
+              style: ProductPageTextStyles.productDarkPriceTextStyle,
             ),
 
-            const SizedBox(height: 16),
+          const SizedBox(height: 16),
 
-            if (isLoadingSizes)
-              const Center(child: CircularProgressIndicator())
-            else if (sizesErrorMessage.isNotEmpty)
-              Text(errorMessage)
-            else
-              Text(
-                context.localization.filterPageSizesText,
-                style: FilterPageTextStyles.sectionNameTextStyle,
-              ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: sizes.map((size) {
-                return GestureDetector(
-                  onTap: () {
-                    context
-                        .read<ProductBloc>()
-                        .add(ChangeAppbarSizeEvent(size.name));
-                  },
-                  child: _buildSizeButton(size, selectedSize),
-                );
-              }).toList(),
+          if (isLoadingColorsPics)
+            const Center(child: CircularProgressIndicator())
+          else if (colorsPicsErrorMessage.isNotEmpty)
+            Text(errorMessage)
+          else
+            Text(
+              context.localization.filterPageColorsText,
+              style: FilterPageTextStyles.sectionNameTextStyle,
             ),
-          ],
-        ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: colorsPics.map((colorPic) {
+              return GestureDetector(
+                onTap: () {
+                  context
+                      .read<ProductBloc>()
+                      .add(ChangeAppbarColorPicEvent(colorPic.imageUrl));
+                },
+                child: _buildColorsPicsItem(colorPic, selectedColorPic),
+              );
+            }).toList(),
+          ),
+
+          const SizedBox(height: 16),
+
+          if (isLoadingSizes)
+            const Center(child: CircularProgressIndicator())
+          else if (sizesErrorMessage.isNotEmpty)
+            Text(errorMessage)
+          else
+            Text(
+              context.localization.filterPageSizesText,
+              style: FilterPageTextStyles.sectionNameTextStyle,
+            ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: sizes.map((size) {
+              return GestureDetector(
+                onTap: () {
+                  context
+                      .read<ProductBloc>()
+                      .add(ChangeAppbarSizeEvent(size.name));
+                },
+                child: _buildSizeButton(size, selectedSize),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }

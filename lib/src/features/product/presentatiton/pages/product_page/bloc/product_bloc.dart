@@ -121,7 +121,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   void _onAppbarSizeChanged(
-      ChangeAppbarSizeEvent event, Emitter<ProductState> emit) {
+    ChangeAppbarSizeEvent event,
+    Emitter<ProductState> emit,
+  ) {
     if (state.selectedAppbarProductsSizes.contains(event.size)) {
       emit(state.copyWith(selectedAppbarProductsSizes: []));
     } else {

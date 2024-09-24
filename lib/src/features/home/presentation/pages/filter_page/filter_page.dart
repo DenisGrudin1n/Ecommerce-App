@@ -10,7 +10,6 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/w
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/size_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/widgets/sort_by_section.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
-import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +26,6 @@ class _FilterPageState extends State<FilterPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => FilterBloc(
-        storageRepository: context.read<StorageRepository>(),
         firestoreRepository: context.read<DatabaseRepository>(),
       ),
       child: Scaffold(
