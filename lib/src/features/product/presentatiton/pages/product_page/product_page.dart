@@ -4,6 +4,7 @@ import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_p
 import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/bloc/product_event.dart';
 import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/widgets/product_appbar.dart';
 import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/widgets/product_details.dart';
+import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/widgets/product_reviews.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,14 @@ class _ProductPageState extends State<ProductPage> {
             ),
             SliverToBoxAdapter(
               child: ProductDetails(),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.only(
+                bottom: 8,
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: ProductReviews(),
             ),
           ],
         ),

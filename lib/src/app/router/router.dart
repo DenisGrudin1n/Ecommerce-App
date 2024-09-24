@@ -46,11 +46,11 @@ class AppRouter extends RootStackRouter {
 
         AutoRoute(
           page: FilterRoute.page,
-          initial: true,
+          //initial: true,
         ),
         AutoRoute(
           page: ProductRoute.page,
-          //initial: true,
+          initial: true,
         ),
       ];
 }
