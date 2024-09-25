@@ -4,6 +4,7 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bl
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/bloc/product_bloc.dart';
 import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/bloc/product_event.dart';
+import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/widgets/add_to_cart.dart';
 import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/widgets/product_appbar.dart';
 import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/widgets/product_details.dart';
 import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/widgets/product_reviews.dart';
@@ -40,34 +41,27 @@ class _ProductPageState extends State<ProductPage> {
         ),
       ],
       child: const Scaffold(
-        backgroundColor: AppColors.lightGreyColor,
-        body: CustomScrollView(
-          slivers: [
-            // AppBar & SearchBar
-            SliverToBoxAdapter(child: ProductAppbar()),
-            SliverPadding(
-              padding: EdgeInsets.only(
-                bottom: 8,
-              ),
+        backgroundColor: AppColors.lightBackgroundColor,
+        body: Stack(
+          children: [
+            // Scrollable content
+            CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(child: ProductAppbar()),
+                SliverPadding(padding: EdgeInsets.only(bottom: 8)),
+                SliverToBoxAdapter(child: ProductDetails()),
+                SliverPadding(padding: EdgeInsets.only(bottom: 8)),
+                SliverToBoxAdapter(child: ProductReviews()),
+                SliverPadding(padding: EdgeInsets.only(bottom: 8)),
+                SliverToBoxAdapter(child: RelatedProducts()),
+              ],
             ),
-            SliverToBoxAdapter(
-              child: ProductDetails(),
-            ),
-            SliverPadding(
-              padding: EdgeInsets.only(
-                bottom: 8,
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: ProductReviews(),
-            ),
-            SliverPadding(
-              padding: EdgeInsets.only(
-                bottom: 8,
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: RelatedProducts(),
+            // Fixed AddToCart button
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: AddToCart(),
             ),
           ],
         ),

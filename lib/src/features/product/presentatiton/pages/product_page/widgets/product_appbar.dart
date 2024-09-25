@@ -217,9 +217,12 @@ class _ProductAppbarState extends State<ProductAppbar> {
             children: colorsPics.map((colorPic) {
               return GestureDetector(
                 onTap: () {
-                  context
-                      .read<ProductBloc>()
-                      .add(ChangeAppbarColorPicEvent(colorPic.imageUrl));
+                  context.read<ProductBloc>().add(
+                        ChangeColorPicEvent(
+                          colorPic.imageUrl,
+                          colorPic.imageUrl,
+                        ),
+                      );
                 },
                 child: _buildColorsPicsItem(colorPic, selectedColorPic),
               );

@@ -10,8 +10,13 @@ class ProductState extends Equatable {
     this.appbarProductsColorsPics = const [],
     this.selectedAppbarProductsSizes = const [],
     this.selectedAppbarProductsColorPics = const [],
+    this.selectedImageUrl = '',
+    this.counter = 1,
     this.isLoadingAppbarProducts = false,
     this.isLoadingAppbarProductsSizes = false,
+    this.isCommentHelpful = false,
+    this.isCartExpanded = false,
+    this.isProductFavorite = false,
     this.isLoadingAppbarColorsPics = false,
     this.appbarProductsErrorMessage = '',
     this.appbarProductsSizesErrorMessage = '',
@@ -23,10 +28,16 @@ class ProductState extends Equatable {
   final List<AppbarColorPicModel> appbarProductsColorsPics;
   final List<String> selectedAppbarProductsSizes;
   final List<String> selectedAppbarProductsColorPics;
+  final String selectedImageUrl;
+
+  final int counter;
 
   final bool isLoadingAppbarProducts;
   final bool isLoadingAppbarColorsPics;
   final bool isLoadingAppbarProductsSizes;
+  final bool isCommentHelpful;
+  final bool isCartExpanded;
+  final bool isProductFavorite;
 
   final String appbarProductsErrorMessage;
   final String appbarProductsSizesErrorMessage;
@@ -38,9 +49,14 @@ class ProductState extends Equatable {
     List<AppbarColorPicModel>? appbarProductsColorsPics,
     List<String>? selectedAppbarProductsSizes,
     List<String>? selectedAppbarProductsColorPics,
+    String? selectedImageUrl,
+    int? counter,
     bool? isLoadingAppbarProducts,
     bool? isLoadingAppbarColorsPics,
     bool? isLoadingAppbarProductsSizes,
+    bool? isCommentHelpful,
+    bool? isCartExpanded,
+    bool? isProductFavorite,
     String? appbarProductsErrorMessage,
     String? appbarProductsSizesErrorMessage,
     String? appbarProductsColorsPicsErrorMessage,
@@ -54,12 +70,17 @@ class ProductState extends Equatable {
           selectedAppbarProductsSizes ?? this.selectedAppbarProductsSizes,
       selectedAppbarProductsColorPics: selectedAppbarProductsColorPics ??
           this.selectedAppbarProductsColorPics,
+      selectedImageUrl: selectedImageUrl ?? this.selectedImageUrl,
+      counter: counter ?? this.counter,
       isLoadingAppbarProducts:
           isLoadingAppbarProducts ?? this.isLoadingAppbarProducts,
       isLoadingAppbarColorsPics:
           isLoadingAppbarColorsPics ?? this.isLoadingAppbarColorsPics,
       isLoadingAppbarProductsSizes:
           isLoadingAppbarProductsSizes ?? this.isLoadingAppbarProductsSizes,
+      isCartExpanded: isCartExpanded ?? this.isCartExpanded,
+      isCommentHelpful: isCommentHelpful ?? this.isCommentHelpful,
+      isProductFavorite: isProductFavorite ?? this.isProductFavorite,
       appbarProductsErrorMessage:
           appbarProductsErrorMessage ?? this.appbarProductsErrorMessage,
       appbarProductsSizesErrorMessage: appbarProductsSizesErrorMessage ??
@@ -77,9 +98,14 @@ class ProductState extends Equatable {
         appbarProductsColorsPics,
         selectedAppbarProductsSizes,
         selectedAppbarProductsColorPics,
+        selectedImageUrl,
+        counter,
         isLoadingAppbarProducts,
         isLoadingAppbarColorsPics,
         isLoadingAppbarProductsSizes,
+        isCommentHelpful,
+        isCartExpanded,
+        isProductFavorite,
         appbarProductsErrorMessage,
         appbarProductsSizesErrorMessage,
         appbarProductsColorsPicsErrorMessage,

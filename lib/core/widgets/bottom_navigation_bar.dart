@@ -67,7 +67,9 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                       tabsRouter,
                     ),
                     AnimatedContainer(
-                      duration: const Duration(milliseconds: 500),
+                      duration: Duration(
+                        milliseconds: _isCartClosed ? 0 : 400,
+                      ),
                       curve: Curves.easeInOut,
                       width: _isCartClosed ? 45 : 105,
                     ),
@@ -135,7 +137,9 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
         });
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 500),
+        duration: Duration(
+          milliseconds: _isCartClosed ? 0 : 400,
+        ),
         curve: Curves.easeInOut,
         height: 60,
         width: _isCartClosed ? 65 : 120,
@@ -152,31 +156,35 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
         ),
         child: _isCartClosed
             ? AppIcons.shoppingCartIcon
-            : Row(
-                children: [
-                  AppIcons.shoppingCartIcon,
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        context.localization.bottomNavBarShoppingCartPriceText,
-                        style: BottomNavBarTextStyles
-                            .bottomNavBarShoppingCartPriceTextStyle,
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        context.localization.bottomNavBarShoppingCartItemText,
-                        style: BottomNavBarTextStyles
-                            .bottomNavBarShoppingCartItemCountTextStyle,
-                      ),
-                    ],
-                  ),
-                ],
+            : SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    AppIcons.shoppingCartIcon,
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          context
+                              .localization.bottomNavBarShoppingCartPriceText,
+                          style: BottomNavBarTextStyles
+                              .bottomNavBarShoppingCartPriceTextStyle,
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          context.localization.bottomNavBarShoppingCartItemText,
+                          style: BottomNavBarTextStyles
+                              .bottomNavBarShoppingCartItemCountTextStyle,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
       ),
     );

@@ -164,7 +164,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
           top: 152,
           right: 8,
           child: Container(
-            padding: const EdgeInsets.all(6),
+            padding: EdgeInsets.zero,
             width: 36,
             height: 36,
             decoration: BoxDecoration(
@@ -177,18 +177,22 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                 ),
               ],
             ),
-            child: index != 1
-                ? const GradientIcon(
-                    icon: Icons.favorite_border,
-                    size: 20,
-                    gradient: AppGradients.purpleGradient,
-                    strokeWidth: 1,
-                  )
-                : const Icon(
-                    Icons.favorite,
-                    size: 20,
-                    color: AppColors.yellowColor,
-                  ),
+            child: Center(
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  // context.read<ProductBloc>().add(ToggleProductFavoriteEvent());
+                },
+                icon: index == 1
+                    ? AppIcons.smallFavoriteProductIcon
+                    : const GradientIcon(
+                        icon: Icons.favorite_border,
+                        size: 20,
+                        gradient: AppGradients.purpleGradient,
+                        strokeWidth: 1,
+                      ),
+              ),
+            ),
           ),
         ),
         if (index == 0)

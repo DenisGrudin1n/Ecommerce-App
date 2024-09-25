@@ -21,10 +21,21 @@ class ChangeAppbarSizeEvent extends ProductEvent {
 
 class LoadAppbarColorsPicsEvent extends ProductEvent {}
 
-class ChangeAppbarColorPicEvent extends ProductEvent {
-  const ChangeAppbarColorPicEvent(this.colorPic);
+class ChangeColorPicEvent extends ProductEvent {
+  const ChangeColorPicEvent(this.colorPic, this.selectedImageUrl);
   final String colorPic;
+  final String selectedImageUrl;
 
   @override
-  List<Object?> get props => [colorPic];
+  List<Object?> get props => [colorPic, selectedImageUrl];
 }
+
+class ToggleCommentHelpfulEvent extends ProductEvent {}
+
+class ToggleCartSizeEvent extends ProductEvent {}
+
+class ToggleProductFavoriteEvent extends ProductEvent {}
+
+class IncrementCounterEvent extends ProductEvent {}
+
+class DecrementCounterEvent extends ProductEvent {}

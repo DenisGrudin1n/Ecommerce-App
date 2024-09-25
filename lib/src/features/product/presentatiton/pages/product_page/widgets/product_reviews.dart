@@ -1,7 +1,10 @@
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/bloc/product_bloc.dart';
+import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/bloc/product_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductReviews extends StatelessWidget {
@@ -9,6 +12,9 @@ class ProductReviews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isCommentHelpful = context.select<ProductBloc, bool>(
+      (bloc) => bloc.state.isCommentHelpful,
+    );
     return Container(
       padding: const EdgeInsets.only(
         top: 24,
@@ -110,9 +116,9 @@ class ProductReviews extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          const Row(
+          Row(
             children: [
-              Text(
+              const Text(
                 'Comment',
                 style: TextStyle(
                   fontFamily: 'SFProText',
@@ -124,28 +130,41 @@ class ProductReviews extends StatelessWidget {
                   decoration: TextDecoration.underline,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
-                  Text(
-                    'Helpful ',
+                  const Text(
+                    'Helpful',
                     style: TextStyle(
                       fontFamily: 'SFProText',
-                      fontSize: 12,
+                      fontSize: 13,
                       fontWeight: FontWeight.w400,
                       color: AppColors.greyColor,
-                      height: 16 / 12,
+                      height: 16 / 13,
                       letterSpacing: 0,
                     ),
                   ),
                   Column(
                     children: [
-                      Icon(
-                        Icons.thumb_up_outlined,
-                        size: 24,
-                        color: AppColors.greyColor,
+                      IconButton(
+                        onPressed: () {
+                          context.read<ProductBloc>().add(
+                                ToggleCommentHelpfulEvent(),
+                              );
+                        },
+                        icon: isCommentHelpful
+                            ? const Icon(
+                                Icons.thumb_up,
+                                size: 24,
+                                color: AppColors.blueColor,
+                              )
+                            : const Icon(
+                                Icons.thumb_up_outlined,
+                                size: 24,
+                                color: AppColors.greyColor,
+                              ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                     ],

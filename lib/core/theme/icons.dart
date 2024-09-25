@@ -95,9 +95,27 @@ class AppIcons {
     color: AppColors.whiteColor,
   );
 
+  static const Icon greyArrowBackIcon = Icon(
+    Icons.arrow_back,
+    color: AppColors.greyColor,
+    size: 28,
+  );
+
   static const Icon itemsSectionFeaturedIcon = Icon(
     Icons.keyboard_arrow_down,
     color: AppColors.darkColor,
+  );
+
+  static const Icon favoriteProductIcon = Icon(
+    Icons.favorite,
+    size: 28,
+    color: AppColors.yellowColor,
+  );
+
+  static const Icon smallFavoriteProductIcon = Icon(
+    Icons.favorite,
+    size: 20,
+    color: AppColors.yellowColor,
   );
 
   static Stack filterIcon = Stack(

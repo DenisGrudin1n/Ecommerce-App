@@ -11,9 +11,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }) : super(const ProductState()) {
     on<LoadAppbarProductsEvent>(_onLoadAppbarProductsChanged);
     on<LoadAppbarSizesEvent>(_onLoadAppbarSizesChanged);
-    on<ChangeAppbarSizeEvent>(_onAppbarSizeChanged);
     on<LoadAppbarColorsPicsEvent>(_onLoadAppbarColorsPicsChanged);
-    on<ChangeAppbarColorPicEvent>(_onAppbarColorPicChanged);
+    on<ChangeAppbarSizeEvent>(_onAppbarSizeChanged);
+    on<ChangeColorPicEvent>(_onColorPicChanged);
+    on<ToggleCommentHelpfulEvent>(_onToggleCommentHelpful);
+    on<ToggleCartSizeEvent>(_onToggleCartSize);
+    on<ToggleProductFavoriteEvent>(_onToggleProductFavorite);
+    on<IncrementCounterEvent>(_onIncrementCounter);
+    on<DecrementCounterEvent>(_onDecrementCounter);
   }
 
   final StorageRepository storageRepository;
@@ -79,14 +84,24 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  void _onAppbarColorPicChanged(
-    ChangeAppbarColorPicEvent event,
+  void _onColorPicChanged(
+    ChangeColorPicEvent event,
     Emitter<ProductState> emit,
   ) {
     if (state.selectedAppbarProductsColorPics.contains(event.colorPic)) {
-      emit(state.copyWith(selectedAppbarProductsColorPics: []));
+      emit(
+        state.copyWith(
+          selectedAppbarProductsColorPics: [],
+          selectedImageUrl: '',
+        ),
+      );
     } else {
-      emit(state.copyWith(selectedAppbarProductsColorPics: [event.colorPic]));
+      emit(
+        state.copyWith(
+          selectedAppbarProductsColorPics: [event.colorPic],
+          selectedImageUrl: event.selectedImageUrl,
+        ),
+      );
     }
   }
 
@@ -128,6 +143,43 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(state.copyWith(selectedAppbarProductsSizes: []));
     } else {
       emit(state.copyWith(selectedAppbarProductsSizes: [event.size]));
+    }
+  }
+
+  void _onToggleCommentHelpful(
+    ToggleCommentHelpfulEvent event,
+    Emitter<ProductState> emit,
+  ) {
+    emit(state.copyWith(isCommentHelpful: !state.isCommentHelpful));
+  }
+
+  void _onToggleCartSize(
+    ToggleCartSizeEvent event,
+    Emitter<ProductState> emit,
+  ) {
+    emit(state.copyWith(isCartExpanded: !state.isCartExpanded));
+  }
+
+  void _onToggleProductFavorite(
+    ToggleProductFavoriteEvent event,
+    Emitter<ProductState> emit,
+  ) {
+    emit(state.copyWith(isProductFavorite: !state.isProductFavorite));
+  }
+
+  void _onIncrementCounter(
+    IncrementCounterEvent event,
+    Emitter<ProductState> emit,
+  ) {
+    emit(state.copyWith(counter: state.counter + 1));
+  }
+
+  void _onDecrementCounter(
+    DecrementCounterEvent event,
+    Emitter<ProductState> emit,
+  ) {
+    if (state.counter > 1) {
+      emit(state.copyWith(counter: state.counter - 1));
     }
   }
 }

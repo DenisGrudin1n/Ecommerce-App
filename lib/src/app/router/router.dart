@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/catalogue_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/favorite_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/filter_page.dart';
@@ -31,9 +32,12 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: MainTabsRoute.page,
-          //initial: true,
+          initial: true,
           children: [
-            AutoRoute(page: HomeRoute.page),
+            AutoRoute(
+              page: HomeRoute.page,
+              initial: true,
+            ),
             AutoRoute(page: CatalogueRoute.page),
             AutoRoute(
               page: ItemsRoute.page,
@@ -43,14 +47,17 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: ProfileRoute.page),
           ],
         ),
-
         AutoRoute(
           page: FilterRoute.page,
           //initial: true,
         ),
         AutoRoute(
           page: ProductRoute.page,
-          initial: true,
+          //initial: true,
+        ),
+        AutoRoute(
+          page: CartRoute.page,
+          //initial: true,
         ),
       ];
 }

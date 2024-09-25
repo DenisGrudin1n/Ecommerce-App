@@ -1,10 +1,12 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/models/items_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
+import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/bloc/product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,6 +32,9 @@ class _RelatedProductsState extends State<RelatedProducts> {
     final isLoading = context.select<ItemsBloc, bool>(
       (bloc) => bloc.state.isLoadingItems,
     );
+    final isProductFavorite = context.select<ProductBloc, bool>(
+      (bloc) => bloc.state.isProductFavorite,
+    );
     final errorMessage = context.select<ItemsBloc, String>(
       (bloc) => bloc.state.itemsErrorMessage,
     );
@@ -50,8 +55,8 @@ class _RelatedProductsState extends State<RelatedProducts> {
 
     return Padding(
       padding: const EdgeInsets.only(
-        top: 28,
-        bottom: 40,
+        top: 24,
+        bottom: 140,
         left: 16,
         right: 16,
       ),
@@ -75,7 +80,11 @@ class _RelatedProductsState extends State<RelatedProducts> {
                     padding: EdgeInsets.only(
                       right: index != items.length - 1 ? 16 : 0,
                     ),
-                    child: _buildItemsTile(item, index),
+                    child: _buildItemsTile(
+                      item,
+                      index,
+                      isProductFavorite,
+                    ),
                   );
                 } else {
                   return const SizedBox();
@@ -88,7 +97,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
     );
   }
 
-  Widget _buildItemsTile(ItemsModel item, int index) {
+  Widget _buildItemsTile(ItemsModel item, int index, bool isProductFavorite) {
     return Stack(
       children: [
         GestureDetector(
@@ -96,7 +105,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
           child: Container(
             width: 140,
             decoration: BoxDecoration(
-              color: AppColors.lightGreyColor,
+              color: AppColors.lightBackgroundColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -147,6 +156,41 @@ class _RelatedProductsState extends State<RelatedProducts> {
                       .homePageFeaturedProductDarkPriceTextStyle,
                 ),
               ],
+            ),
+          ),
+        ),
+        Positioned(
+          top: 120,
+          right: 8,
+          child: Container(
+            padding: EdgeInsets.zero,
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: AppColors.whiteColor,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 6,
+                ),
+              ],
+            ),
+            child: Center(
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  // context.read<ProductBloc>().add(ToggleProductFavoriteEvent());
+                },
+                icon: index == 2
+                    ? AppIcons.smallFavoriteProductIcon
+                    : const GradientIcon(
+                        icon: Icons.favorite_border,
+                        size: 20,
+                        gradient: AppGradients.purpleGradient,
+                        strokeWidth: 1,
+                      ),
+              ),
             ),
           ),
         ),
