@@ -361,6 +361,51 @@ class ItemsPageTextStyles {
   );
 }
 
+class FilterPageTextStyles {
+  static TextStyle clearTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    color: AppColors.whiteColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle sectionNameTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.greyColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle valueTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle selectedValueTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.whiteColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle resultsTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+    height: 22 / 17,
+    letterSpacing: 0,
+  );
+}
+
 class BottomNavBarTextStyles {
   static TextStyle bottomNavBarNotActiveIconTextStyle = const TextStyle(
     fontFamily: 'SFProText',

@@ -26,7 +26,7 @@ class ItemsAppbar extends StatelessWidget {
               children: [
                 Align(
                   child: Text(
-                    context.localization.cataloguePageCatalogueText,
+                    context.localization.itemsPageClothingText,
                     style: CataloguePageTextStyles.catalogueTextStyle,
                   ),
                 ),

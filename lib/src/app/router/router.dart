@@ -20,7 +20,7 @@ class AppRouter extends RootStackRouter {
         /// routes go here
         AutoRoute(
           page: GetStartedRoute.page,
-          initial: true,
+          //initial: true,
         ),
         AutoRoute(
           page: EnterPhoneRoute.page,
@@ -45,6 +45,7 @@ class AppRouter extends RootStackRouter {
 
         AutoRoute(
           page: FilterRoute.page,
+          initial: true,
         ),
       ];
 }
