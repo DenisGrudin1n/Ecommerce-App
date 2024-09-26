@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class AppGradients {
@@ -88,19 +89,18 @@ class GradientIcon extends StatelessWidget {
           Icon(
             icon,
             size: size,
-            color: Colors.transparent, // Зробити іконку прозорою
+            color: AppColors.transparentColor,
             shadows: [
               Shadow(
-                blurRadius: strokeWidth, // Контролювати товщину тіні
-                color: Colors.white,
+                blurRadius: strokeWidth,
+                color: AppColors.whiteColor,
               ),
             ],
           ),
           Icon(
             icon,
-            size:
-                size - strokeWidth, // Відняти товщину лінії від розміру іконки
-            color: Colors.white,
+            size: size - strokeWidth,
+            color: AppColors.whiteColor,
           ),
         ],
       ),

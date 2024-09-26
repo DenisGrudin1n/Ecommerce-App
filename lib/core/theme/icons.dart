@@ -136,6 +136,12 @@ class AppIcons {
     color: AppColors.greyColor,
   );
 
+  static const GradientIcon profilePageEditIcon = GradientIcon(
+    icon: Icons.edit_outlined,
+    gradient: AppGradients.purpleGradient,
+    size: 26,
+  );
+
   static Stack filterIcon = Stack(
     alignment: Alignment.center,
     children: [

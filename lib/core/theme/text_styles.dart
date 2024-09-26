@@ -534,6 +534,43 @@ class ProductPageTextStyles {
   );
 }
 
+class ProfilePageTextStyles {
+  static TextStyle userNameTextstyle = GoogleFonts.inter(
+    fontSize: 19,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
+
+  static TextStyle userPhoneNumberTextstyle = GoogleFonts.inter(
+    color: AppColors.whiteColor,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle policyTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+    decoration: TextDecoration.underline,
+  );
+
+  static TextStyle profileOptionTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+    color: AppColors.darkColor,
+    height: 22 / 17,
+    letterSpacing: -0.41,
+  );
+}
+
 class BottomNavBarTextStyles {
   static TextStyle bottomNavBarNotActiveIconTextStyle = const TextStyle(
     fontFamily: 'SFProText',

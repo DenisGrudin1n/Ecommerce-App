@@ -9,7 +9,7 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: AppColors.lightBackgroundColor,
       body: Center(
         child: Text(
           'Favorite Page',
