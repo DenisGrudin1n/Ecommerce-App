@@ -1,6 +1,8 @@
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({super.key});
@@ -22,34 +24,18 @@ class ProductDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Product details',
-            style: GoogleFonts.inter(
-              fontSize: 19,
-              fontWeight: FontWeight.w700,
-              color: AppColors.darkColor,
-              height: 23 / 19,
-              letterSpacing: -0.49,
-            ),
+            context.localization.productPageDetailsText,
+            style: ProductPageTextStyles.productDetailsStyle,
           ),
           const SizedBox(
             height: 8,
           ),
           Text(
-            "Women's Casual V-Neck Pullover Sweater Long Sleeved Sweater Top with High Low Hemline is going to be the newest staple in your wardrobe! Living up to its namesake, this sweater is unbelievably soft, li...",
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: AppColors.darkGreyColor,
-              height: 19 / 14,
-              letterSpacing: -0.15,
-            ),
+            context.localization.productPageProductDetailsText,
+            style: ProductPageTextStyles.productDetailsTextStyle,
           ),
           const Center(
-            child: Icon(
-              Icons.keyboard_arrow_down,
-              size: 24,
-              color: AppColors.greyColor,
-            ),
+            child: AppIcons.productDetailOpenFullIcon,
           ),
         ],
       ),

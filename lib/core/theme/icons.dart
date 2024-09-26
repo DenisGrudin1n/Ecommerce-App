@@ -118,6 +118,24 @@ class AppIcons {
     color: AppColors.yellowColor,
   );
 
+  static const Icon productDetailOpenFullIcon = Icon(
+    Icons.keyboard_arrow_down,
+    size: 24,
+    color: AppColors.greyColor,
+  );
+
+  static const Icon productPageThumbsUpIcon = Icon(
+    Icons.thumb_up,
+    size: 24,
+    color: AppColors.blueColor,
+  );
+
+  static const Icon productPageThumbsUpOutlinedIcon = Icon(
+    Icons.thumb_up_outlined,
+    size: 24,
+    color: AppColors.greyColor,
+  );
+
   static Stack filterIcon = Stack(
     alignment: Alignment.center,
     children: [

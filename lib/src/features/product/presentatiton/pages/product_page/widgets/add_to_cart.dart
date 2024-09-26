@@ -187,6 +187,7 @@ class AddToCart extends StatelessWidget {
     int counter,
     String selectedImageUrl,
   ) {
+    final productPrice = double.parse(product.price);
     return Row(
       children: [
         Container(
@@ -230,7 +231,7 @@ class AddToCart extends StatelessWidget {
                 height: 6,
               ),
               Text(
-                '\$${product.price}',
+                '\$${(productPrice * counter).toStringAsFixed(2)}',
                 style: HomePageTextStyles
                     .homePageFeaturedProductDarkPriceTextStyle,
               ),

@@ -180,9 +180,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
             child: Center(
               child: IconButton(
                 padding: EdgeInsets.zero,
-                onPressed: () {
-                  // context.read<ProductBloc>().add(ToggleProductFavoriteEvent());
-                },
+                onPressed: () {},
                 icon: index == 1
                     ? AppIcons.smallFavoriteProductIcon
                     : const GradientIcon(

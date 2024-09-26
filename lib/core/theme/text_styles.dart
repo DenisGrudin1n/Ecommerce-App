@@ -462,6 +462,76 @@ class ProductPageTextStyles {
     height: 31 / 25,
     letterSpacing: 0.35,
   );
+
+  static TextStyle productDetailsStyle = GoogleFonts.inter(
+    fontSize: 19,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
+
+  static TextStyle productDetailsTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productPageUserNameTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: Color.fromARGB(255, 27, 22, 31),
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productPageDateTextStyle = const TextStyle(
+    fontSize: 14,
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productPageFullCommentTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor.withOpacity(0.4),
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productPagePeopleFoundHelpfulTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 11,
+    fontWeight: FontWeight.w500,
+    color: AppColors.greyColor,
+    height: 13 / 11,
+    letterSpacing: 0.07,
+  );
+
+  static TextStyle productPageCommentTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: AppColors.darkColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+    decoration: TextDecoration.underline,
+  );
+
+  static TextStyle productPageHelpfulTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 13,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyColor,
+    height: 16 / 13,
+    letterSpacing: 0,
+  );
 }
 
 class BottomNavBarTextStyles {

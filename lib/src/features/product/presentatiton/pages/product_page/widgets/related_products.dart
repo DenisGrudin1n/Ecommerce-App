@@ -64,7 +64,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Products related to this item',
+            context.localization.productPageRelatedProductsText,
             style: HomePageTextStyles.homePageFeaturedTextStyle,
           ),
           const SizedBox(height: 16),
@@ -171,7 +171,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: AppColors.blackColor.withOpacity(0.1),
                   blurRadius: 6,
                 ),
               ],
@@ -179,9 +179,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
             child: Center(
               child: IconButton(
                 padding: EdgeInsets.zero,
-                onPressed: () {
-                  // context.read<ProductBloc>().add(ToggleProductFavoriteEvent());
-                },
+                onPressed: () {},
                 icon: index == 2
                     ? AppIcons.smallFavoriteProductIcon
                     : const GradientIcon(
