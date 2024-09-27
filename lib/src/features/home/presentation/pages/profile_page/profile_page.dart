@@ -24,12 +24,8 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: AppColors.lightBackgroundColor,
         body: Stack(
           children: [
-            ListView(
-              padding: EdgeInsets.zero,
-              physics: const ScrollPhysics(
-                parent: NeverScrollableScrollPhysics(),
-              ),
-              children: const [
+            const Column(
+              children: [
                 ProfileAppbar(),
                 ProfileOptions(),
               ],

@@ -40,24 +40,30 @@ class _ProductPageState extends State<ProductPage> {
           )..add(const LoadItemsEvent('')),
         ),
       ],
-      child: const Scaffold(
+      child: Scaffold(
         backgroundColor: AppColors.lightBackgroundColor,
         body: Stack(
           children: [
             // Scrollable content
-            CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(child: ProductAppbar()),
-                SliverPadding(padding: EdgeInsets.only(bottom: 8)),
-                SliverToBoxAdapter(child: ProductDetails()),
-                SliverPadding(padding: EdgeInsets.only(bottom: 8)),
-                SliverToBoxAdapter(child: ProductReviews()),
-                SliverPadding(padding: EdgeInsets.only(bottom: 8)),
-                SliverToBoxAdapter(child: RelatedProducts()),
+            ListView(
+              children: const [
+                ProductAppbar(),
+                SizedBox(
+                  height: 8,
+                ),
+                ProductDetails(),
+                SizedBox(
+                  height: 8,
+                ),
+                ProductReviews(),
+                SizedBox(
+                  height: 8,
+                ),
+                RelatedProducts(),
               ],
             ),
             // Fixed AddToCart button
-            Positioned(
+            const Positioned(
               bottom: 0,
               left: 0,
               right: 0,
