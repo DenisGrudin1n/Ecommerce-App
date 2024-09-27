@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/cart_page.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/checkout_page.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/shipping_address_editing_page/shipping_address_editing_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/catalogue_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/favorite_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/filter_page.dart';
@@ -61,6 +63,12 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: CartRoute.page,
           //initial: true,
+        ),
+        AutoRoute(
+          page: CheckoutRoute.page,
+        ),
+        AutoRoute(
+          page: ShippingAddressEditingRoute.page,
         ),
       ];
 }

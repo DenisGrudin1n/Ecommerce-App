@@ -48,6 +48,25 @@ class CatalogueRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CheckoutPage]
+class CheckoutRoute extends PageRouteInfo<void> {
+  const CheckoutRoute({List<PageRouteInfo>? children})
+      : super(
+          CheckoutRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CheckoutRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CheckoutPage();
+    },
+  );
+}
+
+/// generated route for
 /// [EnterPhonePage]
 class EnterPhoneRoute extends PageRouteInfo<void> {
   const EnterPhoneRoute({List<PageRouteInfo>? children})
@@ -214,6 +233,25 @@ class ProfileRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ProfilePage();
+    },
+  );
+}
+
+/// generated route for
+/// [ShippingAddressEditingPage]
+class ShippingAddressEditingRoute extends PageRouteInfo<void> {
+  const ShippingAddressEditingRoute({List<PageRouteInfo>? children})
+      : super(
+          ShippingAddressEditingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ShippingAddressEditingRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ShippingAddressEditingPage();
     },
   );
 }

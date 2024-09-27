@@ -80,4 +80,9 @@ class FirebaseAuthRepository implements AuthRepository {
       return null;
     }
   }
+
+  @override
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
 }
