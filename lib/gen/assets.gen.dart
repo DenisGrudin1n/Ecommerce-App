@@ -29,33 +29,21 @@ class $AssetsFontsGen {
       [sfprodisplaybold, sfprodisplaymedium, sFProTextBold, sFProTextRegular];
 }
 
-class $AssetsGifsGen {
-  const $AssetsGifsGen();
-
-  /// File path: assets/gifs/GetStartedGirl.gif
-  AssetGenImage get getStartedGirl =>
-      const AssetGenImage('assets/gifs/GetStartedGirl.gif');
-
-  /// List of all assets
-  List<AssetGenImage> get values => [getStartedGirl];
-}
-
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/fashionSectionBg.jpg
-  AssetGenImage get fashionSectionBg =>
-      const AssetGenImage('assets/images/fashionSectionBg.jpg');
+  /// File path: assets/images/ProfilePic.jpg
+  AssetGenImage get profilePic =>
+      const AssetGenImage('assets/images/ProfilePic.jpg');
 
   /// List of all assets
-  List<AssetGenImage> get values => [fashionSectionBg];
+  List<AssetGenImage> get values => [profilePic];
 }
 
 class Assets {
   Assets._();
 
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
-  static const $AssetsGifsGen gifs = $AssetsGifsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 

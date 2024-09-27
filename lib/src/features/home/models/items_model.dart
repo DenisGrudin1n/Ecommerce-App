@@ -6,7 +6,6 @@ class ItemsModel {
     required this.price,
     required this.imageUrl,
     required this.category,
-    //required this.brand,
     this.oldPrice,
   });
 
@@ -22,7 +21,6 @@ class ItemsModel {
           : null,
       imageUrl: data['imageUrl'] as String? ?? '',
       category: data['category'] as String? ?? '',
-      //brand: data['brand'] as String? ?? '',
     );
   }
   final String name;
@@ -30,5 +28,4 @@ class ItemsModel {
   final String? oldPrice;
   final String imageUrl;
   final String category;
-  //final String brand;
 }

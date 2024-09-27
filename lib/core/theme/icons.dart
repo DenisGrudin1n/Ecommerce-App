@@ -95,9 +95,51 @@ class AppIcons {
     color: AppColors.whiteColor,
   );
 
+  static const Icon greyArrowBackIcon = Icon(
+    Icons.arrow_back,
+    color: AppColors.greyColor,
+    size: 28,
+  );
+
   static const Icon itemsSectionFeaturedIcon = Icon(
     Icons.keyboard_arrow_down,
     color: AppColors.darkColor,
+  );
+
+  static const Icon favoriteProductIcon = Icon(
+    Icons.favorite,
+    size: 28,
+    color: AppColors.yellowColor,
+  );
+
+  static const Icon smallFavoriteProductIcon = Icon(
+    Icons.favorite,
+    size: 20,
+    color: AppColors.yellowColor,
+  );
+
+  static const Icon productDetailOpenFullIcon = Icon(
+    Icons.keyboard_arrow_down,
+    size: 24,
+    color: AppColors.greyColor,
+  );
+
+  static const Icon productPageThumbsUpIcon = Icon(
+    Icons.thumb_up,
+    size: 24,
+    color: AppColors.blueColor,
+  );
+
+  static const Icon productPageThumbsUpOutlinedIcon = Icon(
+    Icons.thumb_up_outlined,
+    size: 24,
+    color: AppColors.greyColor,
+  );
+
+  static const GradientIcon profilePageEditIcon = GradientIcon(
+    icon: Icons.edit_outlined,
+    gradient: AppGradients.purpleGradient,
+    size: 26,
   );
 
   static Stack filterIcon = Stack(
@@ -135,5 +177,17 @@ class AppIcons {
     Icons.arrow_forward_ios,
     color: AppColors.greyColor,
     size: 18,
+  );
+
+  static const Icon starIcon = Icon(
+    Icons.star,
+    color: AppColors.orangeColor,
+    size: 12,
+  );
+
+  static const Icon productPageStarIcon = Icon(
+    Icons.star,
+    color: AppColors.orangeColor,
+    size: 16,
   );
 }

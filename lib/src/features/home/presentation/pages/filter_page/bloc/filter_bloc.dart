@@ -7,12 +7,10 @@ import 'package:ecommerce_app/src/features/home/models/sort_by_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_state.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
-import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 
 class FilterBloc extends Bloc<FilterEvent, FilterState> {
   FilterBloc({
-    required this.storageRepository,
     required this.firestoreRepository,
   }) : super(const FilterState()) {
     on<ChangeMinValueEvent>(_onMinValueChanged);
@@ -40,7 +38,6 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
   List<Color> _initialColors = [];
   List<SortByModel> _initialSortBy = [];
 
-  final StorageRepository storageRepository;
   final DatabaseRepository firestoreRepository;
 
   void _onMinValueChanged(
@@ -223,7 +220,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     final colors = [
       AppColors.darkColor,
       AppColors.redColor,
-      AppColors.greenColor,
+      AppColors.lightGreenColor,
       AppColors.blueColor,
       AppColors.purpleColor,
       AppColors.lightYellowColor,

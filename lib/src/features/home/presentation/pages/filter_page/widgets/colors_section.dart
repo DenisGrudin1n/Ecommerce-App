@@ -46,29 +46,24 @@ class _ColorsSectionState extends State<ColorsSection> {
         const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: colors.map((color) {
-            if (color == AppColors.blueColor) {
-              return Row(
-                children: [
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      context.read<FilterBloc>().add(ChangeColorEvent(color));
-                    },
-                    child: _buildColorCircle(color, selectedColors),
-                  ),
-                ],
-              );
-            }
-            return GestureDetector(
-              onTap: () {
-                context.read<FilterBloc>().add(ChangeColorEvent(color));
-              },
-              child: _buildColorCircle(color, selectedColors),
-            );
-          }).toList(),
+          children: [
+            for (int index = 0; index < colors.length; index++)
+              GestureDetector(
+                onTap: () {
+                  context
+                      .read<FilterBloc>()
+                      .add(ChangeColorEvent(colors[index]));
+                },
+                child: index == 3
+                    ? Row(
+                        children: [
+                          const SizedBox(width: 16),
+                          _buildColorCircle(colors[index], selectedColors),
+                        ],
+                      )
+                    : _buildColorCircle(colors[index], selectedColors),
+              ),
+          ],
         ),
       ],
     );

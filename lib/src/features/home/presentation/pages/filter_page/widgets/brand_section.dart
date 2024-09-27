@@ -92,8 +92,8 @@ class _BrandSectionState extends State<BrandSection> {
         ),
         if (isBrandDropdownOpen) ...[
           const SizedBox(height: 8),
-          ...brands.map(
-            (brand) => GestureDetector(
+          for (final brand in brands)
+            GestureDetector(
               onTap: () {
                 context.read<FilterBloc>().add(ChangeBrandEvent(brand.name));
               },
@@ -129,7 +129,6 @@ class _BrandSectionState extends State<BrandSection> {
                 ),
               ),
             ),
-          ),
         ],
       ],
     );

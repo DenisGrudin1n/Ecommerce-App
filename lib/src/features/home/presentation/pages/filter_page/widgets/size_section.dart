@@ -82,6 +82,9 @@ class _SizeSectionState extends State<SizeSection> {
             ? AppColors.yellowColor
             : AppColors.whiteColor,
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: AppColors.lightGreyColor,
+        ),
       ),
       child: Center(
         child: Text(

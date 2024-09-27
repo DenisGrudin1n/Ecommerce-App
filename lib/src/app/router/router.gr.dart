@@ -10,6 +10,25 @@
 part of 'router.dart';
 
 /// generated route for
+/// [CartPage]
+class CartRoute extends PageRouteInfo<void> {
+  const CartRoute({List<PageRouteInfo>? children})
+      : super(
+          CartRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CartRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CartPage();
+    },
+  );
+}
+
+/// generated route for
 /// [CataloguePage]
 class CatalogueRoute extends PageRouteInfo<void> {
   const CatalogueRoute({List<PageRouteInfo>? children})
@@ -24,6 +43,25 @@ class CatalogueRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const CataloguePage();
+    },
+  );
+}
+
+/// generated route for
+/// [CheckoutPage]
+class CheckoutRoute extends PageRouteInfo<void> {
+  const CheckoutRoute({List<PageRouteInfo>? children})
+      : super(
+          CheckoutRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CheckoutRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CheckoutPage();
     },
   );
 }
@@ -162,6 +200,25 @@ class MainTabsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ProductPage]
+class ProductRoute extends PageRouteInfo<void> {
+  const ProductRoute({List<PageRouteInfo>? children})
+      : super(
+          ProductRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProductRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProductPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ProfilePage]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})
@@ -176,6 +233,25 @@ class ProfileRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ProfilePage();
+    },
+  );
+}
+
+/// generated route for
+/// [ShippingAddressEditingPage]
+class ShippingAddressEditingRoute extends PageRouteInfo<void> {
+  const ShippingAddressEditingRoute({List<PageRouteInfo>? children})
+      : super(
+          ShippingAddressEditingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ShippingAddressEditingRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ShippingAddressEditingPage();
     },
   );
 }

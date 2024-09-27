@@ -8,6 +8,8 @@ import 'package:ecommerce_app/src/features/home/models/items_model.dart';
 import 'package:ecommerce_app/src/features/home/models/size_model.dart';
 import 'package:ecommerce_app/src/features/home/models/sort_by_model.dart';
 import 'package:ecommerce_app/src/features/login/models/get_started_gif_model.dart';
+import 'package:ecommerce_app/src/features/product/models/color_pic_model.dart';
+import 'package:ecommerce_app/src/features/product/models/product_model.dart';
 
 abstract class DatabaseRepository {
   Future<List<GetStartedGifModel>> getAllGetStartedGifs();
@@ -24,4 +26,6 @@ abstract class DatabaseRepository {
   Future<List<BrandModel>> getAllBrands();
   Future<List<SizeModel>> getAllSizes();
   Future<List<SortByModel>> getAllSortBy();
+  Future<List<AppbarProductModel>> getAllAppbarProducts();
+  Future<List<AppbarColorPicModel>> getAllAppbarColorsPics();
 }

@@ -21,4 +21,6 @@ abstract interface class AuthRepository {
     String verificationId,
     String smsCode,
   );
+
+  Future<void> signOut();
 }

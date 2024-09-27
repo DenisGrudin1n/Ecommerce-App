@@ -1,4 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/cart_page.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/checkout_page.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/shipping_address_editing_page/shipping_address_editing_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/catalogue_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/favorite_page.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/filter_page.dart';
@@ -9,6 +12,7 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/profile_page/
 import 'package:ecommerce_app/src/features/login/presentation/pages/enter_phone_page/enter_phone_page.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/get_started_page/get_started_page.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/verification_page.dart';
+import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/product_page.dart';
 import 'package:flutter/material.dart';
 
 part 'router.gr.dart';
@@ -30,22 +34,41 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: MainTabsRoute.page,
-          //initial: true,
+          initial: true,
           children: [
-            AutoRoute(page: HomeRoute.page),
+            AutoRoute(
+              page: HomeRoute.page,
+              //initial: true,
+            ),
             AutoRoute(page: CatalogueRoute.page),
             AutoRoute(
               page: ItemsRoute.page,
               //initial: true,
             ),
             AutoRoute(page: FavoriteRoute.page),
-            AutoRoute(page: ProfileRoute.page),
+            AutoRoute(
+              page: ProfileRoute.page,
+              initial: true,
+            ),
           ],
         ),
-
         AutoRoute(
           page: FilterRoute.page,
-          initial: true,
+          //initial: true,
+        ),
+        AutoRoute(
+          page: ProductRoute.page,
+          //initial: true,
+        ),
+        AutoRoute(
+          page: CartRoute.page,
+          //initial: true,
+        ),
+        AutoRoute(
+          page: CheckoutRoute.page,
+        ),
+        AutoRoute(
+          page: ShippingAddressEditingRoute.page,
         ),
       ];
 }

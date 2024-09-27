@@ -11,6 +11,8 @@ import 'package:ecommerce_app/src/features/home/models/items_model.dart';
 import 'package:ecommerce_app/src/features/home/models/size_model.dart';
 import 'package:ecommerce_app/src/features/home/models/sort_by_model.dart';
 import 'package:ecommerce_app/src/features/login/models/get_started_gif_model.dart';
+import 'package:ecommerce_app/src/features/product/models/color_pic_model.dart';
+import 'package:ecommerce_app/src/features/product/models/product_model.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 
 class FirestoreDatabaseRepository implements DatabaseRepository {
@@ -194,6 +196,22 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
     return fetchCollectionData<SortByModel>(
       collectionPath: 'catalogue/catalogue/filters/sortBy/sortBy',
       fromSnapshot: SortByModel.fromSnapshot,
+    );
+  }
+
+  @override
+  Future<List<AppbarProductModel>> getAllAppbarProducts() {
+    return fetchCollectionData<AppbarProductModel>(
+      collectionPath: 'product/appbar/appbar',
+      fromSnapshot: AppbarProductModel.fromSnapshot,
+    );
+  }
+
+  @override
+  Future<List<AppbarColorPicModel>> getAllAppbarColorsPics() {
+    return fetchCollectionData<AppbarColorPicModel>(
+      collectionPath: 'product/appbar/appbarColorsPics',
+      fromSnapshot: AppbarColorPicModel.fromSnapshot,
     );
   }
 }

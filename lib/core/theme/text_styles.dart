@@ -406,6 +406,171 @@ class FilterPageTextStyles {
   );
 }
 
+class ProductPageTextStyles {
+  static TextStyle reviewsCountTextStyle = const TextStyle(
+    fontSize: 12,
+    fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+  );
+
+  static TextStyle inStockTextStyle = const TextStyle(
+    fontSize: 12,
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w700,
+    color: AppColors.lightGreenColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+  );
+
+  static TextStyle productNameTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
+    fontSize: 19,
+    color: AppColors.darkColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
+
+  static TextStyle productRedPriceTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    color: AppColors.redColor,
+    fontSize: 25,
+    fontWeight: FontWeight.w700,
+    height: 31 / 25,
+    letterSpacing: 0.35,
+  );
+
+  static TextStyle productGreyPriceTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    color: AppColors.greyColor,
+    fontSize: 22,
+    fontWeight: FontWeight.w400,
+    height: 27 / 22,
+    letterSpacing: 0.2,
+    decoration: TextDecoration.lineThrough,
+    decorationColor: AppColors.greyColor,
+  );
+
+  static TextStyle productDarkPriceTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    color: AppColors.darkColor,
+    fontSize: 25,
+    fontWeight: FontWeight.w700,
+    height: 31 / 25,
+    letterSpacing: 0.35,
+  );
+
+  static TextStyle productDetailsStyle = GoogleFonts.inter(
+    fontSize: 19,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
+
+  static TextStyle productDetailsTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productPageUserNameTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: Color.fromARGB(255, 27, 22, 31),
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productPageDateTextStyle = const TextStyle(
+    fontSize: 14,
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productPageFullCommentTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor.withOpacity(0.4),
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productPagePeopleFoundHelpfulTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 11,
+    fontWeight: FontWeight.w500,
+    color: AppColors.greyColor,
+    height: 13 / 11,
+    letterSpacing: 0.07,
+  );
+
+  static TextStyle productPageCommentTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: AppColors.darkColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+    decoration: TextDecoration.underline,
+  );
+
+  static TextStyle productPageHelpfulTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 13,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyColor,
+    height: 16 / 13,
+    letterSpacing: 0,
+  );
+}
+
+class ProfilePageTextStyles {
+  static TextStyle userNameTextstyle = GoogleFonts.inter(
+    fontSize: 19,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
+
+  static TextStyle userPhoneNumberTextstyle = GoogleFonts.inter(
+    color: AppColors.whiteColor,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle policyTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 16 / 12,
+    letterSpacing: 0,
+    decoration: TextDecoration.underline,
+  );
+
+  static TextStyle profileOptionTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+    color: AppColors.darkColor,
+    height: 22 / 17,
+    letterSpacing: -0.41,
+  );
+}
+
 class BottomNavBarTextStyles {
   static TextStyle bottomNavBarNotActiveIconTextStyle = const TextStyle(
     fontFamily: 'SFProText',
