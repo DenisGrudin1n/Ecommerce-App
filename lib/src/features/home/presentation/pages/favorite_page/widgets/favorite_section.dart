@@ -1,76 +1,40 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FeaturedSection extends StatefulWidget {
-  const FeaturedSection({
-    super.key,
-  });
+class FavoriteSection extends StatefulWidget {
+  const FavoriteSection({super.key});
 
   @override
-  State<FeaturedSection> createState() => _FeaturedSectionState();
+  State<FavoriteSection> createState() => _FavoriteSectionState();
 }
 
-class _FeaturedSectionState extends State<FeaturedSection> {
+class _FavoriteSectionState extends State<FavoriteSection> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(const LoadFeaturedProductsEvent(''));
     context.read<FavoriteBloc>().add(LoadFavoriteProductsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    final featuredSectionProducts =
-        context.select<HomeBloc, List<FeaturedProductModel>>(
-      (bloc) => bloc.state.featuredProducts,
-    );
-    final isLoading = context.select<HomeBloc, bool>(
-      (bloc) => bloc.state.isLoadingFeatured,
-    );
-    final errorMessage = context.select<HomeBloc, String>(
-      (bloc) => bloc.state.featuredErrorMessage,
-    );
     final favoriteProducts =
         context.select<FavoriteBloc, List<FeaturedProductModel>>(
       (bloc) => bloc.state.favoriteProducts,
     );
 
-    if (isLoading) {
+    if (favoriteProducts.isEmpty) {
       return const SliverToBoxAdapter(
-        child: Center(child: CircularProgressIndicator()),
+        child: Center(child: Text('No favorite products.')),
       );
     }
 
-    if (errorMessage.isNotEmpty) {
-      return SliverToBoxAdapter(
-        child: Text(errorMessage),
-      );
-    }
-
-    if (featuredSectionProducts.isEmpty) {
-      return SliverToBoxAdapter(
-        child: Text(context.localization.noItemsFoundForQueryText),
-      );
-    }
-
-    return _buildProductGrid(featuredSectionProducts, favoriteProducts);
-  }
-
-  Widget _buildProductGrid(
-    List<FeaturedProductModel> products,
-    List<FeaturedProductModel> favoriteProducts,
-  ) {
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -80,20 +44,17 @@ class _FeaturedSectionState extends State<FeaturedSection> {
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          final product = products[index];
-          final isFavorite = favoriteProducts
-              .any((favProduct) => favProduct.name == product.name);
-          return _buildFeaturedProductTile(product, isFavorite, index);
+          final product = favoriteProducts[index];
+          return _buildFavoriteProductTile(product, context);
         },
-        childCount: products.length,
+        childCount: favoriteProducts.length,
       ),
     );
   }
 
-  Widget _buildFeaturedProductTile(
+  Widget _buildFavoriteProductTile(
     FeaturedProductModel product,
-    bool isFavorite,
-    int index,
+    BuildContext context,
   ) {
     return Stack(
       children: [
@@ -173,6 +134,8 @@ class _FeaturedSectionState extends State<FeaturedSection> {
             ),
           ),
         ),
+
+        // Favorite Icon Positioned
         Positioned(
           top: 152,
           right: 8,
@@ -185,7 +148,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: AppColors.blackColor.withOpacity(0.1),
                   blurRadius: 6,
                 ),
               ],
@@ -194,53 +157,15 @@ class _FeaturedSectionState extends State<FeaturedSection> {
               child: IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  if (isFavorite) {
-                    context
-                        .read<FavoriteBloc>()
-                        .add(RemoveFromFavoriteEvent(product));
-                  } else {
-                    context
-                        .read<FavoriteBloc>()
-                        .add(AddToFavoriteEvent(product));
-                  }
+                  context
+                      .read<FavoriteBloc>()
+                      .add(RemoveFromFavoriteEvent(product));
                 },
-                icon: isFavorite
-                    ? AppIcons.smallFavoriteProductIcon
-                    : const GradientIcon(
-                        icon: Icons.favorite_border,
-                        size: 20,
-                        gradient: AppGradients.purpleGradient,
-                        strokeWidth: 1,
-                      ),
+                icon: AppIcons.smallFavoriteProductIcon,
               ),
             ),
           ),
         ),
-        if (index == 0)
-          // Discount Label Positioned
-          Positioned(
-            top: 8,
-            left: 0,
-            child: Container(
-              height: 20,
-              width: 45,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
-                ),
-                gradient: AppGradients.orangeGradient,
-              ),
-              child: Center(
-                child: Text(
-                  '-50%',
-                  style: HomePageTextStyles
-                      .homePageFeaturedDiscountPercentTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
       ],
     );
   }

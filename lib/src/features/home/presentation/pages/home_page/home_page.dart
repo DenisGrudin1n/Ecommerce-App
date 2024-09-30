@@ -3,6 +3,8 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/core/widgets/refreshable_scroll_view.dart';
+import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/widgets/catalogue_section.dart';
@@ -14,6 +16,7 @@ import 'package:ecommerce_app/src/repositories/database/database_repository.dart
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 @RoutePage()
@@ -27,6 +30,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late TextEditingController searchController;
   late RefreshController refreshController;
+  final favoritesBox = Hive.box<FeaturedProductModel>('favorites');
 
   @override
   void initState() {
@@ -44,14 +48,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomeBloc(
-        storageRepository: context.read<StorageRepository>(),
-        firestoreRepository: context.read<DatabaseRepository>(),
-      )
-        ..add(const LoadFeaturedProductsEvent(''))
-        ..add(LoadHomeCatalogueEvent())
-        ..add(LoadFashionSaleImagesEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => HomeBloc(
+            storageRepository: context.read<StorageRepository>(),
+            firestoreRepository: context.read<DatabaseRepository>(),
+          )
+            ..add(const LoadFeaturedProductsEvent(''))
+            ..add(LoadHomeCatalogueEvent())
+            ..add(LoadFashionSaleImagesEvent()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              FavoriteBloc(favoritesBox)..add(LoadFavoriteProductsEvent()),
+        ),
+      ],
       child: Scaffold(
         backgroundColor: AppColors.lightBackgroundColor,
         body: Builder(
@@ -85,6 +97,9 @@ class _HomePageState extends State<HomePage> {
                       context
                           .read<HomeBloc>()
                           .add(LoadFashionSaleImagesEvent());
+                      context
+                          .read<FavoriteBloc>()
+                          .add(LoadFavoriteProductsEvent());
                       // Complete the refresh
                       refreshController.refreshCompleted();
                     },

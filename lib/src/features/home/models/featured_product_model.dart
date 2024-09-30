@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive/hive.dart';
+part 'featured_product_model.g.dart';
 
+@HiveType(typeId: 0)
 class FeaturedProductModel {
   FeaturedProductModel({
     required this.name,
@@ -21,8 +24,18 @@ class FeaturedProductModel {
       imageUrl: data['imageUrl'] as String? ?? '',
     );
   }
+
+  @override
+  String toString() {
+    return 'FeaturedProductModel(name: $name, price: $price)';
+  }
+
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final String price;
+  @HiveField(2)
   final String? oldPrice;
+  @HiveField(3)
   final String imageUrl;
 }
