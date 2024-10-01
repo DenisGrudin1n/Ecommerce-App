@@ -370,7 +370,7 @@ class AddToCart extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Add to Cart',
+                context.localization.productPageAddToCartText,
                 style: FilterPageTextStyles.resultsTextStyle,
               ),
             ),

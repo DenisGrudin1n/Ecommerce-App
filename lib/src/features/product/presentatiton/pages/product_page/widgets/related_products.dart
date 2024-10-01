@@ -39,7 +39,6 @@ class _RelatedProductsState extends State<RelatedProducts> {
     final favoriteProducts = context.select<FavoriteBloc, List<ProductModel>>(
       (bloc) => bloc.state.favoriteProducts,
     );
-    print(items.length);
 
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());

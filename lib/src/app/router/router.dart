@@ -34,7 +34,7 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: MainTabsRoute.page,
-          initial: true,
+          //initial: true,
           children: [
             AutoRoute(
               page: HomeRoute.page,
@@ -47,7 +47,7 @@ class AppRouter extends RootStackRouter {
             ),
             AutoRoute(
               page: FavoriteRoute.page,
-              initial: true,
+              //initial: true,
             ),
             AutoRoute(
               page: ProfileRoute.page,
@@ -65,7 +65,7 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: CartRoute.page,
-          //initial: true,
+          initial: true,
         ),
         AutoRoute(
           page: CheckoutRoute.page,
