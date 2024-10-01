@@ -21,17 +21,27 @@ class FavoriteAppbar extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: AppGradients.purpleGradient,
       ),
-      child: Row(
+      child: Stack(
         children: [
-          IconButton(
-            icon: AppIcons.arrowBackIcon,
-            onPressed: () {
-              context.router.push(const ItemsRoute());
-            },
+          Align(
+            child: Text(
+              context.localization.favoritePageFavoriteText,
+              style: CataloguePageTextStyles.catalogueTextStyle,
+            ),
           ),
-          Text(
-            context.localization.filterPageFilterText,
-            style: CataloguePageTextStyles.catalogueTextStyle,
+          Positioned(
+            left: 0,
+            top: 0,
+            bottom: 0,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon: AppIcons.arrowBackIcon,
+                onPressed: () {
+                  context.router.push(const HomeRoute());
+                },
+              ),
+            ),
           ),
         ],
       ),

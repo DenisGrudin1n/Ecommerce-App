@@ -5,7 +5,8 @@ import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/home/models/items_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +29,12 @@ class _ItemsSectionState extends State<ItemsSection> {
   void initState() {
     super.initState();
     context.read<ItemsBloc>().add(const LoadItemsEvent(''));
+    context.read<FavoriteBloc>().add(LoadFavoriteProductsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    final items = context.select<ItemsBloc, List<ItemsModel>>(
+    final items = context.select<ItemsBloc, List<ProductModel>>(
       (bloc) => bloc.state.items,
     );
     final isLoading = context.select<ItemsBloc, bool>(
@@ -40,6 +42,9 @@ class _ItemsSectionState extends State<ItemsSection> {
     );
     final errorMessage = context.select<ItemsBloc, String>(
       (bloc) => bloc.state.itemsErrorMessage,
+    );
+    final favoriteProducts = context.select<FavoriteBloc, List<ProductModel>>(
+      (bloc) => bloc.state.favoriteProducts,
     );
 
     final filteredItems = widget.selectedCategory == 'All'
@@ -88,12 +93,17 @@ class _ItemsSectionState extends State<ItemsSection> {
               child: Row(
                 children: [
                   Expanded(
-                    child: _buildItemsTile(firstItem, itemIndex),
+                    child:
+                        _buildItemsTile(firstItem, itemIndex, favoriteProducts),
                   ),
                   const SizedBox(width: 16),
                   if (secondItem != null)
                     Expanded(
-                      child: _buildItemsTile(secondItem, itemIndex + 1),
+                      child: _buildItemsTile(
+                        secondItem,
+                        itemIndex + 1,
+                        favoriteProducts,
+                      ),
                     )
                   else
                     Expanded(
@@ -110,7 +120,14 @@ class _ItemsSectionState extends State<ItemsSection> {
     );
   }
 
-  Widget _buildItemsTile(ItemsModel item, int index) {
+  Widget _buildItemsTile(
+    ProductModel item,
+    int index,
+    List<ProductModel> favoriteProducts,
+  ) {
+    final isFavorite =
+        favoriteProducts.any((favProduct) => favProduct.name == item.name);
+
     return Stack(
       children: [
         GestureDetector(
@@ -195,7 +212,7 @@ class _ItemsSectionState extends State<ItemsSection> {
           top: 152,
           right: 8,
           child: Container(
-            padding: const EdgeInsets.all(6),
+            padding: EdgeInsets.zero,
             width: 36,
             height: 36,
             decoration: BoxDecoration(
@@ -208,18 +225,28 @@ class _ItemsSectionState extends State<ItemsSection> {
                 ),
               ],
             ),
-            child: index != 1
-                ? const GradientIcon(
-                    icon: Icons.favorite_border,
-                    size: 20,
-                    gradient: AppGradients.purpleGradient,
-                    strokeWidth: 1,
-                  )
-                : const Icon(
-                    Icons.favorite,
-                    size: 20,
-                    color: AppColors.yellowColor,
-                  ),
+            child: Center(
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  if (isFavorite) {
+                    context
+                        .read<FavoriteBloc>()
+                        .add(RemoveFromFavoriteEvent(item));
+                  } else {
+                    context.read<FavoriteBloc>().add(AddToFavoriteEvent(item));
+                  }
+                },
+                icon: isFavorite
+                    ? AppIcons.smallFavoriteProductIcon
+                    : const GradientIcon(
+                        icon: Icons.favorite_border,
+                        size: 20,
+                        gradient: AppGradients.purpleGradient,
+                        strokeWidth: 1,
+                      ),
+              ),
+            ),
           ),
         ),
         if (index == 0)
@@ -251,7 +278,7 @@ class _ItemsSectionState extends State<ItemsSection> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, List<ItemsModel> items) {
+  Widget _buildHeader(BuildContext context, List<ProductModel> items) {
     return Row(
       children: [
         Text(

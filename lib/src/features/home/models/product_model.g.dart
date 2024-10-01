@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'featured_product_model.dart';
+part of 'product_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class FeaturedProductModelAdapter extends TypeAdapter<FeaturedProductModel> {
+class ProductModelAdapter extends TypeAdapter<ProductModel> {
   @override
   final int typeId = 0;
 
   @override
-  FeaturedProductModel read(BinaryReader reader) {
+  ProductModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return FeaturedProductModel(
+    return ProductModel(
       name: fields[0] as String,
       price: fields[1] as String,
       imageUrl: fields[3] as String,
@@ -25,7 +25,7 @@ class FeaturedProductModelAdapter extends TypeAdapter<FeaturedProductModel> {
   }
 
   @override
-  void write(BinaryWriter writer, FeaturedProductModel obj) {
+  void write(BinaryWriter writer, ProductModel obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -44,7 +44,7 @@ class FeaturedProductModelAdapter extends TypeAdapter<FeaturedProductModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is FeaturedProductModelAdapter &&
+      other is ProductModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

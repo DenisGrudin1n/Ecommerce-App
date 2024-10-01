@@ -5,7 +5,7 @@ import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
@@ -32,7 +32,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
   @override
   Widget build(BuildContext context) {
     final featuredSectionProducts =
-        context.select<HomeBloc, List<FeaturedProductModel>>(
+        context.select<HomeBloc, List<ProductModel>>(
       (bloc) => bloc.state.featuredProducts,
     );
     final isLoading = context.select<HomeBloc, bool>(
@@ -41,8 +41,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
     final errorMessage = context.select<HomeBloc, String>(
       (bloc) => bloc.state.featuredErrorMessage,
     );
-    final favoriteProducts =
-        context.select<FavoriteBloc, List<FeaturedProductModel>>(
+    final favoriteProducts = context.select<FavoriteBloc, List<ProductModel>>(
       (bloc) => bloc.state.favoriteProducts,
     );
 
@@ -68,8 +67,8 @@ class _FeaturedSectionState extends State<FeaturedSection> {
   }
 
   Widget _buildProductGrid(
-    List<FeaturedProductModel> products,
-    List<FeaturedProductModel> favoriteProducts,
+    List<ProductModel> products,
+    List<ProductModel> favoriteProducts,
   ) {
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -91,7 +90,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
   }
 
   Widget _buildFeaturedProductTile(
-    FeaturedProductModel product,
+    ProductModel product,
     bool isFavorite,
     int index,
   ) {

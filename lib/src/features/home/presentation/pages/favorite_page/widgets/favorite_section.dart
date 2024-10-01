@@ -3,7 +3,7 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,8 +24,7 @@ class _FavoriteSectionState extends State<FavoriteSection> {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteProducts =
-        context.select<FavoriteBloc, List<FeaturedProductModel>>(
+    final favoriteProducts = context.select<FavoriteBloc, List<ProductModel>>(
       (bloc) => bloc.state.favoriteProducts,
     );
 
@@ -53,7 +52,7 @@ class _FavoriteSectionState extends State<FavoriteSection> {
   }
 
   Widget _buildFavoriteProductTile(
-    FeaturedProductModel product,
+    ProductModel product,
     BuildContext context,
   ) {
     return Stack(

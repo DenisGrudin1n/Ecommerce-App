@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
@@ -13,7 +13,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     on<LoadFavoriteProductsEvent>(_onLoadFavoriteProducts);
   }
 
-  final Box<FeaturedProductModel> favoritesBox;
+  final Box<dynamic> favoritesBox;
 
   void _onAddToFavorites(
     AddToFavoriteEvent event,
@@ -22,7 +22,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     favoritesBox.add(event.product);
     emit(
       state.copyWith(
-        favoriteProducts: favoritesBox.values.toList(),
+        favoriteProducts: favoritesBox.values.cast<ProductModel>().toList(),
       ),
     );
   }
@@ -31,21 +31,28 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     RemoveFromFavoriteEvent event,
     Emitter<FavoriteState> emit,
   ) {
-    final index = favoritesBox.values.toList().indexOf(event.product);
+    final index = favoritesBox.values
+        .cast<ProductModel>()
+        .toList()
+        .indexOf(event.product);
     if (index != -1) {
       favoritesBox.deleteAt(index);
     }
     emit(
       state.copyWith(
-        favoriteProducts: favoritesBox.values.toList(),
+        favoriteProducts: favoritesBox.values.cast<ProductModel>().toList(),
       ),
-    ); // Add the LoadFavoriteProductsEvent
+    );
   }
 
   void _onLoadFavoriteProducts(
     LoadFavoriteProductsEvent event,
     Emitter<FavoriteState> emit,
   ) {
-    emit(state.copyWith(favoriteProducts: favoritesBox.values.toList()));
+    emit(
+      state.copyWith(
+        favoriteProducts: favoritesBox.values.cast<ProductModel>().toList(),
+      ),
+    );
   }
 }

@@ -95,6 +95,11 @@ class AppIcons {
     color: AppColors.whiteColor,
   );
 
+  static const Icon arrowBackTransparentIcon = Icon(
+    Icons.arrow_back,
+    color: AppColors.transparentColor,
+  );
+
   static const Icon greyArrowBackIcon = Icon(
     Icons.arrow_back,
     color: AppColors.greyColor,

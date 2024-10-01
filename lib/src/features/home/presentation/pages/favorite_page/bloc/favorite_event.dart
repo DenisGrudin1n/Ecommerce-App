@@ -9,7 +9,7 @@ abstract class FavoriteEvent extends Equatable {
 
 class AddToFavoriteEvent extends FavoriteEvent {
   const AddToFavoriteEvent(this.product);
-  final FeaturedProductModel product;
+  final ProductModel product;
 
   @override
   List<Object> get props => [product];
@@ -17,7 +17,7 @@ class AddToFavoriteEvent extends FavoriteEvent {
 
 class RemoveFromFavoriteEvent extends FavoriteEvent {
   const RemoveFromFavoriteEvent(this.product);
-  final FeaturedProductModel product;
+  final ProductModel product;
 
   @override
   List<Object> get props => [product];

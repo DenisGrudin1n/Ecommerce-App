@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/widgets/refreshable_scroll_view.dart';
-import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/widgets/favorite_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/widgets/favorite_section.dart';
@@ -20,7 +20,7 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   late RefreshController refreshController;
-  final favoritesBox = Hive.box<FeaturedProductModel>('favorites');
+  final favoritesBox = Hive.box<ProductModel>('favorites');
 
   @override
   void initState() {

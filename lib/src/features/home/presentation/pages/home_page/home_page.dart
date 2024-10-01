@@ -3,7 +3,7 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/core/widgets/refreshable_scroll_view.dart';
-import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
@@ -30,7 +30,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late TextEditingController searchController;
   late RefreshController refreshController;
-  final favoritesBox = Hive.box<FeaturedProductModel>('favorites');
+  final favoritesBox = Hive.box<ProductModel>('favorites');
 
   @override
   void initState() {
