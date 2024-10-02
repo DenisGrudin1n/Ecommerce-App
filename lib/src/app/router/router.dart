@@ -65,10 +65,11 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: CartRoute.page,
-          initial: true,
+          //initial: true,
         ),
         AutoRoute(
           page: CheckoutRoute.page,
+          initial: true,
         ),
         AutoRoute(
           page: ShippingAddressEditingRoute.page,
