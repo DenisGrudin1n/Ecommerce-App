@@ -1,7 +1,9 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PayWindow extends StatelessWidget {
   const PayWindow({super.key});
@@ -77,7 +79,16 @@ class PayWindow extends StatelessWidget {
               height: 48,
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<CheckoutBloc>().add(ShowLoadingEvent());
+                  Future.delayed(const Duration(seconds: 2), () {
+                    if (context.mounted) {
+                      context
+                          .read<CheckoutBloc>()
+                          .add(ShowSuccessWindowEvent());
+                    }
+                  });
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.yellowColor,
                   shape: RoundedRectangleBorder(
