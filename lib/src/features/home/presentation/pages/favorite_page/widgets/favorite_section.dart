@@ -5,6 +5,8 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,9 +26,33 @@ class _FavoriteSectionState extends State<FavoriteSection> {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteProducts = context.select<FavoriteBloc, List<ProductModel>>(
-      (bloc) => bloc.state.favoriteProducts,
+    final favoriteProductsNames = context.select<FavoriteBloc, List<String>>(
+      (bloc) => bloc.state.favoriteProductsNames,
     );
+
+    // Select featured products from HomeBloc
+    final featuredProducts = context.select<HomeBloc, List<ProductModel>>(
+      (bloc) => bloc.state.featuredProducts,
+    );
+
+    // Select items from ItemsBloc
+    final itemsProducts = context.select<ItemsBloc, List<ProductModel>>(
+      (bloc) => bloc.state.items,
+    );
+
+    // Combine featured products and items while avoiding duplicates
+    final allProducts = [...featuredProducts];
+    // Add items only if they are not already in featuredProducts
+    for (final item in itemsProducts) {
+      if (!allProducts.any((product) => product.name == item.name)) {
+        allProducts.add(item);
+      }
+    }
+
+    // Filter to find favorite products
+    final favoriteProducts = allProducts
+        .where((product) => favoriteProductsNames.contains(product.name))
+        .toList();
 
     if (favoriteProducts.isEmpty) {
       return const SliverToBoxAdapter(

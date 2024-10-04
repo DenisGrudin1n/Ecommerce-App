@@ -13,19 +13,20 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     on<LoadFavoriteProductsEvent>(_onLoadFavoriteProducts);
   }
 
-  final Box<dynamic> favoritesBox;
+  final Box<String> favoritesBox;
 
   void _onAddToFavorites(
     AddToFavoriteEvent event,
     Emitter<FavoriteState> emit,
   ) {
-    if (!favoritesBox.values.contains(event.product)) {
-      favoritesBox.add(event.product);
+    // Check if the product name already exists in the favorites
+    if (!state.favoriteProductsNames.contains(event.product.name)) {
+      favoritesBox.add(event.product.name); // Add only the product name
     }
 
     emit(
       state.copyWith(
-        favoriteProducts: favoritesBox.values.cast<ProductModel>().toList(),
+        favoriteProducts: favoritesBox.values.cast<String>().toList(),
       ),
     );
   }
@@ -34,23 +35,14 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     RemoveFromFavoriteEvent event,
     Emitter<FavoriteState> emit,
   ) {
-    final productToRemove = favoritesBox.values.cast<ProductModel>().firstWhere(
-          (product) =>
-              product.name == event.product.name &&
-              product.price == event.product.price,
-          orElse: () => ProductModel(name: '', price: '', imageUrl: ''),
-        );
-
+    // Remove the product name
     favoritesBox.deleteAt(
-      favoritesBox.values
-          .cast<ProductModel>()
-          .toList()
-          .indexOf(productToRemove),
+      favoritesBox.values.cast<String>().toList().indexOf(event.product.name),
     );
 
     emit(
       state.copyWith(
-        favoriteProducts: favoritesBox.values.cast<ProductModel>().toList(),
+        favoriteProducts: favoritesBox.values.cast<String>().toList(),
       ),
     );
   }
@@ -61,7 +53,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   ) {
     emit(
       state.copyWith(
-        favoriteProducts: favoritesBox.values.cast<ProductModel>().toList(),
+        favoriteProducts: favoritesBox.values.cast<String>().toList(),
       ),
     );
   }

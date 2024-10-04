@@ -36,8 +36,8 @@ class _RelatedProductsState extends State<RelatedProducts> {
     final errorMessage = context.select<ItemsBloc, String>(
       (bloc) => bloc.state.itemsErrorMessage,
     );
-    final favoriteProducts = context.select<FavoriteBloc, List<ProductModel>>(
-      (bloc) => bloc.state.favoriteProducts,
+    final favoriteProducts = context.select<FavoriteBloc, List<String>>(
+      (bloc) => bloc.state.favoriteProductsNames,
     );
 
     if (isLoading) {
@@ -97,10 +97,9 @@ class _RelatedProductsState extends State<RelatedProducts> {
   Widget _buildItemsTile(
     ProductModel item,
     int index,
-    List<ProductModel> favoriteProducts,
+    List<String> favoriteProducts,
   ) {
-    final isFavorite =
-        favoriteProducts.any((favProduct) => favProduct.name == item.name);
+    final isFavorite = favoriteProducts.contains(item.name);
 
     return Stack(
       children: [

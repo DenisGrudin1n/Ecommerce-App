@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
@@ -27,7 +26,7 @@ class MainTabsPage extends StatefulWidget {
 }
 
 class _MainTabsPageState extends State<MainTabsPage> {
-  final favoritesBox = Hive.box<ProductModel>('favorites');
+  final favoritesBox = Hive.box<String>('favorites');
 
   @override
   Widget build(BuildContext context) {

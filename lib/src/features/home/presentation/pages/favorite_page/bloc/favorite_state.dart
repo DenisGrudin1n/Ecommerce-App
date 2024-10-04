@@ -1,15 +1,15 @@
 part of 'favorite_bloc.dart';
 
 class FavoriteState extends Equatable {
-  const FavoriteState({this.favoriteProducts = const []});
-  final List<ProductModel> favoriteProducts;
+  const FavoriteState({this.favoriteProductsNames = const []});
+  final List<String> favoriteProductsNames;
 
-  FavoriteState copyWith({List<ProductModel>? favoriteProducts}) {
+  FavoriteState copyWith({List<String>? favoriteProducts}) {
     return FavoriteState(
-      favoriteProducts: favoriteProducts ?? this.favoriteProducts,
+      favoriteProductsNames: favoriteProducts ?? this.favoriteProductsNames,
     );
   }
 
   @override
-  List<Object> get props => [favoriteProducts];
+  List<Object> get props => [favoriteProductsNames];
 }

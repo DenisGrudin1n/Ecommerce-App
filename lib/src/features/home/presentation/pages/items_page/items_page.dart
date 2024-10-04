@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/widgets/refreshable_scroll_view.dart';
-import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/widgets/items_appbar.dart';
@@ -10,7 +9,6 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/wi
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/widgets/items_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 @RoutePage()
@@ -25,7 +23,6 @@ class _ItemsPageState extends State<ItemsPage> {
   late String selectedCategory;
   late TextEditingController searchController;
   late RefreshController refreshController;
-  final favoritesBox = Hive.box<ProductModel>('favorites');
 
   @override
   void initState() {

@@ -41,8 +41,8 @@ class _FeaturedSectionState extends State<FeaturedSection> {
     final errorMessage = context.select<HomeBloc, String>(
       (bloc) => bloc.state.featuredErrorMessage,
     );
-    final favoriteProducts = context.select<FavoriteBloc, List<ProductModel>>(
-      (bloc) => bloc.state.favoriteProducts,
+    final favoriteProductsNames = context.select<FavoriteBloc, List<String>>(
+      (bloc) => bloc.state.favoriteProductsNames,
     );
 
     if (isLoading) {
@@ -63,12 +63,12 @@ class _FeaturedSectionState extends State<FeaturedSection> {
       );
     }
 
-    return _buildProductGrid(featuredSectionProducts, favoriteProducts);
+    return _buildProductGrid(featuredSectionProducts, favoriteProductsNames);
   }
 
   Widget _buildProductGrid(
     List<ProductModel> products,
-    List<ProductModel> favoriteProducts,
+    List<String> favoriteProductsNames,
   ) {
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -80,8 +80,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           final product = products[index];
-          final isFavorite = favoriteProducts
-              .any((favProduct) => favProduct.name == product.name);
+          final isFavorite = favoriteProductsNames.contains(product.name);
           return _buildFeaturedProductTile(product, isFavorite, index);
         },
         childCount: products.length,
