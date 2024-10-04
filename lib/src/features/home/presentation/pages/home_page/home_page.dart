@@ -3,7 +3,6 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/core/widgets/refreshable_scroll_view.dart';
-import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
@@ -12,11 +11,8 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/wid
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/widgets/featured_section.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/widgets/home_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/widgets/home_searchbar.dart';
-import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
-import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 @RoutePage()
@@ -30,7 +26,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late TextEditingController searchController;
   late RefreshController refreshController;
-  final favoritesBox = Hive.box<ProductModel>('favorites');
 
   @override
   void initState() {
@@ -48,100 +43,81 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => HomeBloc(
-            storageRepository: context.read<StorageRepository>(),
-            firestoreRepository: context.read<DatabaseRepository>(),
-          )
-            ..add(const LoadFeaturedProductsEvent(''))
-            ..add(LoadHomeCatalogueEvent())
-            ..add(LoadFashionSaleImagesEvent()),
-        ),
-        BlocProvider(
-          create: (context) =>
-              FavoriteBloc(favoritesBox)..add(LoadFavoriteProductsEvent()),
-        ),
-      ],
-      child: Scaffold(
-        backgroundColor: AppColors.lightBackgroundColor,
-        body: Builder(
-          builder: (BuildContext context) {
-            return CustomScrollView(
-              slivers: [
-                // AppBar & SearchBar
-                SliverToBoxAdapter(
-                  child: Stack(
-                    children: [
-                      const HomeAppbar(),
-                      HomeSearchBar(controller: searchController),
-                    ],
-                  ),
+    return Scaffold(
+      backgroundColor: AppColors.lightBackgroundColor,
+      body: Builder(
+        builder: (BuildContext context) {
+          return CustomScrollView(
+            slivers: [
+              // AppBar & SearchBar
+              SliverToBoxAdapter(
+                child: Stack(
+                  children: [
+                    const HomeAppbar(),
+                    HomeSearchBar(controller: searchController),
+                  ],
                 ),
+              ),
 
-                const SliverPadding(padding: EdgeInsets.only(top: 20)),
+              const SliverPadding(padding: EdgeInsets.only(top: 20)),
 
-                // Pull to refresh feature
-                SliverFillRemaining(
-                  child: RefreshableScrollView(
-                    refreshController: refreshController,
-                    onRefresh: () async {
-                      // Clear search query
-                      searchController.clear();
-                      // Dispatch events to refresh the data
-                      context
-                          .read<HomeBloc>()
-                          .add(const LoadFeaturedProductsEvent(''));
-                      context.read<HomeBloc>().add(LoadHomeCatalogueEvent());
-                      context
-                          .read<HomeBloc>()
-                          .add(LoadFashionSaleImagesEvent());
-                      context
-                          .read<FavoriteBloc>()
-                          .add(LoadFavoriteProductsEvent());
-                      // Complete the refresh
-                      refreshController.refreshCompleted();
-                    },
-                    slivers: [
-                      // Fashion Sale Section
-                      const SliverToBoxAdapter(
-                        child: FashionSaleSection(),
-                      ),
+              // Pull to refresh feature
+              SliverFillRemaining(
+                child: RefreshableScrollView(
+                  refreshController: refreshController,
+                  onRefresh: () async {
+                    // Clear search query
+                    searchController.clear();
+                    // Dispatch events to refresh the data
+                    context
+                        .read<HomeBloc>()
+                        .add(const LoadFeaturedProductsEvent(''));
+                    context.read<HomeBloc>().add(LoadHomeCatalogueEvent());
+                    context.read<HomeBloc>().add(LoadFashionSaleImagesEvent());
+                    context
+                        .read<FavoriteBloc>()
+                        .add(LoadFavoriteProductsEvent());
+                    // Complete the refresh
+                    refreshController.refreshCompleted();
+                  },
+                  slivers: [
+                    // Fashion Sale Section
+                    const SliverToBoxAdapter(
+                      child: FashionSaleSection(),
+                    ),
 
-                      const SliverPadding(padding: EdgeInsets.only(top: 20)),
+                    const SliverPadding(padding: EdgeInsets.only(top: 20)),
 
-                      // Catalogue Section
-                      const SliverToBoxAdapter(
-                        child: CatalogueSection(),
-                      ),
+                    // Catalogue Section
+                    const SliverToBoxAdapter(
+                      child: CatalogueSection(),
+                    ),
 
-                      const SliverPadding(padding: EdgeInsets.only(top: 20)),
+                    const SliverPadding(padding: EdgeInsets.only(top: 20)),
 
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            context.localization.homePageFeaturedText,
-                            style: HomePageTextStyles.homePageFeaturedTextStyle,
-                          ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          context.localization.homePageFeaturedText,
+                          style: HomePageTextStyles.homePageFeaturedTextStyle,
                         ),
                       ),
+                    ),
 
-                      const SliverPadding(padding: EdgeInsets.only(top: 16)),
+                    const SliverPadding(padding: EdgeInsets.only(top: 16)),
 
-                      // Featured Section as SliverGrid
-                      const SliverPadding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        sliver: FeaturedSection(),
-                      ),
-                    ],
-                  ),
+                    // Featured Section as SliverGrid
+                    const SliverPadding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      sliver: FeaturedSection(),
+                    ),
+                  ],
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

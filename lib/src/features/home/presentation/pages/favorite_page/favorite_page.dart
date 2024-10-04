@@ -1,13 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/widgets/refreshable_scroll_view.dart';
-import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/widgets/favorite_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/widgets/favorite_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 @RoutePage()
@@ -20,7 +18,6 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   late RefreshController refreshController;
-  final favoritesBox = Hive.box<ProductModel>('favorites');
 
   @override
   void initState() {
@@ -36,45 +33,41 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          FavoriteBloc(favoritesBox)..add(LoadFavoriteProductsEvent()),
-      child: Scaffold(
-        backgroundColor: AppColors.lightBackgroundColor,
-        body: Builder(
-          builder: (BuildContext context) {
-            return CustomScrollView(
-              slivers: [
-                // AppBar & SearchBar
-                const SliverToBoxAdapter(
-                  child: FavoriteAppbar(),
-                ),
+    return Scaffold(
+      backgroundColor: AppColors.lightBackgroundColor,
+      body: Builder(
+        builder: (BuildContext context) {
+          return CustomScrollView(
+            slivers: [
+              // AppBar & SearchBar
+              const SliverToBoxAdapter(
+                child: FavoriteAppbar(),
+              ),
 
-                const SliverPadding(padding: EdgeInsets.only(top: 24)),
+              const SliverPadding(padding: EdgeInsets.only(top: 24)),
 
-                // Pull to refresh feature
-                SliverFillRemaining(
-                  child: RefreshableScrollView(
-                    refreshController: refreshController,
-                    onRefresh: () async {
-                      context
-                          .read<FavoriteBloc>()
-                          .add(LoadFavoriteProductsEvent());
-                      refreshController.refreshCompleted();
-                    },
-                    slivers: const [
-                      // Items Section as SliverGrid
-                      SliverPadding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        sliver: FavoriteSection(),
-                      ),
-                    ],
-                  ),
+              // Pull to refresh feature
+              SliverFillRemaining(
+                child: RefreshableScrollView(
+                  refreshController: refreshController,
+                  onRefresh: () async {
+                    context
+                        .read<FavoriteBloc>()
+                        .add(LoadFavoriteProductsEvent());
+                    refreshController.refreshCompleted();
+                  },
+                  slivers: const [
+                    // Items Section as SliverGrid
+                    SliverPadding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      sliver: FavoriteSection(),
+                    ),
+                  ],
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

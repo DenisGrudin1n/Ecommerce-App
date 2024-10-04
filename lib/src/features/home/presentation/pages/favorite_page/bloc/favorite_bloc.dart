@@ -19,7 +19,10 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     AddToFavoriteEvent event,
     Emitter<FavoriteState> emit,
   ) {
-    favoritesBox.add(event.product);
+    if (!favoritesBox.values.contains(event.product)) {
+      favoritesBox.add(event.product);
+    }
+
     emit(
       state.copyWith(
         favoriteProducts: favoritesBox.values.cast<ProductModel>().toList(),
@@ -31,13 +34,20 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     RemoveFromFavoriteEvent event,
     Emitter<FavoriteState> emit,
   ) {
-    final index = favoritesBox.values
-        .cast<ProductModel>()
-        .toList()
-        .indexOf(event.product);
-    if (index != -1) {
-      favoritesBox.deleteAt(index);
-    }
+    final productToRemove = favoritesBox.values.cast<ProductModel>().firstWhere(
+          (product) =>
+              product.name == event.product.name &&
+              product.price == event.product.price,
+          orElse: () => ProductModel(name: '', price: '', imageUrl: ''),
+        );
+
+    favoritesBox.deleteAt(
+      favoritesBox.values
+          .cast<ProductModel>()
+          .toList()
+          .indexOf(productToRemove),
+    );
+
     emit(
       state.copyWith(
         favoriteProducts: favoritesBox.values.cast<ProductModel>().toList(),

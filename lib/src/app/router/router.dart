@@ -24,7 +24,6 @@ class AppRouter extends RootStackRouter {
         /// routes go here
         AutoRoute(
           page: GetStartedRoute.page,
-          //initial: true,
         ),
         AutoRoute(
           page: EnterPhoneRoute.page,
@@ -34,42 +33,36 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: MainTabsRoute.page,
-          //initial: true,
+          initial: true,
           children: [
             AutoRoute(
               page: HomeRoute.page,
-              //initial: true,
+              initial: true,
             ),
             AutoRoute(page: CatalogueRoute.page),
             AutoRoute(
               page: ItemsRoute.page,
-              //initial: true,
             ),
             AutoRoute(
               page: FavoriteRoute.page,
-              //initial: true,
             ),
             AutoRoute(
               page: ProfileRoute.page,
-              //initial: true,
+            ),
+            AutoRoute(
+              page: FilterRoute.page,
             ),
           ],
         ),
-        AutoRoute(
-          page: FilterRoute.page,
-          //initial: true,
-        ),
+
         AutoRoute(
           page: ProductRoute.page,
-          //initial: true,
         ),
         AutoRoute(
           page: CartRoute.page,
-          //initial: true,
         ),
         AutoRoute(
           page: CheckoutRoute.page,
-          initial: true,
         ),
         AutoRoute(
           page: ShippingAddressEditingRoute.page,
