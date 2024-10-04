@@ -13,20 +13,19 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     on<LoadFavoriteProductsEvent>(_onLoadFavoriteProducts);
   }
 
-  final Box<String> favoritesBox;
+  final Box<int> favoritesBox;
 
   void _onAddToFavorites(
     AddToFavoriteEvent event,
     Emitter<FavoriteState> emit,
   ) {
-    // Check if the product name already exists in the favorites
-    if (!state.favoriteProductsNames.contains(event.product.name)) {
-      favoritesBox.add(event.product.name); // Add only the product name
+    if (!state.favoriteProductsIds.contains(event.product.id)) {
+      favoritesBox.add(event.product.id);
     }
 
     emit(
       state.copyWith(
-        favoriteProducts: favoritesBox.values.cast<String>().toList(),
+        favoriteProducts: favoritesBox.values.cast<int>().toList(),
       ),
     );
   }
@@ -35,14 +34,13 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     RemoveFromFavoriteEvent event,
     Emitter<FavoriteState> emit,
   ) {
-    // Remove the product name
     favoritesBox.deleteAt(
-      favoritesBox.values.cast<String>().toList().indexOf(event.product.name),
+      favoritesBox.values.cast<int>().toList().indexOf(event.product.id),
     );
 
     emit(
       state.copyWith(
-        favoriteProducts: favoritesBox.values.cast<String>().toList(),
+        favoriteProducts: favoritesBox.values.cast<int>().toList(),
       ),
     );
   }
@@ -53,7 +51,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   ) {
     emit(
       state.copyWith(
-        favoriteProducts: favoritesBox.values.cast<String>().toList(),
+        favoriteProducts: favoritesBox.values.cast<int>().toList(),
       ),
     );
   }

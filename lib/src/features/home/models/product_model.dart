@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
   ProductModel({
+    required this.id,
     required this.name,
     required this.price,
     required this.imageUrl,
@@ -13,6 +14,7 @@ class ProductModel {
     DocumentSnapshot<Map<String, dynamic>> data,
   ) {
     return ProductModel(
+      id: data['id'] as int? ?? -1,
       name: data['name'] as String? ?? '',
       price: data['price'] as String? ?? '',
       // ignore: use_if_null_to_convert_nulls_to_bools
@@ -27,11 +29,7 @@ class ProductModel {
     );
   }
 
-  @override
-  String toString() {
-    return 'FeaturedProductModel(name: $name, price: $price, category: $category)';
-  }
-
+  final int id;
   final String name;
   final String price;
   final String? oldPrice;

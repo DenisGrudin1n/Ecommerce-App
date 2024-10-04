@@ -34,6 +34,7 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
           isLoadingItems: false,
         ),
       );
+      print('items products: ${filteredProducts.length}');
     } catch (e) {
       emit(
         state.copyWith(

@@ -26,7 +26,7 @@ class MainTabsPage extends StatefulWidget {
 }
 
 class _MainTabsPageState extends State<MainTabsPage> {
-  final favoritesBox = Hive.box<String>('favorites');
+  final favoritesBox = Hive.box<int>('favorites');
 
   @override
   Widget build(BuildContext context) {

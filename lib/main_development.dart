@@ -10,8 +10,7 @@ void main() async {
   await Firebase.initializeApp();
 
   await Hive.initFlutter();
-  await Hive.deleteFromDisk();
-  await Hive.openBox<String>('favorites');
+  await Hive.openBox<int>('favorites');
 
   await bootstrap(() => const App());
 }

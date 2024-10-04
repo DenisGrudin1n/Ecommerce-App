@@ -25,7 +25,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final favoritesBox = Hive.box<String>('favorites');
+  final favoritesBox = Hive.box<int>('favorites');
 
   @override
   Widget build(BuildContext context) {

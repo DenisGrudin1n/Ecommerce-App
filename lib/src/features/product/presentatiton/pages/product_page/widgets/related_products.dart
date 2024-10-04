@@ -36,8 +36,8 @@ class _RelatedProductsState extends State<RelatedProducts> {
     final errorMessage = context.select<ItemsBloc, String>(
       (bloc) => bloc.state.itemsErrorMessage,
     );
-    final favoriteProducts = context.select<FavoriteBloc, List<String>>(
-      (bloc) => bloc.state.favoriteProductsNames,
+    final favoriteProductsIds = context.select<FavoriteBloc, List<int>>(
+      (bloc) => bloc.state.favoriteProductsIds,
     );
 
     if (isLoading) {
@@ -81,7 +81,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
                     padding: EdgeInsets.only(
                       right: index != items.length - 1 ? 16 : 0,
                     ),
-                    child: _buildItemsTile(item, index, favoriteProducts),
+                    child: _buildItemsTile(item, index, favoriteProductsIds),
                   );
                 } else {
                   return const SizedBox();
@@ -97,9 +97,9 @@ class _RelatedProductsState extends State<RelatedProducts> {
   Widget _buildItemsTile(
     ProductModel item,
     int index,
-    List<String> favoriteProducts,
+    List<int> favoriteProducts,
   ) {
-    final isFavorite = favoriteProducts.contains(item.name);
+    final isFavorite = favoriteProducts.contains(item.id);
 
     return Stack(
       children: [

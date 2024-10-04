@@ -26,8 +26,8 @@ class _FavoriteSectionState extends State<FavoriteSection> {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteProductsNames = context.select<FavoriteBloc, List<String>>(
-      (bloc) => bloc.state.favoriteProductsNames,
+    final favoriteProductsIds = context.select<FavoriteBloc, List<int>>(
+      (bloc) => bloc.state.favoriteProductsIds,
     );
 
     // Select featured products from HomeBloc
@@ -51,7 +51,7 @@ class _FavoriteSectionState extends State<FavoriteSection> {
 
     // Filter to find favorite products
     final favoriteProducts = allProducts
-        .where((product) => favoriteProductsNames.contains(product.name))
+        .where((product) => favoriteProductsIds.contains(product.id))
         .toList();
 
     if (favoriteProducts.isEmpty) {

@@ -43,8 +43,8 @@ class _ItemsSectionState extends State<ItemsSection> {
     final errorMessage = context.select<ItemsBloc, String>(
       (bloc) => bloc.state.itemsErrorMessage,
     );
-    final favoriteProductsNames = context.select<FavoriteBloc, List<String>>(
-      (bloc) => bloc.state.favoriteProductsNames,
+    final favoriteProductsIds = context.select<FavoriteBloc, List<int>>(
+      (bloc) => bloc.state.favoriteProductsIds,
     );
 
     final filteredItems = widget.selectedCategory == 'All'
@@ -96,7 +96,7 @@ class _ItemsSectionState extends State<ItemsSection> {
                     child: _buildItemsTile(
                       firstItem,
                       itemIndex,
-                      favoriteProductsNames,
+                      favoriteProductsIds,
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -105,7 +105,7 @@ class _ItemsSectionState extends State<ItemsSection> {
                       child: _buildItemsTile(
                         secondItem,
                         itemIndex + 1,
-                        favoriteProductsNames,
+                        favoriteProductsIds,
                       ),
                     )
                   else
@@ -126,9 +126,9 @@ class _ItemsSectionState extends State<ItemsSection> {
   Widget _buildItemsTile(
     ProductModel item,
     int index,
-    List<String> favoriteProductsNames,
+    List<int> favoriteProductsNames,
   ) {
-    final isFavorite = favoriteProductsNames.contains(item.name);
+    final isFavorite = favoriteProductsNames.contains(item.id);
 
     return Stack(
       children: [
