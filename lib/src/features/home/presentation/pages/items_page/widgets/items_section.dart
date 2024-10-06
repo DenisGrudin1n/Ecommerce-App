@@ -3,6 +3,7 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/shadows.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/models/product_model.dart';
@@ -11,7 +12,6 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bl
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ItemsSection extends StatefulWidget {
   const ItemsSection({
@@ -221,10 +221,7 @@ class _ItemsSectionState extends State<ItemsSection> {
               color: AppColors.whiteColor,
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 6,
-                ),
+                AppShadows.favoriteIconBoxShadow,
               ],
             ),
             child: Center(
@@ -241,12 +238,7 @@ class _ItemsSectionState extends State<ItemsSection> {
                 },
                 icon: isFavorite
                     ? AppIcons.smallFavoriteProductIcon
-                    : const GradientIcon(
-                        icon: Icons.favorite_border,
-                        size: 20,
-                        gradient: AppGradients.purpleGradient,
-                        strokeWidth: 1,
-                      ),
+                    : AppIcons.notFavoriteGradientIcon,
               ),
             ),
           ),
@@ -285,13 +277,7 @@ class _ItemsSectionState extends State<ItemsSection> {
       children: [
         Text(
           '${items.length} ${context.localization.itemsPageItemsText}',
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.w700,
-            fontSize: 19,
-            color: AppColors.darkColor,
-            height: 23 / 19,
-            letterSpacing: -0.49,
-          ),
+          style: ItemsPageTextStyles.itemsTextStyle,
         ),
         const Spacer(),
         Row(

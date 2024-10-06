@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +24,11 @@ class SuccessWindow extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: -248,
+          top: -233,
           child: Column(
             children: [
               Container(
-                height: 360,
+                height: 345,
                 width: MediaQuery.of(context).size.width - 48,
                 decoration: const BoxDecoration(
                   gradient: AppGradients.purpleGradient,
@@ -36,17 +38,13 @@ class SuccessWindow extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 32),
-                    child: Icon(
-                      Icons.check_circle_outline_rounded,
-                      color: AppColors.whiteColor,
-                      size: 64,
-                    ),
+                    child: AppIcons.paymentSuccessIcon,
                   ),
                 ),
               ),
               Center(
                 child: Text(
-                  'Success',
+                  context.localization.checkoutPageSuccessText,
                   style: ProductPageTextStyles.productDarkPriceTextStyle,
                 ),
               ),
@@ -56,7 +54,7 @@ class SuccessWindow extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width - 96,
                 child: Text(
-                  'Your order will be delivered soon.',
+                  context.localization.checkoutPageDeliveredSoonText,
                   style: ProductPageTextStyles.productDetailsTextStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -64,7 +62,7 @@ class SuccessWindow extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width - 96,
                 child: Text(
-                  'It can be tracked in the "Orders" section.',
+                  context.localization.checkoutPageOrdersTrackedText,
                   style: ProductPageTextStyles.productDetailsTextStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -89,7 +87,7 @@ class SuccessWindow extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'Continue Shopping',
+                      context.localization.checkoutPageContinueShoppingText,
                       style: FilterPageTextStyles.resultsTextStyle,
                     ),
                   ),
@@ -103,16 +101,9 @@ class SuccessWindow extends StatelessWidget {
                   onTap: () {
                     context.read<CheckoutBloc>().add(HideSuccessWindowEvent());
                   },
-                  child: const Text(
-                    'Go to Orders',
-                    style: TextStyle(
-                      fontFamily: 'SFProDisplay',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 17,
-                      color: AppColors.greyColor,
-                      height: 22 / 17,
-                      letterSpacing: 0,
-                    ),
+                  child: Text(
+                    context.localization.checkoutPageGoToOrdersText,
+                    style: CheckoutPageTextStyles.goToOrdersTextStyle,
                   ),
                 ),
               ),

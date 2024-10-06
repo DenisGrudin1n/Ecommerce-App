@@ -29,7 +29,7 @@ class PayWindow extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Items',
+                context.localization.checkoutPageItemsText,
                 style: FilterPageTextStyles.sectionNameTextStyle,
               ),
               const Spacer(),
@@ -45,7 +45,7 @@ class PayWindow extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Delivery',
+                context.localization.checkoutPageDeliveryText,
                 style: FilterPageTextStyles.sectionNameTextStyle,
               ),
               const Spacer(),
@@ -96,7 +96,7 @@ class PayWindow extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Pay',
+                  context.localization.checkoutPagePayText,
                   style: FilterPageTextStyles.resultsTextStyle,
                 ),
               ),

@@ -1,13 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/shadows.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/gen/assets.gen.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CheckoutSection extends StatefulWidget {
   const CheckoutSection({super.key});
@@ -49,16 +51,12 @@ class _CheckoutSectionState extends State<CheckoutSection> {
       children: [
         Row(
           children: [
-            const GradientIcon(
-              icon: Icons.location_on_outlined,
-              gradient: AppGradients.purpleGradient,
-              size: 28,
-            ),
+            AppIcons.locationGradientIcon,
             const SizedBox(
               width: 12,
             ),
             Text(
-              'Shipping Address',
+              context.localization.checkoutPageShippingAddressText,
               style: ProductPageTextStyles.productDetailsStyle,
             ),
           ],
@@ -74,11 +72,7 @@ class _CheckoutSectionState extends State<CheckoutSection> {
             color: AppColors.whiteColor,
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
-              BoxShadow(
-                color: AppColors.darkColor.withOpacity(0.08),
-                offset: const Offset(0, 4),
-                blurRadius: 12,
-              ),
+              AppShadows.defaultContainerBoxShadow,
             ],
           ),
           child: Column(
@@ -87,7 +81,7 @@ class _CheckoutSectionState extends State<CheckoutSection> {
               Row(
                 children: [
                   Text(
-                    'Oleh Chabanov',
+                    context.localization.profilePageUserNameText,
                     style: ProductPageTextStyles.productPageUserNameTextStyle,
                   ),
                   const Spacer(),
@@ -95,24 +89,14 @@ class _CheckoutSectionState extends State<CheckoutSection> {
                     onTap: () {
                       context.router.push(const ShippingAddressEditingRoute());
                     },
-                    child: const Row(
+                    child: Row(
                       children: [
                         GradientText(
-                          text: 'Change',
-                          style: TextStyle(
-                            fontFamily: 'SFProText',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12,
-                            height: 16 / 12,
-                            letterSpacing: 0,
-                          ),
+                          text: context.localization.checkoutPageChangeText,
+                          style: CheckoutPageTextStyles.changeTextStyle,
                           gradient: AppGradients.purpleGradient,
                         ),
-                        GradientIcon(
-                          icon: Icons.arrow_forward_ios,
-                          size: 16,
-                          gradient: AppGradients.purpleGradient,
-                        ),
+                        AppIcons.arrowForwardGradientIcon,
                       ],
                     ),
                   ),
@@ -123,23 +107,11 @@ class _CheckoutSectionState extends State<CheckoutSection> {
               ),
               Text(
                 '225 Highland Ave',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  color: AppColors.darkGreyColor,
-                  height: 19 / 14,
-                  letterSpacing: -0.15,
-                ),
+                style: CheckoutPageTextStyles.addressTextStyle,
               ),
               Text(
                 'Springfield, IL 62704, USA',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  color: AppColors.darkGreyColor,
-                  height: 19 / 14,
-                  letterSpacing: -0.15,
-                ),
+                style: CheckoutPageTextStyles.addressTextStyle,
               ),
             ],
           ),
@@ -156,14 +128,10 @@ class _CheckoutSectionState extends State<CheckoutSection> {
       children: [
         Row(
           children: [
-            const GradientIcon(
-              icon: Icons.local_shipping_outlined,
-              gradient: AppGradients.purpleGradient,
-              size: 28,
-            ),
+            AppIcons.localShippingGradientIcon,
             const SizedBox(width: 12),
             Text(
-              'Delivery Method',
+              context.localization.checkoutPageDeliveryMethodText,
               style: ProductPageTextStyles.productDetailsStyle,
             ),
           ],
@@ -176,21 +144,21 @@ class _CheckoutSectionState extends State<CheckoutSection> {
               context,
               'DHL',
               r'$15',
-              '1-2 days',
+              '1-2 ${context.localization.checkoutPageDaysText}',
               selectedPaymentMethod,
             ),
             _buildPaymentOption(
               context,
               'FedEx',
               r'$18',
-              '1-2 days',
+              '1-2 ${context.localization.checkoutPageDaysText}',
               selectedPaymentMethod,
             ),
             _buildPaymentOption(
               context,
               'USPS',
               r'$20',
-              '1-2 days',
+              '1-2 ${context.localization.checkoutPageDaysText}',
               selectedPaymentMethod,
             ),
           ],
@@ -226,11 +194,7 @@ class _CheckoutSectionState extends State<CheckoutSection> {
             width: 2,
           ),
           boxShadow: [
-            BoxShadow(
-              color: AppColors.darkColor.withOpacity(0.08),
-              offset: const Offset(0, 4),
-              blurRadius: 12,
-            ),
+            AppShadows.defaultContainerBoxShadow,
           ],
         ),
         child: Column(
@@ -267,16 +231,12 @@ class _CheckoutSectionState extends State<CheckoutSection> {
       children: [
         Row(
           children: [
-            const GradientIcon(
-              icon: Icons.credit_card_outlined,
-              gradient: AppGradients.purpleGradient,
-              size: 28,
-            ),
+            AppIcons.creditCardGradientIcon,
             const SizedBox(
               width: 12,
             ),
             Text(
-              'Payment Method',
+              context.localization.checkoutPagePaymentMethodText,
               style: ProductPageTextStyles.productDetailsStyle,
             ),
           ],
@@ -292,11 +252,7 @@ class _CheckoutSectionState extends State<CheckoutSection> {
             color: AppColors.whiteColor,
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
-              BoxShadow(
-                color: AppColors.darkColor.withOpacity(0.08),
-                offset: const Offset(0, 4),
-                blurRadius: 12,
-              ),
+              AppShadows.defaultContainerBoxShadow,
             ],
           ),
           child: Row(
@@ -310,34 +266,17 @@ class _CheckoutSectionState extends State<CheckoutSection> {
               const SizedBox(
                 width: 12,
               ),
-              const Text(
+              Text(
                 '**** **** **** 5678',
-                style: TextStyle(
-                  fontFamily: 'SFProText',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  color: AppColors.darkColor,
-                  height: 19 / 14,
-                  letterSpacing: 0.85,
-                ),
+                style: CheckoutPageTextStyles.cardNumberTextStyle,
               ),
               const Spacer(),
-              const GradientText(
-                text: 'Change',
-                style: TextStyle(
-                  fontFamily: 'SFProText',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 12,
-                  height: 16 / 12,
-                  letterSpacing: 0,
-                ),
+              GradientText(
+                text: context.localization.checkoutPageChangeText,
+                style: CheckoutPageTextStyles.changeTextStyle,
                 gradient: AppGradients.purpleGradient,
               ),
-              const GradientIcon(
-                icon: Icons.arrow_forward_ios,
-                size: 16,
-                gradient: AppGradients.purpleGradient,
-              ),
+              AppIcons.arrowForwardGradientIcon,
             ],
           ),
         ),

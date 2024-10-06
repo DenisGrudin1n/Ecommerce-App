@@ -28,7 +28,7 @@ class VerificationCodeInputField extends StatelessWidget {
         selectedColor: AppColors.redColor,
       ),
       animationDuration: const Duration(milliseconds: 300),
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparentColor,
       onChanged: (code) {
         BlocProvider.of<VerificationBloc>(context).add(
           VerificationCodeChanged(

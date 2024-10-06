@@ -3,6 +3,7 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/shadows.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/models/product_model.dart';
@@ -182,10 +183,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
               color: AppColors.whiteColor,
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 6,
-                ),
+                AppShadows.favoriteIconBoxShadow,
               ],
             ),
             child: Center(
@@ -204,12 +202,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                 },
                 icon: isFavorite
                     ? AppIcons.smallFavoriteProductIcon
-                    : const GradientIcon(
-                        icon: Icons.favorite_border,
-                        size: 20,
-                        gradient: AppGradients.purpleGradient,
-                        strokeWidth: 1,
-                      ),
+                    : AppIcons.notFavoriteGradientIcon,
               ),
             ),
           ),

@@ -123,11 +123,7 @@ class _CategoriesSectionState extends State<CategoriesSection> {
                         style: FilterPageTextStyles.valueTextStyle,
                       ),
                     ),
-                    if (selectedCategory == category.name)
-                      const Icon(
-                        Icons.check,
-                        color: AppColors.greyColor,
-                      ),
+                    if (selectedCategory == category.name) AppIcons.checkIcon,
                   ],
                 ),
               ),

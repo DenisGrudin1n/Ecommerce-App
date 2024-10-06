@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/shadows.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/models/product_model.dart';
@@ -55,8 +57,12 @@ class _FavoriteSectionState extends State<FavoriteSection> {
         .toList();
 
     if (favoriteProducts.isEmpty) {
-      return const SliverToBoxAdapter(
-        child: Center(child: Text('No favorite products.')),
+      return SliverToBoxAdapter(
+        child: Center(
+          child: Text(
+            context.localization.favoritePageNoProductsText,
+          ),
+        ),
       );
     }
 
@@ -172,10 +178,7 @@ class _FavoriteSectionState extends State<FavoriteSection> {
               color: AppColors.whiteColor,
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(
-                  color: AppColors.blackColor.withOpacity(0.1),
-                  blurRadius: 6,
-                ),
+                AppShadows.favoriteIconBoxShadow,
               ],
             ),
             child: Center(

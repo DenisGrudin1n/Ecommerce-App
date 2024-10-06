@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
@@ -33,7 +34,7 @@ class HomeSearchBar extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const Icon(Icons.search, color: AppColors.greyColor),
+                AppIcons.searchIcon,
                 const SizedBox(width: 8),
                 Expanded(
                   child: Padding(

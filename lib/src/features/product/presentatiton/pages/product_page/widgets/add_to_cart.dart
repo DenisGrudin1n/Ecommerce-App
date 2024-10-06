@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
@@ -219,13 +218,8 @@ class AddToCart extends StatelessWidget {
             children: [
               Text(
                 product.name,
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.darkColor,
-                  height: 19 / 14,
-                  letterSpacing: -0.15,
-                ),
+                style: ProductPageTextStyles
+                    .productPageAddToCartProductNameTextStyle,
               ),
               const SizedBox(
                 height: 6,
@@ -381,12 +375,7 @@ class AddToCart extends StatelessWidget {
             },
             icon: isProductFavorite
                 ? AppIcons.favoriteProductIcon
-                : const GradientIcon(
-                    icon: Icons.favorite_border,
-                    size: 28,
-                    gradient: AppGradients.purpleGradient,
-                    strokeWidth: 1,
-                  ),
+                : AppIcons.notFavoriteProductGradientIcon,
           ),
         ],
       ),

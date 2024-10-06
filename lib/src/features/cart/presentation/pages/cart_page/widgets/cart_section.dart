@@ -55,7 +55,8 @@ class CartSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Astylish Women Open Front Long Sleeve Chunky Knit Cardigan',
+                      'Astylish Women Open Front Long Sleeve '
+                      'Chunky Knit Cardigan',
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -149,7 +150,8 @@ class CartSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Astylish Women Open Front Long Sleeve Chunky Knit Cardigan',
+                      'Astylish Women Open Front Long Sleeve '
+                      'Chunky Knit Cardigan',
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
