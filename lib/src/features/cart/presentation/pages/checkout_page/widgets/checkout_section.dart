@@ -8,6 +8,7 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/gen/assets.gen.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/bloc/checkout_bloc.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/shipping_address_editing_page/bloc/shipping_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +26,22 @@ class _CheckoutSectionState extends State<CheckoutSection> {
       (bloc) => bloc.state.selectedPaymentMethod,
     );
 
+    final fullName = context.select<ShippingBloc, String>(
+      (bloc) => bloc.state.fullName,
+    );
+    final address = context.select<ShippingBloc, String>(
+      (bloc) => bloc.state.address,
+    );
+    final city = context.select<ShippingBloc, String>(
+      (bloc) => bloc.state.city,
+    );
+    final postalCode = context.select<ShippingBloc, String>(
+      (bloc) => bloc.state.postalCode,
+    );
+    final phone = context.select<ShippingBloc, String>(
+      (bloc) => bloc.state.phone,
+    );
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -32,7 +49,13 @@ class _CheckoutSectionState extends State<CheckoutSection> {
           const SizedBox(
             height: 25,
           ),
-          _buildShippingInfo(),
+          _buildShippingInfo(
+            fullName: fullName,
+            address: address,
+            city: city,
+            postalCode: postalCode,
+            phone: phone,
+          ),
           const SizedBox(
             height: 33,
           ),
@@ -46,7 +69,16 @@ class _CheckoutSectionState extends State<CheckoutSection> {
     );
   }
 
-  Widget _buildShippingInfo() {
+  Widget _buildShippingInfo({
+    required String fullName,
+    required String address,
+    required String city,
+    required String postalCode,
+    required String phone,
+  }) {
+    final cityParts = city.split(',');
+    city = cityParts.isNotEmpty ? cityParts[0].trim() : '';
+    final country = cityParts.length > 1 ? cityParts[1].trim() : '';
     return Column(
       children: [
         Row(
@@ -81,7 +113,10 @@ class _CheckoutSectionState extends State<CheckoutSection> {
               Row(
                 children: [
                   Text(
-                    context.localization.profilePageUserNameText,
+                    fullName.isEmpty
+                        ? context
+                            .localization.checkoutPageNoShippingAddressDataText
+                        : fullName,
                     style: ProductPageTextStyles.productPageUserNameTextStyle,
                   ),
                   const Spacer(),
@@ -106,11 +141,13 @@ class _CheckoutSectionState extends State<CheckoutSection> {
                 height: 6,
               ),
               Text(
-                '225 Highland Ave',
+                address.isEmpty ? '' : address,
                 style: CheckoutPageTextStyles.addressTextStyle,
               ),
               Text(
-                'Springfield, IL 62704, USA',
+                '${city.isEmpty ? '' : '$city,'} '
+                '${postalCode.isEmpty ? '' : 'IL $postalCode,'} '
+                '${country.isEmpty ? '' : country}',
                 style: CheckoutPageTextStyles.addressTextStyle,
               ),
             ],

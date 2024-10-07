@@ -623,6 +623,16 @@ class CheckoutPageTextStyles {
   );
 }
 
+class ShippingAddressEditingPageTextStyles {
+  static TextStyle textFieldInputTextStyle = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkColor,
+    height: 1.3,
+    letterSpacing: 0.37,
+  );
+}
+
 class BottomNavBarTextStyles {
   static TextStyle bottomNavBarNotActiveIconTextStyle = const TextStyle(
     fontFamily: 'SFProText',

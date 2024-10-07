@@ -33,11 +33,11 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: MainTabsRoute.page,
-          initial: true,
+          //initial: true,
           children: [
             AutoRoute(
               page: HomeRoute.page,
-              initial: true,
+              //initial: true,
             ),
             AutoRoute(page: CatalogueRoute.page),
             AutoRoute(
@@ -63,6 +63,7 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: CheckoutRoute.page,
+          initial: true,
         ),
         AutoRoute(
           page: ShippingAddressEditingRoute.page,
