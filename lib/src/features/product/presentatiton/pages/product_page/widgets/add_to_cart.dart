@@ -4,6 +4,7 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/src/features/home/models/size_model.dart';
 import 'package:ecommerce_app/src/features/product/models/color_pic_model.dart';
 import 'package:ecommerce_app/src/features/product/models/product_model.dart';
@@ -68,6 +69,15 @@ class AddToCart extends StatelessWidget {
     final counter = context.select<ProductBloc, int>(
       (bloc) => bloc.state.counter,
     );
+
+    final productName = appbarProducts.isNotEmpty ? appbarProducts[0].name : '';
+    final productPrice =
+        appbarProducts.isNotEmpty ? double.parse(appbarProducts[0].price) : 0.0;
+    final imageUrl = selectedImageUrl.isNotEmpty
+        ? selectedImageUrl
+        : appbarProducts.isNotEmpty
+            ? appbarProducts[0].imageUrls[0]
+            : '';
 
     return Column(
       children: [
@@ -175,7 +185,15 @@ class AddToCart extends StatelessWidget {
                   ],
                 ),
         ),
-        _buildBottomBarSection(context, isProductFavorite, isCartExpanded),
+        _buildBottomBarSection(
+          context,
+          isProductFavorite,
+          isCartExpanded,
+          productName,
+          productPrice,
+          counter,
+          imageUrl,
+        ),
       ],
     );
   }
@@ -323,6 +341,10 @@ class AddToCart extends StatelessWidget {
     BuildContext context,
     bool isProductFavorite,
     bool isCartExpanded,
+    String productName,
+    double productPrice,
+    int counter,
+    String imageUrl,
   ) {
     return Container(
       height: 100,
@@ -353,9 +375,19 @@ class AddToCart extends StatelessWidget {
             height: 48,
             child: ElevatedButton(
               onPressed: () {
-                isCartExpanded
-                    ? context.pushRoute(const CartRoute())
-                    : context.read<ProductBloc>().add(ToggleCartSizeEvent());
+                if (isCartExpanded) {
+                  context.read<CartBloc>().add(
+                        UpdateCartEvent(
+                          productName,
+                          productPrice,
+                          counter,
+                          imageUrl,
+                        ),
+                      );
+                  context.pushRoute(const CartRoute());
+                } else {
+                  context.read<ProductBloc>().add(ToggleCartSizeEvent());
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.yellowColor,

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/theme.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/shipping_address_editing_page/bloc/shipping_bloc.dart';
 import 'package:ecommerce_app/src/repositories/auth/auth_repository.dart';
 import 'package:ecommerce_app/src/repositories/auth/firebase_auth_repository.dart';
@@ -21,8 +22,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ShippingBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ShippingBloc(),
+        ),
+        BlocProvider(
+          create: (context) => CartBloc(),
+        ),
+      ],
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<AuthRepository>(

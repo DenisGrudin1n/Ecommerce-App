@@ -55,9 +55,7 @@ class _CartPageState extends State<CartPage> {
                       refreshController.refreshCompleted();
                     },
                     slivers: const [
-                      SliverToBoxAdapter(
-                        child: CartSection(),
-                      ),
+                      CartSection(),
                     ],
                   ),
                 ),
