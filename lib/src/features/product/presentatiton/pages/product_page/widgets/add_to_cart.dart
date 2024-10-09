@@ -386,6 +386,7 @@ class _AddToCartState extends State<AddToCart> {
             child: ElevatedButton(
               onPressed: () {
                 if (isCartExpanded) {
+                  context.read<CartBloc>().add(LoadCartProductsEvent());
                   context.read<CartBloc>().add(
                         UpdateCartEvent(
                           productName,

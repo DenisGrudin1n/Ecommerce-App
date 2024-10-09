@@ -3,7 +3,9 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartAppbar extends StatelessWidget {
   const CartAppbar({super.key});
@@ -49,7 +51,9 @@ class CartAppbar extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.read<CartBloc>().add(RemoveAllCartProductsEvent());
+                },
                 child: Text(
                   context.localization.cartPageRemoveAllText,
                   style: FilterPageTextStyles.clearTextStyle,

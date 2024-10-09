@@ -57,9 +57,11 @@ class CheckoutWindow extends StatelessWidget {
               height: 48,
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
-                onPressed: () {
-                  context.router.push(const CheckoutRoute());
-                },
+                onPressed: products.isNotEmpty
+                    ? () {
+                        context.router.push(const CheckoutRoute());
+                      }
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.yellowColor,
                   shape: RoundedRectangleBorder(

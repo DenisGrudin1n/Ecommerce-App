@@ -12,6 +12,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<IncrementCartCounterEvent>(_onIncrementCartCounter);
     on<DecrementCartCounterEvent>(_onDecrementCartCounter);
     on<LoadCartProductsEvent>(_onLoadCartProducts);
+    on<RemoveAllCartProductsEvent>(_onRemoveAllCartProducts);
   }
 
   final Box<CartProduct> cartBox;
@@ -85,6 +86,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         );
       }
     }
+  }
+
+  Future<void> _onRemoveAllCartProducts(
+    RemoveAllCartProductsEvent event,
+    Emitter<CartState> emit,
+  ) async {
+    await cartBox.clear();
+    emit(state.copyWith(products: []));
   }
 
   Future<void> _updateProductCounter(
