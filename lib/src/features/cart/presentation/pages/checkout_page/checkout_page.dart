@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/widgets/refreshable_scroll_view.dart';
+import 'package:ecommerce_app/src/features/cart/models/cart_product_model.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/bloc/checkout_bloc.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/widgets/checkout_appbar.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/widgets/checkout_section.dart';
@@ -8,6 +10,7 @@ import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/widgets/success_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 @RoutePage()
@@ -23,6 +26,7 @@ class _CheckoutPageState extends State<CheckoutPage>
   late RefreshController _refreshController;
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
+  final cartBox = Hive.box<CartProduct>('cart');
 
   @override
   void initState() {
@@ -52,8 +56,15 @@ class _CheckoutPageState extends State<CheckoutPage>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CheckoutBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CheckoutBloc(),
+        ),
+        BlocProvider(
+          create: (context) => CartBloc(cartBox)..add(LoadCartProductsEvent()),
+        ),
+      ],
       child: Scaffold(
         backgroundColor: AppColors.lightBackgroundColor,
         body: Stack(

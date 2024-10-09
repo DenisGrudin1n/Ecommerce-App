@@ -12,14 +12,9 @@ import 'package:ecommerce_app/src/features/cart/presentation/pages/shipping_addr
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CheckoutSection extends StatefulWidget {
+class CheckoutSection extends StatelessWidget {
   const CheckoutSection({super.key});
 
-  @override
-  State<CheckoutSection> createState() => _CheckoutSectionState();
-}
-
-class _CheckoutSectionState extends State<CheckoutSection> {
   @override
   Widget build(BuildContext context) {
     final selectedPaymentMethod = context.select<CheckoutBloc, String>(
@@ -55,6 +50,7 @@ class _CheckoutSectionState extends State<CheckoutSection> {
             city: city,
             postalCode: postalCode,
             phone: phone,
+            context: context,
           ),
           const SizedBox(
             height: 33,
@@ -63,7 +59,7 @@ class _CheckoutSectionState extends State<CheckoutSection> {
           const SizedBox(
             height: 33,
           ),
-          _buildPaymentMethod(),
+          _buildPaymentMethod(context),
         ],
       ),
     );
@@ -75,6 +71,7 @@ class _CheckoutSectionState extends State<CheckoutSection> {
     required String city,
     required String postalCode,
     required String phone,
+    required BuildContext context,
   }) {
     final cityParts = city.split(',');
     city = cityParts.isNotEmpty ? cityParts[0].trim() : '';
@@ -263,7 +260,7 @@ class _CheckoutSectionState extends State<CheckoutSection> {
     );
   }
 
-  Widget _buildPaymentMethod() {
+  Widget _buildPaymentMethod(BuildContext context) {
     return Column(
       children: [
         Row(

@@ -29,3 +29,5 @@ class DecrementCartCounterEvent extends CartEvent {
   const DecrementCartCounterEvent(this.imageUrl);
   final String imageUrl;
 }
+
+class LoadCartProductsEvent extends CartEvent {}

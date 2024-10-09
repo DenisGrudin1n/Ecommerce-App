@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/src/features/cart/models/cart_product_model.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
@@ -26,6 +28,7 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   final favoritesBox = Hive.box<int>('favorites');
+  final cartBox = Hive.box<CartProduct>('cart');
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +49,9 @@ class _ProductPageState extends State<ProductPage> {
         BlocProvider(
           create: (context) =>
               FavoriteBloc(favoritesBox)..add(LoadFavoriteProductsEvent()),
+        ),
+        BlocProvider(
+          create: (context) => CartBloc(cartBox)..add(LoadCartProductsEvent()),
         ),
       ],
       child: Scaffold(
