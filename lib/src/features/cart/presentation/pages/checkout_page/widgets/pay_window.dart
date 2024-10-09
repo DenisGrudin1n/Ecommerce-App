@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,31 @@ class PayWindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final products = context.select((CartBloc bloc) => bloc.state.products);
+
+    final itemsPrice = products.fold<double>(
+      0,
+      (sum, product) => sum + product.productPrice * product.counter,
+    );
+
+    final deliveryMethod = context.select<CheckoutBloc, String>(
+      (bloc) => bloc.state.selectedPaymentMethod,
+    );
+
+    double deliveryPrice;
+    switch (deliveryMethod) {
+      case 'DHL':
+        deliveryPrice = 15;
+      case 'FedEx':
+        deliveryPrice = 18;
+      case 'USPS':
+        deliveryPrice = 20;
+      default:
+        deliveryPrice = 20;
+    }
+
+    final totalPrice = itemsPrice + deliveryPrice;
+
     return Container(
       padding: const EdgeInsets.only(
         left: 16,
@@ -34,7 +60,7 @@ class PayWindow extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                r'$239.98',
+                '\$${itemsPrice.toStringAsFixed(2)}',
                 style: FilterPageTextStyles.sectionNameTextStyle,
               ),
             ],
@@ -50,7 +76,7 @@ class PayWindow extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                r'$18',
+                '\$${deliveryPrice.toStringAsFixed(2)}',
                 style: FilterPageTextStyles.sectionNameTextStyle,
               ),
             ],
@@ -66,7 +92,7 @@ class PayWindow extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                r'$257.98',
+                '\$${totalPrice.toStringAsFixed(2)}',
                 style: ProductPageTextStyles.productDetailsStyle,
               ),
             ],

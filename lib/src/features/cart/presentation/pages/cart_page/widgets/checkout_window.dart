@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,7 +57,9 @@ class CheckoutWindow extends StatelessWidget {
               height: 48,
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.router.push(const CheckoutRoute());
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.yellowColor,
                   shape: RoundedRectangleBorder(
