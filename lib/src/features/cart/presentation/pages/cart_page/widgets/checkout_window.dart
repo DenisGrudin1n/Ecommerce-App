@@ -1,13 +1,22 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CheckoutWindow extends StatelessWidget {
   const CheckoutWindow({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final products = context.select((CartBloc bloc) => bloc.state.products);
+
+    final totalPrice = products.fold<double>(
+      0,
+      (sum, product) => sum + product.productPrice * product.counter,
+    );
+
     return Container(
       height: 140,
       padding: const EdgeInsets.only(
@@ -33,7 +42,7 @@ class CheckoutWindow extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                r'$239.98',
+                '\$${totalPrice.toStringAsFixed(2)}',
                 style: ProductPageTextStyles.productDetailsStyle,
               ),
             ],

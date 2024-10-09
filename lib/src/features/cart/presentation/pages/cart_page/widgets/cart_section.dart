@@ -112,7 +112,7 @@ class CartSection extends StatelessWidget {
             ),
           );
         },
-        childCount: products.length, // Визначаємо кількість товарів
+        childCount: products.length,
       ),
     );
   }
