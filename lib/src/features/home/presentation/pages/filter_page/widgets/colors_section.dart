@@ -78,7 +78,6 @@ class _ColorsSectionState extends State<ColorsSection> {
     );
   }
 
-  // Widget для відображення вибору кольору
   Widget _buildColorCircle(
     Map<String, Color> colorsMap,
     Map<String, Color> selectedColorsMap,
