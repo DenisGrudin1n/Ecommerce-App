@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/src/features/home/models/size_model.dart';
 import 'package:ecommerce_app/src/features/product/models/color_pic_model.dart';
 import 'package:ecommerce_app/src/features/product/models/product_model.dart';
@@ -14,8 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AddToCart extends StatelessWidget {
+class AddToCart extends StatefulWidget {
   const AddToCart({super.key});
+
+  @override
+  State<AddToCart> createState() => _AddToCartState();
+}
+
+class _AddToCartState extends State<AddToCart> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +79,15 @@ class AddToCart extends StatelessWidget {
     final counter = context.select<ProductBloc, int>(
       (bloc) => bloc.state.counter,
     );
+
+    final productName = appbarProducts.isNotEmpty ? appbarProducts[0].name : '';
+    final productPrice =
+        appbarProducts.isNotEmpty ? double.parse(appbarProducts[0].price) : 0.0;
+    final imageUrl = selectedImageUrl.isNotEmpty
+        ? selectedImageUrl
+        : appbarProducts.isNotEmpty
+            ? appbarProducts[0].imageUrls[0]
+            : '';
 
     return Column(
       children: [
@@ -176,7 +195,15 @@ class AddToCart extends StatelessWidget {
                   ],
                 ),
         ),
-        _buildBottomBarSection(context, isProductFavorite, isCartExpanded),
+        _buildBottomBarSection(
+          context,
+          isProductFavorite,
+          isCartExpanded,
+          productName,
+          productPrice,
+          counter,
+          imageUrl,
+        ),
       ],
     );
   }
@@ -219,13 +246,8 @@ class AddToCart extends StatelessWidget {
             children: [
               Text(
                 product.name,
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.darkColor,
-                  height: 19 / 14,
-                  letterSpacing: -0.15,
-                ),
+                style: ProductPageTextStyles
+                    .productPageAddToCartProductNameTextStyle,
               ),
               const SizedBox(
                 height: 6,
@@ -329,6 +351,10 @@ class AddToCart extends StatelessWidget {
     BuildContext context,
     bool isProductFavorite,
     bool isCartExpanded,
+    String productName,
+    double productPrice,
+    int counter,
+    String imageUrl,
   ) {
     return Container(
       height: 100,
@@ -359,9 +385,20 @@ class AddToCart extends StatelessWidget {
             height: 48,
             child: ElevatedButton(
               onPressed: () {
-                isCartExpanded
-                    ? context.pushRoute(const CartRoute())
-                    : context.read<ProductBloc>().add(ToggleCartSizeEvent());
+                if (isCartExpanded) {
+                  context.read<CartBloc>().add(LoadCartProductsEvent());
+                  context.read<CartBloc>().add(
+                        UpdateCartEvent(
+                          productName,
+                          productPrice,
+                          counter,
+                          imageUrl,
+                        ),
+                      );
+                  context.pushRoute(const CartRoute());
+                } else {
+                  context.read<ProductBloc>().add(ToggleCartSizeEvent());
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.yellowColor,
@@ -370,7 +407,7 @@ class AddToCart extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Add to Cart',
+                context.localization.productPageAddToCartText,
                 style: FilterPageTextStyles.resultsTextStyle,
               ),
             ),
@@ -381,12 +418,7 @@ class AddToCart extends StatelessWidget {
             },
             icon: isProductFavorite
                 ? AppIcons.favoriteProductIcon
-                : const GradientIcon(
-                    icon: Icons.favorite_border,
-                    size: 28,
-                    gradient: AppGradients.purpleGradient,
-                    strokeWidth: 1,
-                  ),
+                : AppIcons.notFavoriteProductGradientIcon,
           ),
         ],
       ),

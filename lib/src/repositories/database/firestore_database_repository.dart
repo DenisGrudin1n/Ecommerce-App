@@ -5,9 +5,8 @@ import 'package:ecommerce_app/src/features/home/models/brand_model.dart';
 import 'package:ecommerce_app/src/features/home/models/catalogue_model.dart';
 import 'package:ecommerce_app/src/features/home/models/catalogue_subcategories_model.dart';
 import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
-import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
 import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
-import 'package:ecommerce_app/src/features/home/models/items_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/models/size_model.dart';
 import 'package:ecommerce_app/src/features/home/models/sort_by_model.dart';
 import 'package:ecommerce_app/src/features/login/models/get_started_gif_model.dart';
@@ -33,7 +32,7 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
   }
 
   @override
-  Future<List<FeaturedProductModel>> searchFeaturedProducts(
+  Future<List<ProductModel>> searchFeaturedProducts(
     String query,
   ) async {
     try {
@@ -50,7 +49,7 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
             final name = doc['name'] as String?;
             return name != null && regex.hasMatch(name);
           })
-          .map(FeaturedProductModel.fromSnapshot)
+          .map(ProductModel.fromSnapshot)
           .toList();
       return filteredProducts;
     } catch (e) {
@@ -86,7 +85,7 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
   }
 
   @override
-  Future<List<ItemsModel>> searchItems(
+  Future<List<ProductModel>> searchItems(
     String query,
   ) async {
     try {
@@ -102,7 +101,7 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
             final name = doc['name'] as String?;
             return name != null && regex.hasMatch(name);
           })
-          .map(ItemsModel.fromSnapshot)
+          .map(ProductModel.fromSnapshot)
           .toList();
       return filteredProducts;
     } catch (e) {
@@ -128,10 +127,10 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
   }
 
   @override
-  Future<List<FeaturedProductModel>> getAllFeaturedProducts() {
-    return fetchCollectionData<FeaturedProductModel>(
+  Future<List<ProductModel>> getAllFeaturedProducts() {
+    return fetchCollectionData<ProductModel>(
       collectionPath: 'home/featured/featuredProducts',
-      fromSnapshot: FeaturedProductModel.fromSnapshot,
+      fromSnapshot: ProductModel.fromSnapshot,
     );
   }
 
@@ -160,10 +159,10 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
   }
 
   @override
-  Future<List<ItemsModel>> getAllItems() {
-    return fetchCollectionData<ItemsModel>(
+  Future<List<ProductModel>> getAllItems() {
+    return fetchCollectionData<ProductModel>(
       collectionPath: 'catalogue/catalogue/items',
-      fromSnapshot: ItemsModel.fromSnapshot,
+      fromSnapshot: ProductModel.fromSnapshot,
     );
   }
 

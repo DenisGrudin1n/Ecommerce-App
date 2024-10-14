@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_state.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
@@ -84,12 +85,24 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
       ),
     );
 
+    List<ProductModel> filteredItems;
     try {
-      final filteredItems = event.selectedCategory == 'All'
-          ? state.items
-          : state.items
+      if (event.selectedCategory == 'All') {
+        final allItems = await firestoreRepository.getAllItems();
+        filteredItems = allItems;
+      } else {
+        filteredItems = state.items
+            .where((item) => item.category == event.selectedCategory)
+            .toList();
+
+        // If filtering returns an empty list, load all products once more
+        if (filteredItems.isEmpty) {
+          final allItems = await firestoreRepository.getAllItems();
+          filteredItems = allItems
               .where((item) => item.category == event.selectedCategory)
               .toList();
+        }
+      }
 
       emit(
         state.copyWith(

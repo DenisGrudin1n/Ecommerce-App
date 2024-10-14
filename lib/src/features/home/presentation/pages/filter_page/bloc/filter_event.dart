@@ -59,11 +59,11 @@ class ToggleBrandDropdownEvent extends FilterEvent {}
 class LoadColorsEvent extends FilterEvent {}
 
 class ChangeColorEvent extends FilterEvent {
-  const ChangeColorEvent(this.color);
-  final Color color;
+  const ChangeColorEvent(this.colorName);
+  final String colorName;
 
   @override
-  List<Object?> get props => [color];
+  List<Object?> get props => [colorName];
 }
 
 class LoadSizesEvent extends FilterEvent {}

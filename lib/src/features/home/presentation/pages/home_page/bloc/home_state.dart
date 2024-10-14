@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/src/features/home/models/catalogue_model.dart';
 import 'package:ecommerce_app/src/features/home/models/fashion_sale_model.dart';
-import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {
@@ -16,7 +16,7 @@ class HomeState extends Equatable {
     this.fashionSaleErrorMessage = '',
   });
 
-  final List<FeaturedProductModel> featuredProducts;
+  final List<ProductModel> featuredProducts;
   final List<CatalogueModel> homeCatalogueCategories;
   final List<FashionSaleModel> fashionSaleImages;
 
@@ -31,7 +31,7 @@ class HomeState extends Equatable {
   final String fashionSaleErrorMessage;
 
   HomeState copyWith({
-    List<FeaturedProductModel>? featuredProducts,
+    List<ProductModel>? featuredProducts,
     List<CatalogueModel>? homeCatalogueCategories,
     List<FashionSaleModel>? fashionSaleImages,
     bool? isLoadingFeatured,

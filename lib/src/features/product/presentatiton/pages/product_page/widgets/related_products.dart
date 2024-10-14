@@ -1,12 +1,12 @@
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/shadows.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
-import 'package:ecommerce_app/src/features/home/models/items_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
-import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/bloc/product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,21 +22,22 @@ class _RelatedProductsState extends State<RelatedProducts> {
   void initState() {
     super.initState();
     context.read<ItemsBloc>().add(const LoadItemsEvent(''));
+    context.read<FavoriteBloc>().add(LoadFavoriteProductsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    final items = context.select<ItemsBloc, List<ItemsModel>>(
+    final items = context.select<ItemsBloc, List<ProductModel>>(
       (bloc) => bloc.state.items,
     );
     final isLoading = context.select<ItemsBloc, bool>(
       (bloc) => bloc.state.isLoadingItems,
     );
-    final isProductFavorite = context.select<ProductBloc, bool>(
-      (bloc) => bloc.state.isProductFavorite,
-    );
     final errorMessage = context.select<ItemsBloc, String>(
       (bloc) => bloc.state.itemsErrorMessage,
+    );
+    final favoriteProductsIds = context.select<FavoriteBloc, List<int>>(
+      (bloc) => bloc.state.favoriteProductsIds,
     );
 
     if (isLoading) {
@@ -80,11 +81,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
                     padding: EdgeInsets.only(
                       right: index != items.length - 1 ? 16 : 0,
                     ),
-                    child: _buildItemsTile(
-                      item,
-                      index,
-                      isProductFavorite,
-                    ),
+                    child: _buildItemsTile(item, index, favoriteProductsIds),
                   );
                 } else {
                   return const SizedBox();
@@ -97,7 +94,13 @@ class _RelatedProductsState extends State<RelatedProducts> {
     );
   }
 
-  Widget _buildItemsTile(ItemsModel item, int index, bool isProductFavorite) {
+  Widget _buildItemsTile(
+    ProductModel item,
+    int index,
+    List<int> favoriteProducts,
+  ) {
+    final isFavorite = favoriteProducts.contains(item.id);
+
     return Stack(
       children: [
         GestureDetector(
@@ -170,24 +173,24 @@ class _RelatedProductsState extends State<RelatedProducts> {
               color: AppColors.whiteColor,
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(
-                  color: AppColors.blackColor.withOpacity(0.1),
-                  blurRadius: 6,
-                ),
+                AppShadows.favoriteIconBoxShadow,
               ],
             ),
             child: Center(
               child: IconButton(
                 padding: EdgeInsets.zero,
-                onPressed: () {},
-                icon: index == 2
+                onPressed: () {
+                  if (isFavorite) {
+                    context
+                        .read<FavoriteBloc>()
+                        .add(RemoveFromFavoriteEvent(item));
+                  } else {
+                    context.read<FavoriteBloc>().add(AddToFavoriteEvent(item));
+                  }
+                },
+                icon: isFavorite
                     ? AppIcons.smallFavoriteProductIcon
-                    : const GradientIcon(
-                        icon: Icons.favorite_border,
-                        size: 20,
-                        gradient: AppGradients.purpleGradient,
-                        strokeWidth: 1,
-                      ),
+                    : AppIcons.notFavoriteGradientIcon,
               ),
             ),
           ),

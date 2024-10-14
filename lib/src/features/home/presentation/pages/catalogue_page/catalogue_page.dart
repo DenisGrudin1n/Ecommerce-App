@@ -6,8 +6,6 @@ import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_pag
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/catalogue_appbar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/catalogue_list.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/widgets/catalogue_searchbar.dart';
-import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
-import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -40,46 +38,40 @@ class _CataloguePageState extends State<CataloguePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CatalogueBloc(
-        storageRepository: context.read<StorageRepository>(),
-        firestoreRepository: context.read<DatabaseRepository>(),
-      )..add(const LoadCatalogueItemsEvent('')),
-      child: Scaffold(
-        backgroundColor: AppColors.lightBackgroundColor,
-        body: Column(
-          children: [
-            // AppBar & SearchBar
-            Stack(
-              children: [
-                const CatalogueAppbar(),
-                CatalogueSearchBar(
-                  controller: searchController,
-                ),
-              ],
-            ),
-            Expanded(
-              child: Builder(
-                builder: (BuildContext context) {
-                  return RefreshableScrollView(
-                    refreshController: refreshController,
-                    onRefresh: () async {
-                      // Clear search query
-                      searchController.clear();
-                      // Dispatch events to refresh the data
-                      context
-                          .read<CatalogueBloc>()
-                          .add(const LoadCatalogueItemsEvent(''));
-                      // Complete the refresh
-                      refreshController.refreshCompleted();
-                    },
-                    child: const CatalogueList(),
-                  );
-                },
+    return Scaffold(
+      backgroundColor: AppColors.lightBackgroundColor,
+      body: Column(
+        children: [
+          // AppBar & SearchBar
+          Stack(
+            children: [
+              const CatalogueAppbar(),
+              CatalogueSearchBar(
+                controller: searchController,
               ),
+            ],
+          ),
+          Expanded(
+            child: Builder(
+              builder: (BuildContext context) {
+                return RefreshableScrollView(
+                  refreshController: refreshController,
+                  onRefresh: () async {
+                    // Clear search query
+                    searchController.clear();
+                    // Dispatch events to refresh the data
+                    context
+                        .read<CatalogueBloc>()
+                        .add(const LoadCatalogueItemsEvent(''));
+                    // Complete the refresh
+                    refreshController.refreshCompleted();
+                  },
+                  child: const CatalogueList(),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

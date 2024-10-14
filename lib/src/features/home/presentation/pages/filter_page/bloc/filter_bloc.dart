@@ -35,7 +35,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
   List<SizeModel> _initialSizes = [];
   List<ItemsCategoriesModel> _initialCategories = [];
   List<BrandModel> _initialBrands = [];
-  List<Color> _initialColors = [];
+  Map<String, Color> _initialColors = {};
   List<SortByModel> _initialSortBy = [];
 
   final DatabaseRepository firestoreRepository;
@@ -217,26 +217,41 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
   }
 
   void _onLoadColors(LoadColorsEvent event, Emitter<FilterState> emit) {
-    final colors = [
-      AppColors.darkColor,
-      AppColors.redColor,
-      AppColors.lightGreenColor,
-      AppColors.blueColor,
-      AppColors.purpleColor,
-      AppColors.lightYellowColor,
-    ];
-    _initialColors = colors;
-    emit(state.copyWith(colors: colors));
+    _initialColors = {
+      'Red': AppColors.redColor,
+      'Black': AppColors.darkColor,
+      'Green': AppColors.lightGreenColor,
+      'Blue': AppColors.blueColor,
+      'Purple': AppColors.purpleColor,
+      'Yellow': AppColors.lightYellowColor,
+    };
+
+    emit(state.copyWith(colors: _initialColors));
   }
 
-  void _onColorChanged(ChangeColorEvent event, Emitter<FilterState> emit) {
-    final selectedColors = List<Color>.from(state.selectedColors);
-    if (selectedColors.contains(event.color)) {
-      selectedColors.remove(event.color);
-    } else {
-      selectedColors.add(event.color);
+  void _onColorChanged(
+    ChangeColorEvent event,
+    Emitter<FilterState> emit,
+  ) {
+    final colorName = event.colorName;
+    final color = state.colors[colorName];
+
+    if (color != null) {
+      final currentSelectedColors =
+          Map<String, Color>.from(state.selectedColors);
+
+      if (currentSelectedColors.containsKey(colorName)) {
+        currentSelectedColors.remove(colorName);
+      } else {
+        currentSelectedColors[colorName] = color;
+      }
+
+      emit(
+        state.copyWith(
+          selectedColors: currentSelectedColors,
+        ),
+      );
     }
-    emit(state.copyWith(selectedColors: selectedColors));
   }
 
   Future<void> _onLoadSizesChanged(
@@ -346,7 +361,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
         brands: _initialBrands,
         selectedBrands: const ['All'],
         colors: _initialColors,
-        selectedColors: const [],
+        selectedColors: const {},
         sizes: _initialSizes,
         selectedSizes: const [],
         sortBy: _initialSortBy,

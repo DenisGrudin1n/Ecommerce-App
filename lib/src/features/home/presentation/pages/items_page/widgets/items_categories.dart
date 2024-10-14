@@ -2,6 +2,8 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,9 @@ class _ItemsCategoriesState extends State<ItemsCategories> {
     final errorMessage = context.select<ItemsBloc, String>(
       (bloc) => bloc.state.itemsCategoriesErrorMessage,
     );
+    final selectedCategory = context.select<ItemsBloc, String>(
+      (bloc) => bloc.state.selectedCategory,
+    );
 
     if (isLoading) {
       return const CircularProgressIndicator();
@@ -60,9 +65,12 @@ class _ItemsCategoriesState extends State<ItemsCategories> {
               padding: const EdgeInsets.only(right: 8),
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    selectedCategory = category.name;
-                  });
+                  context
+                      .read<ItemsBloc>()
+                      .add(ChangeItemsCategoryEvent(category.name));
+                  context
+                      .read<FilterBloc>()
+                      .add(ChangeCategoryEvent(category.name));
                   widget.onCategorySelected(category.name);
                 },
                 child: Container(

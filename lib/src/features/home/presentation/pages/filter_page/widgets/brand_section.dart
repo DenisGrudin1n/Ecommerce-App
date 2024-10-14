@@ -120,11 +120,7 @@ class _BrandSectionState extends State<BrandSection> {
                         style: FilterPageTextStyles.valueTextStyle,
                       ),
                     ),
-                    if (selectedBrands.contains(brand.name))
-                      const Icon(
-                        Icons.check,
-                        color: AppColors.greyColor,
-                      ),
+                    if (selectedBrands.contains(brand.name)) AppIcons.checkIcon,
                   ],
                 ),
               ),
