@@ -587,6 +587,24 @@ class ProfilePageTextStyles {
   );
 }
 
+class CartPageTextStyles {
+  static TextStyle productPriceTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productCounterTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+}
+
 class CheckoutPageTextStyles {
   static TextStyle changeTextStyle = const TextStyle(
     fontFamily: 'SFProText',

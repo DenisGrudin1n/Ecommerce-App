@@ -8,6 +8,7 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ItemsSection extends StatefulWidget {
   const ItemsSection({
-    required this.selectedCategory,
     super.key,
   });
-  final String selectedCategory;
 
   @override
   State<ItemsSection> createState() => _ItemsSectionState();
@@ -47,11 +46,61 @@ class _ItemsSectionState extends State<ItemsSection> {
       (bloc) => bloc.state.favoriteProductsIds,
     );
 
-    final filteredItems = widget.selectedCategory == 'All'
-        ? items
-        : items
-            .where((item) => item.category == widget.selectedCategory)
-            .toList();
+    final minPrice = context.select<FilterBloc, double>(
+      (bloc) => bloc.state.minValue,
+    );
+    final maxPrice = context.select<FilterBloc, double>(
+      (bloc) => bloc.state.maxValue,
+    );
+    final selectedBrands = context.select<FilterBloc, List<String>>(
+      (bloc) => bloc.state.selectedBrands,
+    );
+    final selectedColors = context.select<FilterBloc, Map<String, Color>>(
+      (bloc) => bloc.state.selectedColors,
+    );
+    final selectedCategory = context.select<ItemsBloc, String>(
+      (bloc) => bloc.state.selectedCategory,
+    );
+    final selectedSizes = context.select<FilterBloc, List<String>>(
+      (bloc) => bloc.state.selectedSizes,
+    );
+    final selectedSortBy = context.select<FilterBloc, String>(
+      (bloc) => bloc.state.selectedSortBy,
+    );
+
+    final filteredItems = items.where((item) {
+      final isInPriceRange = double.parse(item.price) > minPrice &&
+          double.parse(item.price) < maxPrice;
+
+      final isInSelectedCategory =
+          selectedCategory == 'All' || item.category == selectedCategory;
+
+      final isBrandSelected = selectedBrands.contains(item.brand);
+
+      final isColorSelected = selectedColors.isEmpty ||
+          item.colors!.any(selectedColors.containsKey);
+
+      final hasSelectedSize =
+          selectedSizes.isEmpty || item.sizes!.any(selectedSizes.contains);
+
+      return isInPriceRange &&
+          isInSelectedCategory &&
+          (selectedBrands.contains('All') || isBrandSelected) &&
+          isColorSelected &&
+          hasSelectedSize;
+    }).toList();
+
+    if (selectedSortBy.isNotEmpty && selectedSortBy != 'Featured') {
+      if (selectedSortBy == 'Lowest Price') {
+        filteredItems.sort(
+          (a, b) => double.parse(a.price).compareTo(double.parse(b.price)),
+        );
+      } else if (selectedSortBy == 'Highest Price') {
+        filteredItems.sort(
+          (a, b) => double.parse(b.price).compareTo(double.parse(a.price)),
+        );
+      }
+    }
 
     if (isLoading) {
       return const SliverToBoxAdapter(

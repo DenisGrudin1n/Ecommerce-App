@@ -22,10 +22,10 @@ class _ColorsSectionState extends State<ColorsSection> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.select<FilterBloc, List<Color>>(
+    final colorsMap = context.select<FilterBloc, Map<String, Color>>(
       (bloc) => bloc.state.colors,
     );
-    final selectedColors = context.select<FilterBloc, List<Color>>(
+    final selectedColorsMap = context.select<FilterBloc, Map<String, Color>>(
       (bloc) => bloc.state.selectedColors,
     );
     final colorsErrorMessage = context.select<FilterBloc, String>(
@@ -35,6 +35,8 @@ class _ColorsSectionState extends State<ColorsSection> {
     if (colorsErrorMessage.isNotEmpty) {
       return Center(child: Text(colorsErrorMessage));
     }
+
+    final colorsKeys = colorsMap.keys.toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,21 +49,28 @@ class _ColorsSectionState extends State<ColorsSection> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            for (int index = 0; index < colors.length; index++)
+            for (int index = 0; index < colorsKeys.length; index++)
               GestureDetector(
                 onTap: () {
-                  context
-                      .read<FilterBloc>()
-                      .add(ChangeColorEvent(colors[index]));
+                  final colorKey = colorsKeys[index];
+                  context.read<FilterBloc>().add(ChangeColorEvent(colorKey));
                 },
                 child: index == 3
                     ? Row(
                         children: [
                           const SizedBox(width: 16),
-                          _buildColorCircle(colors[index], selectedColors),
+                          _buildColorCircle(
+                            colorsMap,
+                            selectedColorsMap,
+                            colorsKeys[index],
+                          ),
                         ],
                       )
-                    : _buildColorCircle(colors[index], selectedColors),
+                    : _buildColorCircle(
+                        colorsMap,
+                        selectedColorsMap,
+                        colorsKeys[index],
+                      ),
               ),
           ],
         ),
@@ -69,8 +78,15 @@ class _ColorsSectionState extends State<ColorsSection> {
     );
   }
 
-  // Widget for choosing colors
-  Widget _buildColorCircle(Color color, List<Color> selectedColors) {
+  // Widget для відображення вибору кольору
+  Widget _buildColorCircle(
+    Map<String, Color> colorsMap,
+    Map<String, Color> selectedColorsMap,
+    String colorKey,
+  ) {
+    final color = colorsMap[colorKey];
+    final isSelected = selectedColorsMap.containsKey(colorKey);
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -80,7 +96,7 @@ class _ColorsSectionState extends State<ColorsSection> {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: selectedColors.contains(color)
+              color: isSelected
                   ? AppColors.yellowColor
                   : AppColors.transparentColor,
               width: 2,

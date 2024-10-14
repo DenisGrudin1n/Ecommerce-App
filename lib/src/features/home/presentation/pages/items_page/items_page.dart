@@ -20,14 +20,12 @@ class ItemsPage extends StatefulWidget {
 }
 
 class _ItemsPageState extends State<ItemsPage> {
-  late String selectedCategory;
   late TextEditingController searchController;
   late RefreshController refreshController;
 
   @override
   void initState() {
     super.initState();
-    selectedCategory = 'All';
     searchController = TextEditingController();
     refreshController = RefreshController();
   }
@@ -62,9 +60,9 @@ class _ItemsPageState extends State<ItemsPage> {
               SliverToBoxAdapter(
                 child: ItemsCategories(
                   onCategorySelected: (categoryName) {
-                    setState(() {
-                      selectedCategory = categoryName;
-                    });
+                    context
+                        .read<ItemsBloc>()
+                        .add(ChangeItemsCategoryEvent(categoryName));
                   },
                 ),
               ),
@@ -84,13 +82,11 @@ class _ItemsPageState extends State<ItemsPage> {
                     // Complete the refresh
                     refreshController.refreshCompleted();
                   },
-                  slivers: [
+                  slivers: const [
                     // Items Section as SliverGrid
                     SliverPadding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      sliver: ItemsSection(
-                        selectedCategory: selectedCategory,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      sliver: ItemsSection(),
                     ),
                   ],
                 ),

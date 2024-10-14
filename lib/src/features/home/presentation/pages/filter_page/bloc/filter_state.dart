@@ -13,8 +13,8 @@ class FilterState extends Equatable {
     this.categories = const [],
     this.brands = const [],
     this.selectedBrands = const ['All'],
-    this.colors = const [],
-    this.selectedColors = const [],
+    this.colors = const {},
+    this.selectedColors = const {},
     this.sizes = const [],
     this.selectedSizes = const [],
     this.sortBy = const [],
@@ -42,8 +42,8 @@ class FilterState extends Equatable {
   final List<ItemsCategoriesModel> categories;
   final List<BrandModel> brands;
   final List<String> selectedBrands;
-  final List<Color> colors;
-  final List<Color> selectedColors;
+  final Map<String, Color> colors;
+  final Map<String, Color> selectedColors;
   final List<SizeModel> sizes;
   final List<String> selectedSizes;
   final List<SortByModel> sortBy;
@@ -72,8 +72,8 @@ class FilterState extends Equatable {
     List<ItemsCategoriesModel>? categories,
     List<BrandModel>? brands,
     List<String>? selectedBrands,
-    List<Color>? colors,
-    List<Color>? selectedColors,
+    Map<String, Color>? colors,
+    Map<String, Color>? selectedColors,
     List<SizeModel>? sizes,
     List<String>? selectedSizes,
     List<SortByModel>? sortBy,

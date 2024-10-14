@@ -3,7 +3,6 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CartSection extends StatefulWidget {
   const CartSection({super.key});
@@ -67,13 +66,7 @@ class _CartSectionState extends State<CartSection> {
                       children: [
                         Text(
                           product.productName,
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.darkColor,
-                            height: 19 / 14,
-                            letterSpacing: -0.15,
-                          ),
+                          style: CartPageTextStyles.productPriceTextStyle,
                         ),
                         const SizedBox(height: 6),
                         Text(
@@ -99,13 +92,7 @@ class _CartSectionState extends State<CartSection> {
                       ),
                       Text(
                         product.counter.toString(),
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.darkGreyColor,
-                          height: 19 / 14,
-                          letterSpacing: -0.15,
-                        ),
+                        style: CartPageTextStyles.productCounterTextStyle,
                       ),
                       IconButton(
                         onPressed: () {

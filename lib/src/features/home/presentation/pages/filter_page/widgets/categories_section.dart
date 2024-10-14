@@ -5,6 +5,8 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +35,7 @@ class _CategoriesSectionState extends State<CategoriesSection> {
     final categoriesErrorMessage = context.select<FilterBloc, String>(
       (bloc) => bloc.state.categoriesErrorMessage,
     );
-    final selectedCategory = context.select<FilterBloc, String>(
+    final selectedFilterCategory = context.select<FilterBloc, String>(
       (bloc) => bloc.state.selectedCategory,
     );
     final isDropdownOpen = context.select<FilterBloc, bool>(
@@ -77,7 +79,7 @@ class _CategoriesSectionState extends State<CategoriesSection> {
               children: [
                 Expanded(
                   child: Text(
-                    selectedCategory,
+                    selectedFilterCategory,
                     overflow: TextOverflow.ellipsis,
                     style: FilterPageTextStyles.valueTextStyle,
                   ),
@@ -98,6 +100,9 @@ class _CategoriesSectionState extends State<CategoriesSection> {
                 context
                     .read<FilterBloc>()
                     .add(ChangeCategoryEvent(category.name));
+                context
+                    .read<ItemsBloc>()
+                    .add(ChangeItemsCategoryEvent(category.name));
                 context.read<FilterBloc>().add(ToggleCategoryDropdownEvent());
               },
               child: Container(
@@ -123,7 +128,8 @@ class _CategoriesSectionState extends State<CategoriesSection> {
                         style: FilterPageTextStyles.valueTextStyle,
                       ),
                     ),
-                    if (selectedCategory == category.name) AppIcons.checkIcon,
+                    if (selectedFilterCategory == category.name)
+                      AppIcons.checkIcon,
                   ],
                 ),
               ),

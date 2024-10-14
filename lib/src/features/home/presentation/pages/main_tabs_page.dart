@@ -4,11 +4,8 @@ import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
-import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/profile_page/bloc/profile_bloc.dart';
 import 'package:ecommerce_app/src/repositories/auth/auth_repository.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
@@ -52,21 +49,8 @@ class _MainTabsPageState extends State<MainTabsPage> {
           )..add(const LoadCatalogueItemsEvent('')),
         ),
         BlocProvider(
-          create: (context) => ItemsBloc(
-            storageRepository: context.read<StorageRepository>(),
-            firestoreRepository: context.read<DatabaseRepository>(),
-          )
-            ..add(const LoadItemsEvent(''))
-            ..add(LoadItemsCategoriesEvent()),
-        ),
-        BlocProvider(
           create: (context) => ProfileBloc(
             authRepository: context.read<AuthRepository>(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => FilterBloc(
-            firestoreRepository: context.read<DatabaseRepository>(),
           ),
         ),
       ],
