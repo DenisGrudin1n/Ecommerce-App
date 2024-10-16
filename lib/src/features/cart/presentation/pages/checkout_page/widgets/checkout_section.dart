@@ -235,11 +235,7 @@ class CheckoutSection extends StatelessWidget {
           children: [
             Image(
               image: AssetImage(
-                paymentMethod == 'DHL'
-                    ? Assets.images.item1.path
-                    : paymentMethod == 'FedEx'
-                        ? Assets.images.item2.path
-                        : Assets.images.item3.path,
+                getPaymentImagePath(paymentMethod),
               ),
               height: 16,
               width: 71,
@@ -317,4 +313,10 @@ class CheckoutSection extends StatelessWidget {
       ],
     );
   }
+
+  String getPaymentImagePath(String paymentMethod) => switch (paymentMethod) {
+        'DHL' => Assets.images.item1.path,
+        'FedEx' => Assets.images.item2.path,
+        _ => Assets.images.item3.path,
+      };
 }

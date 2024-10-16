@@ -200,6 +200,25 @@ class MainTabsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [NotRegisteredPage]
+class NotRegisteredRoute extends PageRouteInfo<void> {
+  const NotRegisteredRoute({List<PageRouteInfo>? children})
+      : super(
+          NotRegisteredRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NotRegisteredRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const NotRegisteredPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ProductPage]
 class ProductRoute extends PageRouteInfo<void> {
   const ProductRoute({List<PageRouteInfo>? children})

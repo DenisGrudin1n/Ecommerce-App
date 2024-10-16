@@ -18,54 +18,72 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final AppRouter appRouter = AppRouter();
+final user = FirebaseAuth.instance.currentUser;
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<AuthRepository>(
-          create: (context) => FirebaseAuthRepository(FirebaseAuth.instance),
-        ),
-        RepositoryProvider<StorageRepository>(
-          create: (context) =>
-              FirebaseStorageRepository(FirebaseStorage.instance),
-        ),
-        RepositoryProvider<DatabaseRepository>(
-          create: (context) =>
-              FirestoreDatabaseRepository(FirebaseFirestore.instance),
-        ),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => FilterBloc(
-              firestoreRepository: context.read<DatabaseRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => ShippingBloc(),
-          ),
-          BlocProvider(
-            create: (context) => ItemsBloc(
-              storageRepository: context.read<StorageRepository>(),
-              firestoreRepository: context.read<DatabaseRepository>(),
-            )
-              ..add(const LoadItemsEvent(''))
-              ..add(LoadItemsCategoriesEvent()),
-          ),
-        ],
-        child: MaterialApp.router(
-          title: 'Ecommerce App',
-          theme: AppTheme.themeData,
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          routerConfig: appRouter.config(),
-        ),
+    return buildProviders(
+      child: MaterialApp.router(
+        title: 'Ecommerce App',
+        theme: AppTheme.themeData,
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        routerConfig: appRouter.config(),
       ),
     );
+  }
+
+  Widget buildProviders({required Widget child}) {
+    return user != null
+        ? MultiRepositoryProvider(
+            providers: [
+              RepositoryProvider<AuthRepository>(
+                create: (context) =>
+                    FirebaseAuthRepository(FirebaseAuth.instance),
+              ),
+              RepositoryProvider<StorageRepository>(
+                create: (context) =>
+                    FirebaseStorageRepository(FirebaseStorage.instance),
+              ),
+              RepositoryProvider<DatabaseRepository>(
+                create: (context) =>
+                    FirestoreDatabaseRepository(FirebaseFirestore.instance),
+              ),
+            ],
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => FilterBloc(
+                    firestoreRepository: context.read<DatabaseRepository>(),
+                  ),
+                ),
+                BlocProvider(
+                  create: (context) => ShippingBloc(),
+                ),
+                BlocProvider(
+                  create: (context) => ItemsBloc(
+                    storageRepository: context.read<StorageRepository>(),
+                    firestoreRepository: context.read<DatabaseRepository>(),
+                  )
+                    ..add(const LoadItemsEvent(''))
+                    ..add(LoadItemsCategoriesEvent()),
+                ),
+              ],
+              child: child,
+            ),
+          )
+        : MultiRepositoryProvider(
+            providers: [
+              RepositoryProvider<AuthRepository>(
+                create: (context) =>
+                    FirebaseAuthRepository(FirebaseAuth.instance),
+              ),
+            ],
+            child: child,
+          );
   }
 }

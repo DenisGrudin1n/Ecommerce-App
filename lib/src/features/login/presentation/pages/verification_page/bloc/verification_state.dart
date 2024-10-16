@@ -35,3 +35,5 @@ class ResendCodeFailed extends VerificationState {
   @override
   List<Object> get props => [error];
 }
+
+class VerificationCodeLoading extends VerificationState {}

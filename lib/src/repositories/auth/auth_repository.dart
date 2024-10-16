@@ -23,4 +23,6 @@ abstract interface class AuthRepository {
   );
 
   Future<void> signOut();
+
+  bool isLoggedIn();
 }

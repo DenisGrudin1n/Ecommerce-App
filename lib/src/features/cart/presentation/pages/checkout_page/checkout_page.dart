@@ -67,75 +67,80 @@ class _CheckoutPageState extends State<CheckoutPage>
       ],
       child: Scaffold(
         backgroundColor: AppColors.lightBackgroundColor,
-        body: Stack(
-          children: [
-            CustomScrollView(
-              slivers: [
-                const SliverToBoxAdapter(child: CheckoutAppbar()),
-                SliverFillRemaining(
-                  child: RefreshableScrollView(
-                    refreshController: _refreshController,
-                    onRefresh: () async {
-                      _refreshController.refreshCompleted();
-                    },
-                    slivers: const [
-                      SliverToBoxAdapter(
-                        child: CheckoutSection(),
-                      ),
-                    ],
+        body: BlocListener<CheckoutBloc, CheckoutState>(
+          listener: (context, state) {
+            if (state.showSuccessWindow) {
+              _animationController
+                ..reset()
+                ..forward();
+            }
+          },
+          child: Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  const SliverToBoxAdapter(child: CheckoutAppbar()),
+                  SliverFillRemaining(
+                    child: RefreshableScrollView(
+                      refreshController: _refreshController,
+                      onRefresh: () async {
+                        _refreshController.refreshCompleted();
+                      },
+                      slivers: const [
+                        SliverToBoxAdapter(
+                          child: CheckoutSection(),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: PayWindow(),
-            ),
-            BlocBuilder<CheckoutBloc, CheckoutState>(
-              builder: (context, state) {
-                if (state.isLoading) {
-                  return Stack(
-                    children: [
-                      ModalBarrier(
-                        dismissible: false,
-                        color: AppColors.blackColor.withOpacity(0.5),
-                      ),
-                      const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.whiteColor,
+                ],
+              ),
+              const Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: PayWindow(),
+              ),
+              BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  if (state.isLoading) {
+                    return Stack(
+                      children: [
+                        ModalBarrier(
+                          dismissible: false,
+                          color: AppColors.blackColor.withOpacity(0.5),
                         ),
-                      ),
-                    ],
-                  );
-                }
-
-                if (state.showSuccessWindow) {
-                  _animationController
-                    ..reset()
-                    ..forward();
-
-                  return Stack(
-                    children: [
-                      ModalBarrier(
-                        dismissible: false,
-                        color: AppColors.blackColor.withOpacity(0.5),
-                      ),
-                      ScaleTransition(
-                        scale: _scaleAnimation,
-                        child: const Center(
-                          child: SuccessWindow(),
+                        const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.whiteColor,
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                }
+                      ],
+                    );
+                  }
 
-                return const SizedBox.shrink();
-              },
-            ),
-          ],
+                  if (state.showSuccessWindow) {
+                    return Stack(
+                      children: [
+                        ModalBarrier(
+                          dismissible: false,
+                          color: AppColors.blackColor.withOpacity(0.5),
+                        ),
+                        ScaleTransition(
+                          scale: _scaleAnimation,
+                          child: const Center(
+                            child: SuccessWindow(),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+
+                  return const SizedBox.shrink();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

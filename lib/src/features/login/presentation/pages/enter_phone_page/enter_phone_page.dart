@@ -138,7 +138,7 @@ class EnterPhonePage extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         context.router.push(
-                          const HomeRoute(),
+                          const NotRegisteredRoute(),
                         );
                       },
                       child: Text(

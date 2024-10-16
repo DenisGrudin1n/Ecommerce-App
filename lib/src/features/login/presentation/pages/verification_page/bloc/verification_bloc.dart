@@ -20,6 +20,10 @@ class VerificationBloc extends Bloc<VerificationEvent, VerificationState> {
     emit(VerificationCodeUpdated(event.verificationId, event.code));
 
     if (event.code.length == 6) {
+      emit(VerificationCodeLoading());
+
+      await Future<void>.delayed(const Duration(seconds: 1));
+
       final authResult = await authRepository.signInWithCredential(
         event.verificationId,
         event.code,

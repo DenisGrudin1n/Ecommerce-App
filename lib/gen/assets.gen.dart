@@ -36,6 +36,10 @@ class $AssetsImagesGen {
   AssetGenImage get profilePic =>
       const AssetGenImage('assets/images/ProfilePic.jpg');
 
+  /// File path: assets/images/getStartedGif.gif
+  AssetGenImage get getStartedGif =>
+      const AssetGenImage('assets/images/getStartedGif.gif');
+
   /// File path: assets/images/item1.jpg
   AssetGenImage get item1 => const AssetGenImage('assets/images/item1.jpg');
 
@@ -51,7 +55,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [profilePic, item1, item2, item3, mastercard];
+      [profilePic, getStartedGif, item1, item2, item3, mastercard];
 }
 
 class Assets {
@@ -91,7 +95,7 @@ class AssetGenImage {
     ImageRepeat repeat = ImageRepeat.noRepeat,
     Rect? centerSlice,
     bool matchTextDirection = false,
-    bool gaplessPlayback = false,
+    bool gaplessPlayback = true,
     bool isAntiAlias = false,
     String? package,
     FilterQuality filterQuality = FilterQuality.low,
