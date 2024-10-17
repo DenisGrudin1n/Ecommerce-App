@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:ecommerce_app/core/widgets/bottom_navigation_bar.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/home/presentation/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/catalogue_page/bloc/catalogue_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';

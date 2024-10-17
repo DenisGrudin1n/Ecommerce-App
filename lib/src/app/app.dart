@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/theme.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/shipping_address_editing_page/bloc/shipping_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
@@ -71,6 +72,11 @@ class App extends StatelessWidget {
                   )
                     ..add(const LoadItemsEvent(''))
                     ..add(LoadItemsCategoriesEvent()),
+                ),
+                BlocProvider(
+                  create: (context) => CartBloc(
+                    firestoreRepository: context.read<DatabaseRepository>(),
+                  )..add(LoadCartProductsEvent()),
                 ),
               ],
               child: child,

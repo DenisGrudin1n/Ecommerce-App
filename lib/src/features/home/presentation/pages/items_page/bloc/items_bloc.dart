@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/src/features/home/models/product_model.dart';
-import 'package:ecommerce_app/src/features/home/models/sort_by_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_state.dart';
 import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
@@ -21,7 +20,6 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
 
   final StorageRepository storageRepository;
   final DatabaseRepository firestoreRepository;
-  List<SortByModel> _initialSortBy = [];
 
   Future<void> _onLoadItemsChanged(
     LoadItemsEvent event,
@@ -139,10 +137,6 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
 
     try {
       final sortBy = await firestoreRepository.getAllSortBy();
-      _initialSortBy = sortBy;
-
-      print('Sort By Options: $sortBy');
-
       emit(
         state.copyWith(
           sortBy: sortBy,

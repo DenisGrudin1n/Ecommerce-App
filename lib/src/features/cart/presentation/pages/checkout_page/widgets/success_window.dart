@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,9 +78,7 @@ class SuccessWindow extends StatelessWidget {
                   width: MediaQuery.of(context).size.width - 112,
                   child: ElevatedButton(
                     onPressed: () {
-                      context
-                          .read<CheckoutBloc>()
-                          .add(HideSuccessWindowEvent());
+                      context.router.push(const HomeRoute());
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.yellowColor,

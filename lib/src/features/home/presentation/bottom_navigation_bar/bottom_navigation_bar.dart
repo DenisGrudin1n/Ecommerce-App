@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/constants/keys.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
@@ -5,7 +7,10 @@ import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
+import 'package:ecommerce_app/src/app/router/router.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBottomNavigationBar extends StatefulWidget {
   const AppBottomNavigationBar({
@@ -22,10 +27,43 @@ class AppBottomNavigationBar extends StatefulWidget {
 
 class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   bool _isCartClosed = true;
+  Timer? _closeCartTimer;
+
+  @override
+  void dispose() {
+    _closeCartTimer?.cancel();
+    super.dispose();
+  }
+
+  void _startCloseCartTimer() {
+    _closeCartTimer?.cancel();
+    _closeCartTimer = Timer(const Duration(seconds: 5), () {
+      setState(() {
+        _isCartClosed = true;
+      });
+    });
+  }
+
+  void _toggleCart() {
+    setState(() {
+      if (_isCartClosed) {
+        _isCartClosed = false;
+        _startCloseCartTimer();
+      } else {
+        context.router.push(const CartRoute());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final tabsRouter = AutoTabsRouter.of(context);
+    final products = context.select((CartBloc bloc) => bloc.state.products);
+    var totalPrice = 0.0;
+    for (final product in products) {
+      totalPrice += product.productPrice * product.counter;
+    }
+
     return Container(
       height: 105,
       color: AppColors.lightBackgroundColor,
@@ -81,7 +119,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
           Positioned(
             right: 0,
             bottom: 45,
-            child: buildCartButton(),
+            child: buildCartButton(totalPrice, products.length),
           ),
         ],
       ),
@@ -129,13 +167,12 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
     );
   }
 
-  Widget buildCartButton() {
+  Widget buildCartButton(double totalPrice, int productsLength) {
+    final itemText = context.localization.bottomNavBarShoppingCartItemText;
+    final itemsText = context.localization.bottomNavBarShoppingCartItemsText;
+
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _isCartClosed = !_isCartClosed;
-        });
-      },
+      onTap: _toggleCart,
       child: AnimatedContainer(
         duration: Duration(
           milliseconds: _isCartClosed ? 0 : 400,
@@ -168,8 +205,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          context
-                              .localization.bottomNavBarShoppingCartPriceText,
+                          '\$${totalPrice.toStringAsFixed(2)}',
                           style: BottomNavBarTextStyles
                               .bottomNavBarShoppingCartPriceTextStyle,
                         ),
@@ -177,7 +213,9 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                           height: 4,
                         ),
                         Text(
-                          context.localization.bottomNavBarShoppingCartItemText,
+                          productsLength == 1
+                              ? '$productsLength $itemText'
+                              : '$productsLength $itemsText',
                           style: BottomNavBarTextStyles
                               .bottomNavBarShoppingCartItemCountTextStyle,
                         ),
