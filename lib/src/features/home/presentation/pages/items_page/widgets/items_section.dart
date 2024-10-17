@@ -7,8 +7,10 @@ import 'package:ecommerce_app/core/theme/shadows.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/models/product_model.dart';
+import 'package:ecommerce_app/src/features/home/models/sort_by_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,7 @@ class _ItemsSectionState extends State<ItemsSection> {
   void initState() {
     super.initState();
     context.read<ItemsBloc>().add(const LoadItemsEvent(''));
+    context.read<ItemsBloc>().add(LoadItemsSortByEvent());
     context.read<FavoriteBloc>().add(LoadFavoriteProductsEvent());
   }
 
@@ -64,8 +67,15 @@ class _ItemsSectionState extends State<ItemsSection> {
     final selectedSizes = context.select<FilterBloc, List<String>>(
       (bloc) => bloc.state.selectedSizes,
     );
-    final selectedSortBy = context.select<FilterBloc, String>(
+    final selectedSortBy = context.select<ItemsBloc, String>(
       (bloc) => bloc.state.selectedSortBy,
+    );
+
+    final isDropDownOpen = context.select<ItemsBloc, bool>(
+      (bloc) => bloc.state.isSortByDropdownOpen,
+    );
+    final sortBy = context.select<ItemsBloc, List<SortByModel>>(
+      (bloc) => bloc.state.sortBy,
     );
 
     final filteredItems = items.where((item) {
@@ -126,7 +136,13 @@ class _ItemsSectionState extends State<ItemsSection> {
       delegate: SliverChildBuilderDelegate(
         (context, index) {
           if (index == 0) {
-            return _buildHeader(context, filteredItems);
+            return _buildHeader(
+              context,
+              filteredItems,
+              isDropDownOpen,
+              sortBy,
+              selectedSortBy,
+            );
           }
 
           final itemIndex = (index - 1) * 2;
@@ -321,25 +337,111 @@ class _ItemsSectionState extends State<ItemsSection> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, List<ProductModel> items) {
-    return Row(
+  Widget _buildHeader(
+    BuildContext context,
+    List<ProductModel> items,
+    bool isDropDownOpen,
+    List<SortByModel> sortBy,
+    String selectedSortBy,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '${items.length} ${context.localization.itemsPageItemsText}',
-          style: ItemsPageTextStyles.itemsTextStyle,
-        ),
-        const Spacer(),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              context.localization.itemsPageSortByText,
-              style: ItemsPageTextStyles.sortByTextStyle,
+            Column(
+              children: [
+                const SizedBox(
+                  height: 1,
+                ),
+                Text(
+                  '${items.length} ${context.localization.itemsPageItemsText}',
+                  style: ItemsPageTextStyles.itemsTextStyle,
+                ),
+              ],
             ),
-            Text(
-              context.localization.itemsPageFeaturedText,
-              style: ItemsPageTextStyles.featuredTextStyle,
+            GestureDetector(
+              onTap: () {
+                context.read<ItemsBloc>().add(ToggleItemsSortByDropdownEvent());
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        context.localization.itemsPageSortByText,
+                        style: ItemsPageTextStyles.sortByTextStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            selectedSortBy.isNotEmpty
+                                ? selectedSortBy
+                                : context.localization.itemsPageFeaturedText,
+                            style: ItemsPageTextStyles.featuredTextStyle,
+                          ),
+                          const SizedBox(width: 4),
+                          AppIcons.itemsSectionFeaturedIcon,
+                        ],
+                      ),
+                      if (isDropDownOpen) ...[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: sortBy.map((option) {
+                            return GestureDetector(
+                              onTap: () {
+                                context
+                                    .read<ItemsBloc>()
+                                    .add(ChangeItemsSortByEvent(option.name));
+                                context
+                                    .read<ItemsBloc>()
+                                    .add(ToggleItemsSortByDropdownEvent());
+                                context
+                                    .read<FilterBloc>()
+                                    .add(ChangeSortByEvent(option.name));
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      option.name,
+                                      style:
+                                          ItemsPageTextStyles.featuredTextStyle,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    if (selectedSortBy == option.name)
+                                      const Icon(
+                                        Icons.circle,
+                                        size: 9,
+                                        color: AppColors.blackColor,
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-            AppIcons.itemsSectionFeaturedIcon,
           ],
         ),
       ],

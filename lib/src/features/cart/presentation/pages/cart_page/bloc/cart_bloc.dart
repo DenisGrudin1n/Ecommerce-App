@@ -28,7 +28,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     await emit.forEach<List<CartProduct>>(
       firestoreRepository.fetchCartProductsStream(userId),
       onData: (products) {
-        log('Loaded products: ${products.length}');
         return state.copyWith(products: products);
       },
       onError: (error, stackTrace) {

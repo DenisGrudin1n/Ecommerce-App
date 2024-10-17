@@ -5,6 +5,8 @@ import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/features/home/models/sort_by_model.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_event.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -98,6 +100,9 @@ class _SortBySectionState extends State<SortBySection> {
                 context
                     .read<FilterBloc>()
                     .add(ChangeSortByEvent(sortByOption.name));
+                context
+                    .read<ItemsBloc>()
+                    .add(ChangeItemsSortByEvent(sortByOption.name));
                 context.read<FilterBloc>().add(ToggleSortByDropdownEvent());
               },
               child: Container(

@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
-import 'package:ecommerce_app/src/features/cart/models/cart_product_model.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
@@ -16,7 +15,6 @@ import 'package:ecommerce_app/src/repositories/database/database_repository.dart
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 
 @RoutePage()
 class ProductPage extends StatefulWidget {
@@ -27,8 +25,6 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final cartBox = Hive.box<CartProduct>('cart');
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
