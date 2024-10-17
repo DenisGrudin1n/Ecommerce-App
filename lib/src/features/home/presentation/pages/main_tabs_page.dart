@@ -12,7 +12,6 @@ import 'package:ecommerce_app/src/repositories/database/database_repository.dart
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 @RoutePage()
 class MainTabsPage extends StatefulWidget {
@@ -23,15 +22,14 @@ class MainTabsPage extends StatefulWidget {
 }
 
 class _MainTabsPageState extends State<MainTabsPage> {
-  final favoritesBox = Hive.box<int>('favorites');
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              FavoriteBloc(favoritesBox)..add(LoadFavoriteProductsEvent()),
+          create: (context) => FavoriteBloc(
+            firestoreRepository: context.read<DatabaseRepository>(),
+          )..add(LoadFavoriteProductsEvent()),
         ),
         BlocProvider(
           create: (context) => HomeBloc(

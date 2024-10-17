@@ -27,7 +27,6 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final favoritesBox = Hive.box<int>('favorites');
   final cartBox = Hive.box<CartProduct>('cart');
 
   @override
@@ -47,11 +46,14 @@ class _ProductPageState extends State<ProductPage> {
           )..add(const LoadItemsEvent('')),
         ),
         BlocProvider(
-          create: (context) =>
-              FavoriteBloc(favoritesBox)..add(LoadFavoriteProductsEvent()),
+          create: (context) => FavoriteBloc(
+            firestoreRepository: context.read<DatabaseRepository>(),
+          )..add(LoadFavoriteProductsEvent()),
         ),
         BlocProvider(
-          create: (context) => CartBloc(cartBox)..add(LoadCartProductsEvent()),
+          create: (context) => CartBloc(
+            firestoreRepository: context.read<DatabaseRepository>(),
+          )..add(LoadCartProductsEvent()),
         ),
       ],
       child: Scaffold(

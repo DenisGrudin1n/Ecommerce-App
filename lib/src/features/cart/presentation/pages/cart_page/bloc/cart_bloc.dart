@@ -1,13 +1,16 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/src/features/cart/models/cart_product_model.dart';
+import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc(this.cartBox) : super(const CartState()) {
+  CartBloc({required this.firestoreRepository}) : super(const CartState()) {
     on<UpdateCartEvent>(_onUpdateCartEvent);
     on<IncrementCartCounterEvent>(_onIncrementCartCounter);
     on<DecrementCartCounterEvent>(_onDecrementCartCounter);
@@ -15,14 +18,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<RemoveAllCartProductsEvent>(_onRemoveAllCartProducts);
   }
 
-  final Box<CartProduct> cartBox;
+  final DatabaseRepository firestoreRepository;
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
 
-  void _onLoadCartProducts(
+  Future<void> _onLoadCartProducts(
     LoadCartProductsEvent event,
     Emitter<CartState> emit,
-  ) {
-    final products = cartBox.values.cast<CartProduct>().toList();
-    emit(state.copyWith(products: products));
+  ) async {
+    await emit.forEach<List<CartProduct>>(
+      firestoreRepository.fetchCartProductsStream(userId),
+      onData: (products) {
+        log('Loaded products: ${products.length}');
+        return state.copyWith(products: products);
+      },
+      onError: (error, stackTrace) {
+        log('Error loading cart products: $error');
+        return state;
+      },
+    );
   }
 
   Future<void> _onUpdateCartEvent(
@@ -45,12 +58,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         counter: event.counter,
         imageUrl: event.imageUrl,
       );
-      await cartBox.add(newProduct);
-      emit(
-        state.copyWith(
-          products: cartBox.values.cast<CartProduct>().toList(),
-        ),
-      );
+      await firestoreRepository.addProductToCart(userId, newProduct);
     }
   }
 
@@ -92,8 +100,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     RemoveAllCartProductsEvent event,
     Emitter<CartState> emit,
   ) async {
-    await cartBox.clear();
-    emit(state.copyWith(products: []));
+    try {
+      await firestoreRepository.removeAllProductsFromCart(userId);
+      emit(state.copyWith(products: []));
+    } catch (e) {
+      log('Error clearing cart: $e');
+    }
   }
 
   Future<void> _updateProductCounter(
@@ -102,7 +114,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Emitter<CartState> emit,
   ) async {
     final updatedProduct = state.products[index].copyWith(counter: newCounter);
-    await cartBox.putAt(index, updatedProduct);
+    await firestoreRepository.addProductToCart(userId, updatedProduct);
     emit(
       state.copyWith(
         products: List<CartProduct>.from(state.products)

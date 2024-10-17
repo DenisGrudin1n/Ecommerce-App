@@ -4,9 +4,9 @@ class FavoriteState extends Equatable {
   const FavoriteState({this.favoriteProductsIds = const []});
   final List<int> favoriteProductsIds;
 
-  FavoriteState copyWith({List<int>? favoriteProducts}) {
+  FavoriteState copyWith({List<int>? favoriteProductsIds}) {
     return FavoriteState(
-      favoriteProductsIds: favoriteProducts ?? favoriteProductsIds,
+      favoriteProductsIds: favoriteProductsIds ?? this.favoriteProductsIds,
     );
   }
 

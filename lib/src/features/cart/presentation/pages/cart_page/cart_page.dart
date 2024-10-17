@@ -49,7 +49,9 @@ class _CartPageState extends State<CartPage> {
           ),
         ),
         BlocProvider(
-          create: (context) => CartBloc(cartBox)..add(LoadCartProductsEvent()),
+          create: (context) => CartBloc(
+            firestoreRepository: context.read<DatabaseRepository>(),
+          )..add(LoadCartProductsEvent()),
         ),
       ],
       child: Scaffold(

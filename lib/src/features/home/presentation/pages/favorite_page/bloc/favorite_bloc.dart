@@ -1,58 +1,55 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/src/features/home/models/product_model.dart';
+import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hive/hive.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 part 'favorite_event.dart';
 part 'favorite_state.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
-  FavoriteBloc(this.favoritesBox) : super(const FavoriteState()) {
+  FavoriteBloc({required this.firestoreRepository})
+      : super(const FavoriteState()) {
     on<AddToFavoriteEvent>(_onAddToFavorites);
     on<RemoveFromFavoriteEvent>(_onRemoveFromFavorites);
     on<LoadFavoriteProductsEvent>(_onLoadFavoriteProducts);
   }
 
-  final Box<int> favoritesBox;
+  final DatabaseRepository firestoreRepository;
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
 
-  void _onAddToFavorites(
+  Future<void> _onAddToFavorites(
     AddToFavoriteEvent event,
     Emitter<FavoriteState> emit,
-  ) {
-    if (!state.favoriteProductsIds.contains(event.product.id)) {
-      favoritesBox.add(event.product.id);
-    }
-
-    emit(
-      state.copyWith(
-        favoriteProducts: favoritesBox.values.cast<int>().toList(),
-      ),
-    );
+  ) async {
+    await firestoreRepository.addFavorite(userId, event.product.id);
   }
 
-  void _onRemoveFromFavorites(
+  Future<void> _onRemoveFromFavorites(
     RemoveFromFavoriteEvent event,
     Emitter<FavoriteState> emit,
-  ) {
-    favoritesBox.deleteAt(
-      favoritesBox.values.cast<int>().toList().indexOf(event.product.id),
-    );
-
-    emit(
-      state.copyWith(
-        favoriteProducts: favoritesBox.values.cast<int>().toList(),
-      ),
-    );
+  ) async {
+    await firestoreRepository.removeFavorite(userId, event.product.id);
   }
 
-  void _onLoadFavoriteProducts(
+  Future<void> _onLoadFavoriteProducts(
     LoadFavoriteProductsEvent event,
     Emitter<FavoriteState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        favoriteProducts: favoritesBox.values.cast<int>().toList(),
+  ) async {
+    await emit.forEach<List<int>>(
+      firestoreRepository.fetchCollectionStream(
+        collectionPath: 'favorites/$userId/products',
+        fromSnapshot: (snapshot) => snapshot.get('productId') as int,
       ),
+      onData: (favoriteIds) {
+        return state.copyWith(favoriteProductsIds: favoriteIds);
+      },
+      onError: (error, stackTrace) {
+        log('Error loading favorites: $error');
+        return state;
+      },
     );
   }
 }

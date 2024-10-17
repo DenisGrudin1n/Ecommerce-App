@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_app/src/features/cart/models/cart_product_model.dart';
 import 'package:ecommerce_app/src/features/home/models/brand_model.dart';
 import 'package:ecommerce_app/src/features/home/models/catalogue_model.dart';
 import 'package:ecommerce_app/src/features/home/models/catalogue_subcategories_model.dart';
@@ -28,6 +29,116 @@ class FirestoreDatabaseRepository implements DatabaseRepository {
     } catch (e) {
       log('Error fetching data from $collectionPath: $e');
       return [];
+    }
+  }
+
+  @override
+  Stream<List<T>> fetchCollectionStream<T>({
+    required String collectionPath,
+    required T Function(DocumentSnapshot<Map<String, dynamic>>) fromSnapshot,
+  }) {
+    return _firestore.collection(collectionPath).snapshots().map(
+          (snapshot) => snapshot.docs.map(fromSnapshot).toList(),
+        );
+  }
+
+  @override
+  Future<void> addFavorite(String userId, int productId) async {
+    try {
+      await _firestore
+          .collection('favorites')
+          .doc(userId)
+          .collection('products')
+          .doc(productId.toString())
+          .set({
+        'productId': productId,
+      });
+    } catch (e) {
+      log('Error adding to favorites: $e');
+    }
+  }
+
+  @override
+  Future<void> removeFavorite(String userId, int productId) async {
+    try {
+      await _firestore
+          .collection('favorites')
+          .doc(userId)
+          .collection('products')
+          .doc(productId.toString())
+          .delete();
+    } catch (e) {
+      log('Error removing from favorites: $e');
+    }
+  }
+
+  @override
+  Stream<List<CartProduct>> fetchCartProductsStream(String userId) {
+    return _firestore
+        .collection('carts')
+        .doc(userId)
+        .collection('products')
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs.map((doc) {
+            final data = doc.data();
+            return CartProduct(
+              productName: data['productName'] as String,
+              productPrice: (data['productPrice'] as num).toDouble(),
+              counter: (data['counter'] as num).toInt(),
+              imageUrl: data['imageUrl'] as String,
+            );
+          }).toList(),
+        );
+  }
+
+  @override
+  Future<void> addProductToCart(String userId, CartProduct product) async {
+    try {
+      final productId = product.imageUrl.replaceAll('/', '_');
+      await _firestore
+          .collection('carts')
+          .doc(userId)
+          .collection('products')
+          .doc(productId)
+          .set({
+        'productName': product.productName,
+        'productPrice': product.productPrice,
+        'counter': product.counter,
+        'imageUrl': product.imageUrl,
+      });
+    } catch (e) {
+      log('Error adding to cart: $e');
+    }
+  }
+
+  @override
+  Future<void> removeProductFromCart(String userId, String imageUrl) async {
+    try {
+      await _firestore
+          .collection('carts')
+          .doc(userId)
+          .collection('products')
+          .doc(imageUrl)
+          .delete();
+    } catch (e) {
+      log('Error removing from cart: $e');
+    }
+  }
+
+  @override
+  Future<void> removeAllProductsFromCart(String userId) async {
+    try {
+      final snapshot = await _firestore
+          .collection('carts')
+          .doc(userId)
+          .collection('products')
+          .get();
+      for (final DocumentSnapshot ds in snapshot.docs) {
+        await ds.reference.delete();
+      }
+    } catch (e) {
+      log('Error clearing cart: $e');
     }
   }
 

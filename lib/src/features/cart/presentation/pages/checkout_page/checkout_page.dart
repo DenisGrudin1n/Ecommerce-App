@@ -8,6 +8,7 @@ import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/widgets/checkout_section.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/widgets/pay_window.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/checkout_page/widgets/success_window.dart';
+import 'package:ecommerce_app/src/repositories/database/database_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -62,7 +63,9 @@ class _CheckoutPageState extends State<CheckoutPage>
           create: (context) => CheckoutBloc(),
         ),
         BlocProvider(
-          create: (context) => CartBloc(cartBox)..add(LoadCartProductsEvent()),
+          create: (context) => CartBloc(
+            firestoreRepository: context.read<DatabaseRepository>(),
+          )..add(LoadCartProductsEvent()),
         ),
       ],
       child: Scaffold(
