@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/theme.dart';
+import 'package:ecommerce_app/src/app/auth_bloc/auth_bloc.dart';
+import 'package:ecommerce_app/src/app/auth_bloc/auth_event.dart';
+import 'package:ecommerce_app/src/app/auth_bloc/auth_state.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/pages/shipping_address_editing_page/bloc/shipping_bloc.dart';
@@ -19,7 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final AppRouter appRouter = AppRouter();
-final user = FirebaseAuth.instance.currentUser;
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -39,57 +41,61 @@ class App extends StatelessWidget {
   }
 
   Widget buildProviders({required Widget child}) {
-    return user != null
-        ? MultiRepositoryProvider(
-            providers: [
-              RepositoryProvider<AuthRepository>(
-                create: (context) =>
-                    FirebaseAuthRepository(FirebaseAuth.instance),
-              ),
-              RepositoryProvider<StorageRepository>(
-                create: (context) =>
-                    FirebaseStorageRepository(FirebaseStorage.instance),
-              ),
-              RepositoryProvider<DatabaseRepository>(
-                create: (context) =>
-                    FirestoreDatabaseRepository(FirebaseFirestore.instance),
-              ),
-            ],
-            child: MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (context) => FilterBloc(
-                    firestoreRepository: context.read<DatabaseRepository>(),
-                  ),
-                ),
-                BlocProvider(
-                  create: (context) => ShippingBloc(),
-                ),
-                BlocProvider(
-                  create: (context) => ItemsBloc(
-                    storageRepository: context.read<StorageRepository>(),
-                    firestoreRepository: context.read<DatabaseRepository>(),
-                  )
-                    ..add(const LoadItemsEvent(''))
-                    ..add(LoadItemsCategoriesEvent()),
-                ),
-                BlocProvider(
-                  create: (context) => CartBloc(
-                    firestoreRepository: context.read<DatabaseRepository>(),
-                  )..add(LoadCartProductsEvent()),
-                ),
-              ],
-              child: child,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>(
+          create: (context) => FirebaseAuthRepository(FirebaseAuth.instance),
+        ),
+        RepositoryProvider<StorageRepository>(
+          create: (context) =>
+              FirebaseStorageRepository(FirebaseStorage.instance),
+        ),
+        RepositoryProvider<DatabaseRepository>(
+          create: (context) =>
+              FirestoreDatabaseRepository(FirebaseFirestore.instance),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthBloc(
+              authRepository: context.read<AuthRepository>(),
+            )..add(AuthCheckRequestedEvent()),
+          ),
+          BlocProvider(
+            create: (context) => FilterBloc(
+              firestoreRepository: context.read<DatabaseRepository>(),
             ),
-          )
-        : MultiRepositoryProvider(
-            providers: [
-              RepositoryProvider<AuthRepository>(
-                create: (context) =>
-                    FirebaseAuthRepository(FirebaseAuth.instance),
-              ),
-            ],
-            child: child,
-          );
+          ),
+          BlocProvider(
+            create: (context) => ShippingBloc(),
+          ),
+          BlocProvider(
+            create: (context) => CartBloc(
+              firestoreRepository: context.read<DatabaseRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => ItemsBloc(
+              firestoreRepository: context.read<DatabaseRepository>(),
+              storageRepository: context.read<StorageRepository>(),
+            ),
+          ),
+        ],
+        child: BlocListener<AuthBloc, AuthState>(
+          listenWhen: (previous, current) =>
+              previous is Authenticated != current is Authenticated,
+          listener: (context, state) {
+            if (state is Authenticated) {
+              BlocProvider.of<ItemsBloc>(context).add(const LoadItemsEvent(''));
+              BlocProvider.of<ItemsBloc>(context)
+                  .add(LoadItemsCategoriesEvent());
+              BlocProvider.of<CartBloc>(context).add(LoadCartProductsEvent());
+            }
+          },
+          child: child,
+        ),
+      ),
+    );
   }
 }

@@ -36,3 +36,5 @@ class ChangeItemsSortByEvent extends ItemsEvent {
 }
 
 class ToggleItemsSortByDropdownEvent extends ItemsEvent {}
+
+class ClearItemsEvent extends ItemsEvent {}

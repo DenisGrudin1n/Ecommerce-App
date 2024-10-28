@@ -33,3 +33,5 @@ class DecrementCartCounterEvent extends CartEvent {
 class LoadCartProductsEvent extends CartEvent {}
 
 class RemoveAllCartProductsEvent extends CartEvent {}
+
+class ClearCartEvent extends CartEvent {}

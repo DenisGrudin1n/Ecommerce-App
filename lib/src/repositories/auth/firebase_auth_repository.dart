@@ -90,4 +90,9 @@ class FirebaseAuthRepository implements AuthRepository {
   bool isLoggedIn() {
     return _firebaseAuth.currentUser != null;
   }
+
+  @override
+  User? getCurrentUser() {
+    return _firebaseAuth.currentUser;
+  }
 }

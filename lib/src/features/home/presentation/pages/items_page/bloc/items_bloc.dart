@@ -16,6 +16,7 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
     on<LoadItemsSortByEvent>(_onLoadSortByChanged);
     on<ChangeItemsSortByEvent>(_onSortByChanged);
     on<ToggleItemsSortByDropdownEvent>(_onToggleSortByDropdown);
+    on<ClearItemsEvent>(_onClearItems);
   }
 
   final StorageRepository storageRepository;
@@ -173,5 +174,12 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
         isSortByDropdownOpen: !state.isSortByDropdownOpen,
       ),
     );
+  }
+
+  void _onClearItems(
+    ClearItemsEvent event,
+    Emitter<ItemsState> emit,
+  ) {
+    emit(state.copyWith(items: []));
   }
 }

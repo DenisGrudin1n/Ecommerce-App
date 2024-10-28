@@ -16,6 +16,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<DecrementCartCounterEvent>(_onDecrementCartCounter);
     on<LoadCartProductsEvent>(_onLoadCartProducts);
     on<RemoveAllCartProductsEvent>(_onRemoveAllCartProducts);
+    on<ClearCartEvent>(_onClearItems);
   }
 
   final DatabaseRepository firestoreRepository;
@@ -120,5 +121,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           ..[index] = updatedProduct,
       ),
     );
+  }
+
+  void _onClearItems(
+    ClearCartEvent event,
+    Emitter<CartState> emit,
+  ) {
+    emit(state.copyWith(products: []));
   }
 }

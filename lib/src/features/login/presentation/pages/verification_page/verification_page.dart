@@ -9,7 +9,6 @@ import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/bloc/verification_bloc.dart';
 import 'package:ecommerce_app/src/features/login/presentation/pages/verification_page/widgets/verification_code_input_field.dart';
 import 'package:ecommerce_app/src/repositories/auth/auth_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +26,6 @@ class VerificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
     return BlocProvider(
       create: (context) => VerificationBloc(
         authRepository: context.read<AuthRepository>(),
@@ -49,13 +47,9 @@ class VerificationPage extends StatelessWidget {
               builder: (context, state) {
                 if (state is VerificationCodeLoading) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is VerificationCodeVerified && user != null) {
+                } else if (state is VerificationCodeVerified) {
                   context.router.replace(
                     const HomeRoute(),
-                  );
-                } else if (state is VerificationCodeVerified && user == null) {
-                  context.router.replace(
-                    const NotRegisteredRoute(),
                   );
                 } else if (state is VerificationCodeFailed) {
                   ErrorSnackBar.show(
