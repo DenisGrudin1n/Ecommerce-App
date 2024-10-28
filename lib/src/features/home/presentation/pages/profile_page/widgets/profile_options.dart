@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
+import 'package:ecommerce_app/core/theme/shadows.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/profile_page/bloc/profile_bloc.dart';
@@ -86,11 +87,7 @@ class ProfileOption extends StatelessWidget {
             color: AppColors.whiteColor,
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
-              BoxShadow(
-                color: AppColors.darkColor.withOpacity(0.08),
-                offset: const Offset(0, 4),
-                blurRadius: 12,
-              ),
+              AppShadows.defaultContainerBoxShadow,
             ],
           ),
           child: Row(

@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/src/features/home/models/items_categories_model.dart';
-import 'package:ecommerce_app/src/features/home/models/items_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ItemsState extends Equatable {
@@ -13,7 +13,7 @@ class ItemsState extends Equatable {
     this.itemsCategoriesErrorMessage = '',
   });
 
-  final List<ItemsModel> items;
+  final List<ProductModel> items;
   final List<ItemsCategoriesModel> itemsCategories;
   final String selectedCategory;
 
@@ -26,7 +26,7 @@ class ItemsState extends Equatable {
   final String itemsCategoriesErrorMessage;
 
   ItemsState copyWith({
-    List<ItemsModel>? items,
+    List<ProductModel>? items,
     List<ItemsCategoriesModel>? itemsCategories,
     bool? isLoadingItems,
     bool? isLoadingItemsCategories,

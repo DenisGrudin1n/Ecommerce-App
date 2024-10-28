@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
+import 'package:ecommerce_app/src/features/cart/models/cart_product_model.dart';
+import 'package:ecommerce_app/src/features/cart/presentation/pages/cart_page/bloc/cart_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:ecommerce_app/src/features/product/presentatiton/pages/product_page/bloc/product_bloc.dart';
@@ -13,6 +16,7 @@ import 'package:ecommerce_app/src/repositories/database/database_repository.dart
 import 'package:ecommerce_app/src/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 
 @RoutePage()
 class ProductPage extends StatefulWidget {
@@ -23,6 +27,9 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  final favoritesBox = Hive.box<int>('favorites');
+  final cartBox = Hive.box<CartProduct>('cart');
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -39,25 +46,38 @@ class _ProductPageState extends State<ProductPage> {
             firestoreRepository: context.read<DatabaseRepository>(),
           )..add(const LoadItemsEvent('')),
         ),
+        BlocProvider(
+          create: (context) =>
+              FavoriteBloc(favoritesBox)..add(LoadFavoriteProductsEvent()),
+        ),
+        BlocProvider(
+          create: (context) => CartBloc(cartBox)..add(LoadCartProductsEvent()),
+        ),
       ],
-      child: const Scaffold(
+      child: Scaffold(
         backgroundColor: AppColors.lightBackgroundColor,
         body: Stack(
           children: [
             // Scrollable content
-            CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(child: ProductAppbar()),
-                SliverPadding(padding: EdgeInsets.only(bottom: 8)),
-                SliverToBoxAdapter(child: ProductDetails()),
-                SliverPadding(padding: EdgeInsets.only(bottom: 8)),
-                SliverToBoxAdapter(child: ProductReviews()),
-                SliverPadding(padding: EdgeInsets.only(bottom: 8)),
-                SliverToBoxAdapter(child: RelatedProducts()),
+            ListView(
+              children: const [
+                ProductAppbar(),
+                SizedBox(
+                  height: 8,
+                ),
+                ProductDetails(),
+                SizedBox(
+                  height: 8,
+                ),
+                ProductReviews(),
+                SizedBox(
+                  height: 8,
+                ),
+                RelatedProducts(),
               ],
             ),
             // Fixed AddToCart button
-            Positioned(
+            const Positioned(
               bottom: 0,
               left: 0,
               right: 0,

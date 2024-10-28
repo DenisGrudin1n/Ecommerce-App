@@ -123,11 +123,7 @@ class _SortBySectionState extends State<SortBySection> {
                         style: FilterPageTextStyles.valueTextStyle,
                       ),
                     ),
-                    if (selectedSortBy == sortByOption.name)
-                      const Icon(
-                        Icons.check,
-                        color: AppColors.greyColor,
-                      ),
+                    if (selectedSortBy == sortByOption.name) AppIcons.checkIcon,
                   ],
                 ),
               ),

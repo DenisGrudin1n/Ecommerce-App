@@ -359,6 +359,14 @@ class ItemsPageTextStyles {
     height: 16 / 12,
     letterSpacing: 0,
   );
+
+  static TextStyle itemsTextStyle = GoogleFonts.inter(
+    fontWeight: FontWeight.w700,
+    fontSize: 19,
+    color: AppColors.darkColor,
+    height: 23 / 19,
+    letterSpacing: -0.49,
+  );
 }
 
 class FilterPageTextStyles {
@@ -532,6 +540,14 @@ class ProductPageTextStyles {
     height: 16 / 13,
     letterSpacing: 0,
   );
+
+  static TextStyle productPageAddToCartProductNameTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
 }
 
 class ProfilePageTextStyles {
@@ -568,6 +584,70 @@ class ProfilePageTextStyles {
     color: AppColors.darkColor,
     height: 22 / 17,
     letterSpacing: -0.41,
+  );
+}
+
+class CartPageTextStyles {
+  static TextStyle productPriceTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle productCounterTextStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkGreyColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+}
+
+class CheckoutPageTextStyles {
+  static TextStyle changeTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w700,
+    fontSize: 12,
+    height: 16 / 12,
+    letterSpacing: 0,
+  );
+
+  static TextStyle addressTextStyle = GoogleFonts.inter(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: AppColors.darkGreyColor,
+    height: 19 / 14,
+    letterSpacing: -0.15,
+  );
+
+  static TextStyle cardNumberTextStyle = const TextStyle(
+    fontFamily: 'SFProText',
+    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    color: AppColors.darkColor,
+    height: 19 / 14,
+    letterSpacing: 0.85,
+  );
+
+  static TextStyle goToOrdersTextStyle = const TextStyle(
+    fontFamily: 'SFProDisplay',
+    fontWeight: FontWeight.w700,
+    fontSize: 17,
+    color: AppColors.greyColor,
+    height: 22 / 17,
+    letterSpacing: 0,
+  );
+}
+
+class ShippingAddressEditingPageTextStyles {
+  static TextStyle textFieldInputTextStyle = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkColor,
+    height: 1.3,
+    letterSpacing: 0.37,
   );
 }
 

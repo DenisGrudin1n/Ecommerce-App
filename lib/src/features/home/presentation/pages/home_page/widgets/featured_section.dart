@@ -3,9 +3,11 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/shadows.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/home/models/featured_product_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/home_page/bloc/home_event.dart';
 import 'package:flutter/material.dart';
@@ -25,12 +27,13 @@ class _FeaturedSectionState extends State<FeaturedSection> {
   void initState() {
     super.initState();
     context.read<HomeBloc>().add(const LoadFeaturedProductsEvent(''));
+    context.read<FavoriteBloc>().add(LoadFavoriteProductsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     final featuredSectionProducts =
-        context.select<HomeBloc, List<FeaturedProductModel>>(
+        context.select<HomeBloc, List<ProductModel>>(
       (bloc) => bloc.state.featuredProducts,
     );
     final isLoading = context.select<HomeBloc, bool>(
@@ -38,6 +41,9 @@ class _FeaturedSectionState extends State<FeaturedSection> {
     );
     final errorMessage = context.select<HomeBloc, String>(
       (bloc) => bloc.state.featuredErrorMessage,
+    );
+    final favoriteProductsIds = context.select<FavoriteBloc, List<int>>(
+      (bloc) => bloc.state.favoriteProductsIds,
     );
 
     if (isLoading) {
@@ -58,10 +64,13 @@ class _FeaturedSectionState extends State<FeaturedSection> {
       );
     }
 
-    return _buildProductGrid(featuredSectionProducts);
+    return _buildProductGrid(featuredSectionProducts, favoriteProductsIds);
   }
 
-  Widget _buildProductGrid(List<FeaturedProductModel> products) {
+  Widget _buildProductGrid(
+    List<ProductModel> products,
+    List<int> favoriteProductsIds,
+  ) {
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -72,14 +81,19 @@ class _FeaturedSectionState extends State<FeaturedSection> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           final product = products[index];
-          return _buildFeaturedProductTile(product, index);
+          final isFavorite = favoriteProductsIds.contains(product.id);
+          return _buildFeaturedProductTile(product, isFavorite, index);
         },
         childCount: products.length,
       ),
     );
   }
 
-  Widget _buildFeaturedProductTile(FeaturedProductModel product, int index) {
+  Widget _buildFeaturedProductTile(
+    ProductModel product,
+    bool isFavorite,
+    int index,
+  ) {
     return Stack(
       children: [
         GestureDetector(
@@ -158,8 +172,6 @@ class _FeaturedSectionState extends State<FeaturedSection> {
             ),
           ),
         ),
-
-        // Favorite Icon Positioned
         Positioned(
           top: 152,
           right: 8,
@@ -171,24 +183,26 @@ class _FeaturedSectionState extends State<FeaturedSection> {
               color: AppColors.whiteColor,
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 6,
-                ),
+                AppShadows.favoriteIconBoxShadow,
               ],
             ),
             child: Center(
               child: IconButton(
                 padding: EdgeInsets.zero,
-                onPressed: () {},
-                icon: index == 1
+                onPressed: () {
+                  if (isFavorite) {
+                    context
+                        .read<FavoriteBloc>()
+                        .add(RemoveFromFavoriteEvent(product));
+                  } else {
+                    context
+                        .read<FavoriteBloc>()
+                        .add(AddToFavoriteEvent(product));
+                  }
+                },
+                icon: isFavorite
                     ? AppIcons.smallFavoriteProductIcon
-                    : const GradientIcon(
-                        icon: Icons.favorite_border,
-                        size: 20,
-                        gradient: AppGradients.purpleGradient,
-                        strokeWidth: 1,
-                      ),
+                    : AppIcons.notFavoriteGradientIcon,
               ),
             ),
           ),

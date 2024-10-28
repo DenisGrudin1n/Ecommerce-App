@@ -95,6 +95,11 @@ class AppIcons {
     color: AppColors.whiteColor,
   );
 
+  static const Icon arrowBackTransparentIcon = Icon(
+    Icons.arrow_back,
+    color: AppColors.transparentColor,
+  );
+
   static const Icon greyArrowBackIcon = Icon(
     Icons.arrow_back,
     color: AppColors.greyColor,
@@ -140,6 +145,55 @@ class AppIcons {
     icon: Icons.edit_outlined,
     gradient: AppGradients.purpleGradient,
     size: 26,
+  );
+
+  static const GradientIcon locationGradientIcon = GradientIcon(
+    icon: Icons.location_on_outlined,
+    gradient: AppGradients.purpleGradient,
+    size: 28,
+  );
+
+  static const GradientIcon arrowForwardGradientIcon = GradientIcon(
+    icon: Icons.arrow_forward_ios,
+    size: 16,
+    gradient: AppGradients.purpleGradient,
+  );
+
+  static const GradientIcon localShippingGradientIcon = GradientIcon(
+    icon: Icons.local_shipping_outlined,
+    gradient: AppGradients.purpleGradient,
+    size: 28,
+  );
+
+  static const GradientIcon creditCardGradientIcon = GradientIcon(
+    icon: Icons.credit_card_outlined,
+    gradient: AppGradients.purpleGradient,
+    size: 28,
+  );
+
+  static const Icon paymentSuccessIcon = Icon(
+    Icons.check_circle_outline_rounded,
+    color: AppColors.whiteColor,
+    size: 64,
+  );
+
+  static const Icon checkIcon = Icon(
+    Icons.check,
+    color: AppColors.greyColor,
+  );
+
+  static const GradientIcon notFavoriteGradientIcon = GradientIcon(
+    icon: Icons.favorite_border,
+    size: 20,
+    gradient: AppGradients.purpleGradient,
+    strokeWidth: 1,
+  );
+
+  static const GradientIcon notFavoriteProductGradientIcon = GradientIcon(
+    icon: Icons.favorite_border,
+    size: 28,
+    gradient: AppGradients.purpleGradient,
+    strokeWidth: 1,
   );
 
   static Stack filterIcon = Stack(

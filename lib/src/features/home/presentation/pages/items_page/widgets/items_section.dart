@@ -3,21 +3,21 @@ import 'package:ecommerce_app/core/l10n/l10n.dart';
 import 'package:ecommerce_app/core/theme/colors.dart';
 import 'package:ecommerce_app/core/theme/gradients.dart';
 import 'package:ecommerce_app/core/theme/icons.dart';
+import 'package:ecommerce_app/core/theme/shadows.dart';
 import 'package:ecommerce_app/core/theme/text_styles.dart';
 import 'package:ecommerce_app/src/app/router/router.dart';
-import 'package:ecommerce_app/src/features/home/models/items_model.dart';
+import 'package:ecommerce_app/src/features/home/models/product_model.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/favorite_page/bloc/favorite_bloc.dart';
+import 'package:ecommerce_app/src/features/home/presentation/pages/filter_page/bloc/filter_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_bloc.dart';
 import 'package:ecommerce_app/src/features/home/presentation/pages/items_page/bloc/items_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ItemsSection extends StatefulWidget {
   const ItemsSection({
-    required this.selectedCategory,
     super.key,
   });
-  final String selectedCategory;
 
   @override
   State<ItemsSection> createState() => _ItemsSectionState();
@@ -28,11 +28,12 @@ class _ItemsSectionState extends State<ItemsSection> {
   void initState() {
     super.initState();
     context.read<ItemsBloc>().add(const LoadItemsEvent(''));
+    context.read<FavoriteBloc>().add(LoadFavoriteProductsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    final items = context.select<ItemsBloc, List<ItemsModel>>(
+    final items = context.select<ItemsBloc, List<ProductModel>>(
       (bloc) => bloc.state.items,
     );
     final isLoading = context.select<ItemsBloc, bool>(
@@ -41,12 +42,65 @@ class _ItemsSectionState extends State<ItemsSection> {
     final errorMessage = context.select<ItemsBloc, String>(
       (bloc) => bloc.state.itemsErrorMessage,
     );
+    final favoriteProductsIds = context.select<FavoriteBloc, List<int>>(
+      (bloc) => bloc.state.favoriteProductsIds,
+    );
 
-    final filteredItems = widget.selectedCategory == 'All'
-        ? items
-        : items
-            .where((item) => item.category == widget.selectedCategory)
-            .toList();
+    final minPrice = context.select<FilterBloc, double>(
+      (bloc) => bloc.state.minValue,
+    );
+    final maxPrice = context.select<FilterBloc, double>(
+      (bloc) => bloc.state.maxValue,
+    );
+    final selectedBrands = context.select<FilterBloc, List<String>>(
+      (bloc) => bloc.state.selectedBrands,
+    );
+    final selectedColors = context.select<FilterBloc, Map<String, Color>>(
+      (bloc) => bloc.state.selectedColors,
+    );
+    final selectedCategory = context.select<ItemsBloc, String>(
+      (bloc) => bloc.state.selectedCategory,
+    );
+    final selectedSizes = context.select<FilterBloc, List<String>>(
+      (bloc) => bloc.state.selectedSizes,
+    );
+    final selectedSortBy = context.select<FilterBloc, String>(
+      (bloc) => bloc.state.selectedSortBy,
+    );
+
+    final filteredItems = items.where((item) {
+      final isInPriceRange = double.parse(item.price) > minPrice &&
+          double.parse(item.price) < maxPrice;
+
+      final isInSelectedCategory =
+          selectedCategory == 'All' || item.category == selectedCategory;
+
+      final isBrandSelected = selectedBrands.contains(item.brand);
+
+      final isColorSelected = selectedColors.isEmpty ||
+          item.colors!.any(selectedColors.containsKey);
+
+      final hasSelectedSize =
+          selectedSizes.isEmpty || item.sizes!.any(selectedSizes.contains);
+
+      return isInPriceRange &&
+          isInSelectedCategory &&
+          (selectedBrands.contains('All') || isBrandSelected) &&
+          isColorSelected &&
+          hasSelectedSize;
+    }).toList();
+
+    if (selectedSortBy.isNotEmpty && selectedSortBy != 'Featured') {
+      if (selectedSortBy == 'Lowest Price') {
+        filteredItems.sort(
+          (a, b) => double.parse(a.price).compareTo(double.parse(b.price)),
+        );
+      } else if (selectedSortBy == 'Highest Price') {
+        filteredItems.sort(
+          (a, b) => double.parse(b.price).compareTo(double.parse(a.price)),
+        );
+      }
+    }
 
     if (isLoading) {
       return const SliverToBoxAdapter(
@@ -88,12 +142,20 @@ class _ItemsSectionState extends State<ItemsSection> {
               child: Row(
                 children: [
                   Expanded(
-                    child: _buildItemsTile(firstItem, itemIndex),
+                    child: _buildItemsTile(
+                      firstItem,
+                      itemIndex,
+                      favoriteProductsIds,
+                    ),
                   ),
                   const SizedBox(width: 16),
                   if (secondItem != null)
                     Expanded(
-                      child: _buildItemsTile(secondItem, itemIndex + 1),
+                      child: _buildItemsTile(
+                        secondItem,
+                        itemIndex + 1,
+                        favoriteProductsIds,
+                      ),
                     )
                   else
                     Expanded(
@@ -110,7 +172,13 @@ class _ItemsSectionState extends State<ItemsSection> {
     );
   }
 
-  Widget _buildItemsTile(ItemsModel item, int index) {
+  Widget _buildItemsTile(
+    ProductModel item,
+    int index,
+    List<int> favoriteProductsNames,
+  ) {
+    final isFavorite = favoriteProductsNames.contains(item.id);
+
     return Stack(
       children: [
         GestureDetector(
@@ -195,31 +263,33 @@ class _ItemsSectionState extends State<ItemsSection> {
           top: 152,
           right: 8,
           child: Container(
-            padding: const EdgeInsets.all(6),
+            padding: EdgeInsets.zero,
             width: 36,
             height: 36,
             decoration: BoxDecoration(
               color: AppColors.whiteColor,
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 6,
-                ),
+                AppShadows.favoriteIconBoxShadow,
               ],
             ),
-            child: index != 1
-                ? const GradientIcon(
-                    icon: Icons.favorite_border,
-                    size: 20,
-                    gradient: AppGradients.purpleGradient,
-                    strokeWidth: 1,
-                  )
-                : const Icon(
-                    Icons.favorite,
-                    size: 20,
-                    color: AppColors.yellowColor,
-                  ),
+            child: Center(
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  if (isFavorite) {
+                    context
+                        .read<FavoriteBloc>()
+                        .add(RemoveFromFavoriteEvent(item));
+                  } else {
+                    context.read<FavoriteBloc>().add(AddToFavoriteEvent(item));
+                  }
+                },
+                icon: isFavorite
+                    ? AppIcons.smallFavoriteProductIcon
+                    : AppIcons.notFavoriteGradientIcon,
+              ),
+            ),
           ),
         ),
         if (index == 0)
@@ -251,18 +321,12 @@ class _ItemsSectionState extends State<ItemsSection> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, List<ItemsModel> items) {
+  Widget _buildHeader(BuildContext context, List<ProductModel> items) {
     return Row(
       children: [
         Text(
           '${items.length} ${context.localization.itemsPageItemsText}',
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.w700,
-            fontSize: 19,
-            color: AppColors.darkColor,
-            height: 23 / 19,
-            letterSpacing: -0.49,
-          ),
+          style: ItemsPageTextStyles.itemsTextStyle,
         ),
         const Spacer(),
         Row(
